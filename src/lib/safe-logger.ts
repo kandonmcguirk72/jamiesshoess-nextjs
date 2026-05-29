@@ -64,7 +64,7 @@ class SafeLogger {
       timestamp: new Date().toISOString(),
       level,
       message: sanitizedMessage,
-      ...(data && { data: sanitizeObject(data) }),
+      ...(data ? { data: sanitizeObject(data) } : {}),
       sanitized: hasSensitiveData,
     }
 
