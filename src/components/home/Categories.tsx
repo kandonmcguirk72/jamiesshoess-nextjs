@@ -8,17 +8,20 @@ export default function Categories() {
   const [hoveredId, setHoveredId] = useState<string | null>(null)
 
   return (
-    <section className="section bg-canvas">
+    <section className="section bg-leather">
       <div className="container">
 
         {/* Section header */}
-        <span className="font-sans font-semibold text-[11px] tracking-[0.2em] uppercase text-minted mb-3 block">
+        <span className="font-sans font-bold text-[10px] tracking-[0.2em] uppercase text-minted mb-3 block">
           WHAT&apos;S IN STOCK
         </span>
-        <h2 className="font-display text-display-lg text-ink">
+        <h2
+          className="font-display italic font-black uppercase text-white"
+          style={{ fontSize: 'var(--text-display-lg)', lineHeight: 0.95 }}
+        >
           Everything We Run
         </h2>
-        <p className="font-sans text-[15px] text-ink3 mt-2 mb-10">
+        <p className="font-sans font-semibold text-[14px] text-white/40 mt-2 mb-10">
           Hand-picked, never bulk. New pieces every week.
         </p>
 
@@ -27,7 +30,11 @@ export default function Categories() {
           {BRAND.categories.map((cat) => (
             <div
               key={cat.id}
-              className="relative bg-surface rounded-lg overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-250 cursor-pointer group"
+              className="relative bg-surface2 rounded-sm overflow-hidden cursor-pointer group transition-all duration-200"
+              style={{
+                border: `1px solid ${hoveredId === cat.id ? 'rgba(0,236,241,.35)' : 'rgba(255,255,255,.07)'}`,
+                boxShadow: hoveredId === cat.id ? '0 0 20px rgba(0,236,241,.1)' : 'none',
+              }}
               onMouseEnter={() => setHoveredId(cat.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
@@ -45,16 +52,19 @@ export default function Categories() {
 
               {/* Content */}
               <div className="p-4 pb-5">
-                <p className="font-sans font-bold text-[10px] tracking-[0.2em] text-ink3 mb-1">
+                <p className="font-sans font-bold text-[9px] tracking-[0.2em] text-white/30 mb-1 uppercase">
                   {cat.num}
                 </p>
-                <p className="font-display text-2xl text-ink tracking-[0.04em] leading-none">
+                <p
+                  className="font-display italic font-black uppercase text-white leading-none"
+                  style={{ fontSize: '1.375rem', letterSpacing: '0.01em' }}
+                >
                   {cat.name}
                 </p>
-                <p className="font-sans font-semibold text-[12px] text-minted mt-1 mb-2">
+                <p className="font-sans font-bold text-[11px] tracking-[0.1em] uppercase text-minted mt-1 mb-2">
                   {cat.price}
                 </p>
-                <p className="font-sans text-[13px] text-ink3 leading-relaxed mt-1.5">
+                <p className="font-sans text-[12px] text-white/40 leading-relaxed mt-1">
                   {cat.desc}
                 </p>
               </div>
@@ -63,15 +73,15 @@ export default function Categories() {
         </div>
 
         {/* Footer note */}
-        <p className="text-center mt-8 font-sans text-[14px] text-ink3">
-          Inventory turns over every week · Latest drops on{' '}
+        <p className="text-center mt-8 font-sans font-semibold text-[13px] text-white/30 tracking-[0.06em]">
+          Inventory turns every week · Latest drops on{' '}
           <a
             href={BRAND.social.instagram.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-ink font-semibold hover:text-minted transition-colors"
+            className="text-minted hover:underline"
           >
-            Instagram →
+            @JAMIESSHOESS
           </a>
         </p>
 

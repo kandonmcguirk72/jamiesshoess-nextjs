@@ -4,14 +4,14 @@ import FadeIn from '@/components/ui/FadeIn'
 
 export default function BrandFeature() {
   return (
-    <section className="section bg-canvas">
+    <section className="section bg-leather">
 
-      {/* Block 1: image left, text right */}
+      {/* Block 1: illustration left, text right */}
       <div className="container">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center mb-24">
 
-          {/* Left: illustration on soft surface bg */}
-          <div className="bg-surface rounded-2xl p-10 flex items-center justify-center">
+          {/* Left: illustration on dark surface */}
+          <div className="bg-surface rounded-sm p-10 flex items-center justify-center border border-white/[0.07]">
             <div className="relative w-full max-w-[400px] aspect-square mx-auto">
               <Image
                 src={BRAND.images.illus3}
@@ -26,13 +26,16 @@ export default function BrandFeature() {
 
           {/* Right: content */}
           <FadeIn>
-            <span className="font-sans font-semibold text-[11px] tracking-[0.2em] uppercase text-minted mb-4 block">
+            <span className="font-sans font-bold text-[10px] tracking-[0.2em] uppercase text-minted mb-4 block">
               SHOP VNTG
             </span>
-            <h2 className="font-display text-display-lg text-ink leading-none mb-6">
+            <h2
+              className="font-display italic font-black uppercase text-white leading-none mb-6"
+              style={{ fontSize: 'var(--text-display-lg)' }}
+            >
               Real Heat.<br />No Fakes.<br /><span className="text-minted">Ever.</span>
             </h2>
-            <p className="font-sans text-base text-ink2 leading-[1.7] max-w-[440px] mb-8">
+            <p className="font-sans text-[15px] text-white/50 leading-[1.7] max-w-[440px] mb-8">
               Everything in here was picked for a reason. Not bulk-bought, not random — just things worth owning.
             </p>
             <div className="flex flex-wrap gap-3">
@@ -40,17 +43,18 @@ export default function BrandFeature() {
                 href={BRAND.social.instagram.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-ink text-white font-sans font-bold text-[12px] tracking-[0.06em] px-6 py-3 rounded hover:bg-minted hover:text-ink transition-all duration-200"
+                className="bg-minted text-leather font-sans font-bold text-[12px] tracking-[0.14em] uppercase px-6 py-3 rounded-sm hover:bg-white transition-colors duration-150"
+                style={{ boxShadow: '0 0 16px rgba(0,236,241,.3)' }}
               >
-                Shop on Instagram
+                SHOP ON INSTAGRAM
               </a>
               <a
                 href={BRAND.address.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border border-line2 text-ink font-sans font-semibold text-[12px] tracking-[0.04em] px-6 py-3 rounded hover:border-ink transition-all duration-200"
+                className="border border-white/20 text-white/60 font-sans font-semibold text-[12px] tracking-[0.1em] uppercase px-6 py-3 rounded-sm hover:border-minted hover:text-minted transition-all duration-150"
               >
-                Get Directions
+                GET DIRECTIONS
               </a>
             </div>
           </FadeIn>
@@ -64,31 +68,34 @@ export default function BrandFeature() {
 
           {/* Left: content */}
           <FadeIn>
-            <span className="font-sans font-semibold text-[11px] tracking-[0.2em] uppercase text-minted mb-4 block">
+            <span className="font-sans font-bold text-[10px] tracking-[0.2em] uppercase text-minted mb-4 block">
               DOWNTOWN SPRINGFIELD · ROUTE 66
             </span>
-            <h2 className="font-display text-display-lg text-ink leading-none mb-6">
+            <h2
+              className="font-display italic font-black uppercase text-white leading-none mb-6"
+              style={{ fontSize: 'var(--text-display-lg)' }}
+            >
               Springfield&apos;s<br /><span className="text-minted">Only.</span>
             </h2>
-            <p className="font-sans text-base text-ink2 leading-[1.7] max-w-[440px] mb-6">
+            <p className="font-sans text-[15px] text-white/50 leading-[1.7] max-w-[440px] mb-6">
               Jamie grew up hunting sneakers and vintage in Springfield. Couldn&apos;t find a spot worth coming back to, so he built one.
             </p>
-            <blockquote className="border-l-4 border-minted pl-5 italic font-sans text-[15px] text-ink3 leading-relaxed mb-8">
+            <blockquote className="border-l-4 border-minted pl-5 italic font-sans text-[15px] text-white/40 leading-relaxed mb-8">
               &ldquo;{BRAND.founderQuote}&rdquo;
-              <cite className="block not-italic font-semibold text-[12px] text-ink mt-2">
+              <cite className="block not-italic font-bold text-[11px] tracking-[0.08em] uppercase text-white/50 mt-2">
                 — {BRAND.founder}, Founder
               </cite>
             </blockquote>
             <a
               href="/about"
-              className="border border-line2 text-ink font-sans font-semibold text-[12px] tracking-[0.04em] px-6 py-3 rounded hover:border-ink transition-all duration-200 inline-block"
+              className="border border-white/20 text-white/60 font-sans font-semibold text-[12px] tracking-[0.1em] uppercase px-6 py-3 rounded-sm hover:border-minted hover:text-minted transition-all duration-150 inline-block"
             >
-              Our Full Story →
+              OUR FULL STORY →
             </a>
           </FadeIn>
 
           {/* Right: logo on surface bg */}
-          <div className="bg-surface rounded-2xl p-10 flex items-center justify-center order-first md:order-last">
+          <div className="bg-surface rounded-sm p-10 flex items-center justify-center border border-white/[0.07] order-first md:order-last">
             <div className="relative w-full max-w-[400px] aspect-square mx-auto">
               <Image
                 src={BRAND.images.logoPrimary1}

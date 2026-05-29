@@ -12,13 +12,16 @@ export default function Characters() {
   return (
     <section className="section bg-surface">
       <div className="container">
-        <span className="font-sans font-semibold text-[11px] tracking-[0.2em] uppercase text-minted mb-3 block">
+        <span className="font-sans font-bold text-[10px] tracking-[0.2em] uppercase text-minted mb-3 block">
           THE CREW
         </span>
-        <h2 className="font-display text-display-md text-ink">
+        <h2
+          className="font-display italic font-black uppercase text-white"
+          style={{ fontSize: 'var(--text-display-md)', lineHeight: 1.0 }}
+        >
           Built in Springfield
         </h2>
-        <p className="font-sans text-[15px] text-ink3 mt-2 mb-10">
+        <p className="font-sans font-semibold text-[14px] text-white/40 mt-2 mb-10">
           Four original characters. You&apos;ll see them around.
         </p>
 
@@ -26,10 +29,9 @@ export default function Characters() {
           {chars.map((char) => (
             <div
               key={char.name}
-              className="bg-canvas rounded-lg overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-200 hover:-translate-y-0.5"
+              className="bg-surface2 rounded-sm overflow-hidden border border-white/[0.07] hover:border-minted/40 hover:-translate-y-0.5 transition-all duration-200"
             >
-              {/* Image area */}
-              <div className="relative aspect-square bg-surface">
+              <div className="relative aspect-square bg-leather">
                 <Image
                   src={char.img}
                   alt={char.name + ' JAMIESSHOESS character'}
@@ -39,13 +41,11 @@ export default function Characters() {
                   sizes="(max-width:768px) 50vw, 25vw"
                 />
               </div>
-
-              {/* Label area */}
-              <div className="border-t border-line px-4 py-3.5">
-                <p className="font-sans font-medium text-[10px] tracking-[0.15em] uppercase text-ink3">
+              <div className="border-t border-white/[0.07] px-4 py-3.5">
+                <p className="font-sans font-bold text-[9px] tracking-[0.15em] uppercase text-white/30">
                   {char.role}
                 </p>
-                <p className="font-sans font-bold text-sm text-ink mt-0.5">
+                <p className="font-sans font-bold text-[13px] tracking-[0.06em] uppercase text-white/80 mt-0.5">
                   {char.name}
                 </p>
               </div>

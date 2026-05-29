@@ -1,22 +1,24 @@
 'use client'
 
-import { useState } from 'react'
-import Image from 'next/image'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import { BRAND } from '@/lib/constants'
+import { useCart } from '@/lib/cart-context'
+import SearchBar from '@/components/SearchBar'
 
 const NAV_LINKS = [
-  { label: 'Shop',      href: '/' },
-  { label: 'The Store', href: '/#shop' },
-  { label: 'About',     href: '/about' },
-  { label: 'Hours',     href: '/location' },
-  { label: 'FAQ',       href: '/faq' },
+  { label: 'SHOP',     href: '/#products' },
+  { label: 'SNEAKERS', href: '/#products' },
+  { label: 'VINTAGE',  href: '/#products' },
+  { label: 'MERCH',    href: '/#products' },
+  { label: 'COLLAB',   href: '/#products' },
+  { label: 'ABOUT',    href: '/about' },
 ]
 
 function InstagramIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <rect x="2" y="2" width="16" height="16" rx="5" stroke="currentColor" strokeWidth="1.5" />
       <circle cx="10" cy="10" r="3.5" stroke="currentColor" strokeWidth="1.5" />
       <circle cx="14.5" cy="5.5" r="1" fill="currentColor" />
@@ -24,89 +26,140 @@ function InstagramIcon() {
   )
 }
 
+
+function CartIcon() {
+  return (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
+    </svg>
+  )
+}
+
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const { cart, openCart } = useCart()
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <header
-      className="bg-canvas sticky top-0 z-50 border-b border-line"
-      style={{ boxShadow: '0 1px 0 #E8E8E6' }}
+      className="sticky top-0 z-50 border-b border-white/[0.07]"
+      style={{
+        background: scrolled ? 'rgba(17,19,18,0.96)' : '#111312',
+        boxShadow: scrolled ? '0 4px 40px rgba(0,0,0,.9)' : 'none',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        transition: 'background 0.2s, box-shadow 0.2s',
+      }}
     >
-      {/* ── Main nav bar ── */}
-      <div className="container h-14 md:h-16 flex items-center justify-between gap-6">
-
-        {/* LEFT: Logo */}
-        <Link href="/" className="shrink-0 flex items-center" aria-label="JAMIESSHOESS home">
-          <Image
-            src={BRAND.images.logoPrimary1}
-            alt="JAMIESSHOESS"
-            width={120}
-            height={36}
-            style={{ height: 36, width: 'auto' }}
-            priority
-          />
+      <div
+        className="h-[64px] flex items-center justify-between gap-6"
+        style={{ maxWidth: 1260, margin: '0 auto', padding: '0 clamp(16px,4vw,52px)' }}
+      >
+        {/* Wordmark */}
+        <Link
+          href="/"
+          className="font-display italic font-black uppercase text-minted leading-none flex-shrink-0"
+          style={{ fontSize: 22, letterSpacing: '0.01em' }}
+          aria-label="JAMIESSHOESS home"
+        >
+          JAMIESSHOESS
         </Link>
 
-        {/* CENTER: Desktop nav links */}
-        <nav className="hidden md:flex items-center gap-7" aria-label="Main navigation">
+        {/* Desktop nav links — centered */}
+        <nav className="hidden md:flex items-center gap-8 flex-1 justify-center" aria-label="Main navigation">
           {NAV_LINKS.map((link) => (
             <Link
-              key={link.href}
+              key={link.label}
               href={link.href}
-              className="font-sans font-semibold text-[13px] text-ink tracking-[0.02em] hover:text-minted transition-colors duration-150"
+              className="font-sans font-bold text-[11px] tracking-[0.14em] uppercase text-white/45 hover:text-white transition-colors duration-150"
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        {/* RIGHT: Desktop actions */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* Search — desktop */}
+        <div className="hidden md:block">
+          <SearchBar />
+        </div>
+
+        {/* Desktop actions */}
+        <div className="hidden md:flex items-center gap-5 flex-shrink-0">
           <a
             href={BRAND.social.instagram.url}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="JAMIESSHOESS on Instagram"
-            className="text-ink hover:text-minted transition-colors duration-150"
+            aria-label="Follow on Instagram"
+            className="text-white/40 hover:text-minted transition-colors duration-150"
           >
             <InstagramIcon />
           </a>
+          <button
+            aria-label={`Cart (${cart.length})`}
+            onClick={openCart}
+            className="relative text-white/40 hover:text-minted transition-colors duration-150"
+          >
+            <CartIcon />
+            {cart.length > 0 && (
+              <span
+                className="absolute -top-1.5 -right-1.5 font-sans font-bold text-[10px] text-white flex items-center justify-center rounded-full"
+                style={{ width: 17, height: 17, background: '#F322B3', fontSize: 9 }}
+              >
+                {cart.length}
+              </span>
+            )}
+          </button>
           <a
             href={BRAND.social.marketplace.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-ink text-white font-sans font-bold text-[12px] tracking-[0.06em] uppercase px-5 py-2.5 rounded hover:bg-minted hover:text-ink transition-all duration-200"
+            className="font-sans font-bold text-[11px] tracking-[0.14em] uppercase text-leather bg-minted px-4 py-2 rounded-sm hover:bg-white transition-colors duration-150"
           >
-            SHOP THE STORE →
+            SHOP NOW
           </a>
         </div>
 
-        {/* RIGHT: Mobile hamburger */}
+        {/* Mobile search + cart */}
+        <div className="flex md:hidden items-center gap-3">
+          <SearchBar />
+          <button
+            aria-label={`Cart (${cart.length})`}
+            onClick={openCart}
+            className="relative text-white/40 hover:text-minted transition-colors duration-150"
+          >
+            <CartIcon />
+            {cart.length > 0 && (
+              <span
+                className="absolute -top-1.5 -right-1.5 font-sans font-bold text-[10px] text-white flex items-center justify-center rounded-full"
+                style={{ width: 17, height: 17, background: '#F322B3', fontSize: 9 }}
+              >
+                {cart.length}
+              </span>
+            )}
+          </button>
+        </div>
+
+        {/* Mobile hamburger */}
         <button
-          className="flex md:hidden flex-col justify-center items-center gap-[5px] w-[22px] h-[22px]"
+          className="flex md:hidden flex-col justify-center items-center gap-[5px] w-6 h-6 ml-auto"
           onClick={() => setMenuOpen((v) => !v)}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
         >
-          {menuOpen ? (
-            /* X icon */
-            <>
-              <span className="block w-[22px] h-[1.5px] bg-ink rotate-45 translate-y-[6.5px] transition-transform duration-200" />
-              <span className="block w-[22px] h-[1.5px] bg-ink opacity-0 transition-opacity duration-200" />
-              <span className="block w-[22px] h-[1.5px] bg-ink -rotate-45 -translate-y-[6.5px] transition-transform duration-200" />
-            </>
-          ) : (
-            /* Hamburger icon */
-            <>
-              <span className="block w-[22px] h-[1.5px] bg-ink transition-transform duration-200" />
-              <span className="block w-[22px] h-[1.5px] bg-ink transition-opacity duration-200" />
-              <span className="block w-[22px] h-[1.5px] bg-ink transition-transform duration-200" />
-            </>
-          )}
+          <span className={`block w-5 h-[1.5px] bg-white transition-all duration-200 ${menuOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
+          <span className={`block w-5 h-[1.5px] bg-white transition-all duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block w-5 h-[1.5px] bg-white transition-all duration-200 ${menuOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`} />
         </button>
       </div>
 
-      {/* ── Mobile drawer ── */}
+      {/* Mobile drawer */}
       <AnimatePresence initial={false}>
         {menuOpen && (
           <motion.div
@@ -114,44 +167,36 @@ export default function Nav() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-            className="overflow-hidden bg-canvas border-b border-line md:hidden"
+            transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+            className="overflow-hidden border-t border-white/[0.07] md:hidden"
+            style={{ background: '#111312' }}
           >
-            <div className="p-6 flex flex-col">
-              {/* Nav links */}
-              <nav className="flex flex-col gap-y-4 mb-6" aria-label="Mobile navigation">
-                {NAV_LINKS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="font-sans font-semibold text-lg text-ink hover:text-minted transition-colors duration-150"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </nav>
-
-              {/* Address + hours summary */}
-              <div className="mb-6">
-                <p className="font-sans text-sm text-ink3 leading-relaxed">
-                  302 Park Central East · Springfield, MO 65806
+            <div className="flex flex-col gap-0" style={{ padding: '8px 0 16px' }}>
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="font-sans font-bold text-[13px] tracking-[0.12em] uppercase text-white/60 hover:text-minted hover:bg-white/[0.03] transition-colors duration-150 px-6 py-3"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <div className="px-6 pt-4 pb-2 border-t border-white/[0.07] mt-2">
+                <p className="font-sans text-[11px] tracking-[0.08em] uppercase text-white/25 mb-3">
+                  302 Park Central East · Springfield, MO<br />
+                  Wed–Thu 12–6 · Fri–Sat 12–7
                 </p>
-                <p className="font-sans text-sm text-ink3 leading-relaxed">
-                  Open Wed–Sat · 12 PM – 6/7 PM
-                </p>
+                <a
+                  href={BRAND.social.marketplace.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full bg-minted text-leather font-sans font-bold text-[12px] tracking-[0.14em] uppercase text-center py-3 rounded-sm"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  SHOP NOW
+                </a>
               </div>
-
-              {/* CTA */}
-              <a
-                href={BRAND.social.marketplace.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full bg-ink text-white font-sans font-bold text-[13px] tracking-[0.06em] uppercase text-center py-3.5 rounded hover:bg-minted hover:text-ink transition-all duration-200"
-                onClick={() => setMenuOpen(false)}
-              >
-                SHOP THE STORE →
-              </a>
             </div>
           </motion.div>
         )}

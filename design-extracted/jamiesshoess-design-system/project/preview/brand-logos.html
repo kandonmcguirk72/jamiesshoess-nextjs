@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#080A09;font-family:'Rajdhani',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:24px}
+  .cap{font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.3);margin-bottom:16px}
+  .row{display:flex;gap:14px;flex-wrap:wrap}
+  .mark{flex:1;min-width:140px;background:#111312;border:1px solid rgba(255,255,255,.07);border-radius:6px;overflow:hidden}
+  .mark-img{padding:24px;display:flex;align-items:center;justify-content:center;min-height:110px}
+  .mark-img img{max-height:90px;max-width:100%;object-fit:contain}
+  .mark-info{padding:10px 14px 14px;border-top:1px solid rgba(255,255,255,.06)}
+  .mark-name{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.75);margin-bottom:4px}
+  .mark-status{font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.14em}
+  .approved{color:#00ECF1}
+  .restricted{color:rgba(255,45,45,.7)}
+  .mark-use{font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.3);margin-top:3px;line-height:1.5}
+</style>
+</head>
+<body>
+  <div class="cap">Logo Marks — Usage Guide</div>
+  <div class="row">
+
+    <!-- PRIMARY: Circle badge -->
+    <div class="mark">
+      <div class="mark-img" style="background:#0D0F0E">
+        <img src="../assets/logo-circle-badge-main.png" alt="Circle badge" style="mix-blend-mode:screen">
+      </div>
+      <div class="mark-info">
+        <div class="mark-name">Circle Badge</div>
+        <div class="mark-status approved">Primary Mark — Website Approved</div>
+        <div class="mark-use">Hero · social · print · all surfaces</div>
+      </div>
+    </div>
+
+    <!-- Racing / speed mark -->
+    <div class="mark">
+      <div class="mark-img">
+        <img src="../assets/logo-racing-speed.png" alt="Racing speed mark" style="mix-blend-mode:screen">
+      </div>
+      <div class="mark-info">
+        <div class="mark-name">Racing Mark</div>
+        <div class="mark-status approved">Social &amp; Merch</div>
+        <div class="mark-use">Drops · hype posts · collab merch</div>
+      </div>
+    </div>
+
+    <!-- Graffiti wordmark -->
+    <div class="mark">
+      <div class="mark-img">
+        <img src="../assets/logo-graffiti-teal-magenta.png" alt="Graffiti wordmark" style="mix-blend-mode:screen;opacity:.4;filter:grayscale(1)">
+      </div>
+      <div class="mark-info">
+        <div class="mark-name">Graffiti Wordmark</div>
+        <div class="mark-status restricted">Social / Print Only — Not for Website</div>
+        <div class="mark-use">Marketing, merch &amp; social collateral</div>
+      </div>
+    </div>
+
+    <!-- Pixel retro -->
+    <div class="mark">
+      <div class="mark-img">
+        <img src="../assets/logo-pixel-retro.png" alt="Pixel retro mark" style="mix-blend-mode:screen">
+      </div>
+      <div class="mark-info">
+        <div class="mark-name">Pixel / Retro Mark</div>
+        <div class="mark-status approved">Social &amp; Campaign Use</div>
+        <div class="mark-use">Retro-themed drops · TikTok · IG stories</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

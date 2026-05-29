@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#080A09;font-family:'Rajdhani',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:28px;display:flex;align-items:center;justify-content:center;min-height:100vh}
+  .card{width:100%;max-width:660px;border:1px solid rgba(255,255,255,.07);border-radius:8px;overflow:hidden}
+  .header{background:#111312;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+  .header-label{font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.3)}
+  .status-pill{background:rgba(0,236,241,.1);border:1px solid rgba(0,236,241,.3);border-radius:999px;padding:3px 12px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:#00ECF1}
+  .body{display:grid;grid-template-columns:260px 1fr;gap:0}
+  .img-pane{padding:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;border-right:1px solid rgba(255,255,255,.06)}
+  .info-pane{padding:28px 32px;display:flex;flex-direction:column;gap:16px;justify-content:center}
+  .mark-title{font-family:'Barlow Condensed',Arial Narrow,sans-serif;font-style:italic;font-weight:900;font-size:26px;color:#fff;text-transform:uppercase;line-height:1}
+  .mark-sub{font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.3);margin-top:5px}
+  .rule{display:flex;align-items:flex-start;gap:10px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .rule-dot{width:6px;height:6px;background:#00ECF1;border-radius:50%;flex-shrink:0;margin-top:4px}
+  .rule-text{font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.45);line-height:1.6}
+  .rule-text strong{color:rgba(255,255,255,.75)}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <span class="header-label">Primary Brand Mark</span>
+    <span class="status-pill">Website Approved</span>
+  </div>
+  <div class="body">
+    <div class="img-pane">
+      <img src="../assets/logo-circle-badge-transparent.png" alt="JAMIESSHOESS — Shop Vintage &amp; Sneakers circle badge" style="width:180px;height:180px;object-fit:contain;mix-blend-mode:screen">
+      <div style="font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.25);text-align:center">Primary Mark · All Surfaces</div>
+    </div>
+    <div class="info-pane">
+      <div>
+        <div class="mark-title">Shop Vintage<br>&amp; Sneakers<br>Circle Badge</div>
+        <div class="mark-sub">Recommended on website, social &amp; print</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="rule">
+          <div class="rule-dot"></div>
+          <div class="rule-text"><strong>Website header</strong> — use as text logo (JAMIESSHOESS in Minted)</div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot"></div>
+          <div class="rule-text"><strong>Hero &amp; about sections</strong> — circle badge at full size</div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot"></div>
+          <div class="rule-text"><strong>Social posts &amp; stories</strong> — badge lockup, full color</div>
+        </div>
+        <div class="rule" style="border:none;padding:0">
+          <div class="rule-dot" style="background:#F322B3"></div>
+          <div class="rule-text"><strong>Dark backgrounds:</strong> use mix-blend-mode: screen to float mark</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#080A09;font-family:'Rajdhani',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:28px;display:flex;align-items:center;justify-content:center;min-height:100vh}
+  .card{width:100%;max-width:660px;border:1px solid rgba(255,255,255,.07);border-radius:8px;overflow:hidden}
+  .header{background:#111312;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+  .header-label{font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.3)}
+  .status-pill{background:rgba(255,45,45,.12);border:1px solid rgba(255,45,45,.3);border-radius:999px;padding:3px 12px;font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:#FF6B6B}
+  .body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .img-pane{padding:28px;display:flex;align-items:center;justify-content:center;border-right:1px solid rgba(255,255,255,.06);position:relative}
+  .img-pane img{width:100%;max-width:260px;opacity:.35;filter:grayscale(1)}
+  .cross{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+  .cross::before,.cross::after{content:'';position:absolute;width:80%;height:2px;background:rgba(255,45,45,.6)}
+  .cross::before{transform:rotate(20deg)}
+  .cross::after{transform:rotate(-20deg)}
+  .info-pane{padding:28px;display:flex;flex-direction:column;gap:16px;justify-content:center}
+  .rule-title{font-family:'Barlow Condensed',Arial Narrow,sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#fff;text-transform:uppercase;line-height:1}
+  .rule-body{font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);line-height:1.7}
+  .approved{display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(0,236,241,.06);border:1px solid rgba(0,236,241,.18);border-radius:5px}
+  .approved-dot{width:8px;height:8px;background:#00ECF1;border-radius:50%;flex-shrink:0}
+  .approved-text{font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:rgba(0,236,241,.8)}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <span class="header-label">Logo Usage Rule</span>
+    <span class="status-pill">Not for Website Use</span>
+  </div>
+  <div class="body">
+    <div class="img-pane">
+      <img src="../assets/wordmark-graffiti.png" alt="Graffiti wordmark — not for website">
+      <div class="cross"></div>
+    </div>
+    <div class="info-pane">
+      <div>
+        <div class="rule-title">Graffiti<br>Wordmark</div>
+      </div>
+      <div class="rule-body">
+        Reserved for social media,<br>print, merch, and marketing<br>collateral only.<br><br>Do not use on the website.
+      </div>
+      <div class="approved">
+        <div class="approved-dot"></div>
+        <div class="approved-text">Website mark: circle badge only</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

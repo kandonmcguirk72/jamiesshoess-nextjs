@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Rajdhani:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sole:#FFFFFF;--minted:#00ECF1;--cash:#5AE131;--flash:#F322B3;--leather:#080A09;
+  --sale:#FF2D2D;
+  --fd:'Barlow Condensed',Arial Narrow,sans-serif;
+  --fu:'Rajdhani',system-ui,sans-serif;
+  --fs:'Pacifico',cursive;
+  --gm:0 0 18px rgba(0,236,241,.6),0 0 40px rgba(0,236,241,.25);
+  --gf:0 0 18px rgba(243,34,179,.6),0 0 40px rgba(243,34,179,.25);
+  --gc:0 0 18px rgba(90,225,49,.6),0 0 40px rgba(90,225,49,.25);
+}
+body{background:var(--leather);color:#fff;font-family:var(--fu);padding:22px;-webkit-font-smoothing:antialiased}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.col{display:flex;flex-direction:column;gap:12px}
+.cap{font-family:var(--fu);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:rgba(255,255,255,.4);margin-bottom:10px}
+.tag{font-family:var(--fu);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.16em}
+</style></head><body>
+<div class="col">
+  <div class="cap">Neon Glow System</div>
+  <div class="row">
+    
+    <div style="flex:1;height:80px;border:2px solid var(--minted);border-radius:6px;box-shadow:var(--gm);display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03)">
+      <span class="tag" style="color:var(--minted)">Minted Glow</span>
+    </div>
+    <div style="flex:1;height:80px;border:2px solid var(--flash);border-radius:6px;box-shadow:var(--gf);display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.03)">
+      <span class="tag" style="color:var(--flash)">Flash Glow</span>
+    </div>
+
+  </div>
+  <div class="row">
+    <div style="flex:1;height:44px;background:var(--minted);border-radius:4px;display:flex;align-items:center;justify-content:center;box-shadow:var(--gm)"><span class="tag" style="color:#080A09">Primary CTA</span></div>
+    <div style="flex:1;height:44px;background:var(--flash);border-radius:4px;display:flex;align-items:center;justify-content:center;box-shadow:var(--gf)"><span class="tag" style="color:#fff">Sale / Drop</span></div>
+  </div>
+</div>
+</body></html>

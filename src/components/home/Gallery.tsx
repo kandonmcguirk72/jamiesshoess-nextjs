@@ -30,12 +30,15 @@ export default function Gallery() {
 
   return (
     <>
-      <section className="section bg-canvas">
+      <section className="section bg-leather">
         <div className="container">
-          <h2 className="font-display text-display-md text-ink">
+          <h2
+            className="font-display italic font-black uppercase text-white"
+            style={{ fontSize: 'var(--text-display-md)', lineHeight: 1.0 }}
+          >
             INSIDE THE STORE
           </h2>
-          <p className="font-sans text-[15px] text-ink3 mt-2 mb-8">
+          <p className="font-sans font-semibold text-[14px] text-white/40 mt-2 mb-8">
             Real shots from 302 Park Central East.
           </p>
 

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,800;1,900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#080A09;font-family:'Rajdhani',system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:24px}
+  .row{display:flex;gap:14px;flex-wrap:wrap}
+
+  /* Dark elevated card */
+  .card{flex:1;min-width:150px;background:#1B1D1C;border:1px solid rgba(255,255,255,.09);border-radius:6px;overflow:hidden;transition:border-color .15s,box-shadow .15s}
+  .card:hover{border-color:rgba(0,236,241,.35);box-shadow:0 0 20px rgba(0,236,241,.1)}
+
+  /* Image placeholder */
+  .card-img{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:#222624;position:relative}
+  .card-img-inner{width:60%;height:60%;background:#2A2E2C;border-radius:3px;display:flex;align-items:center;justify-content:center}
+  .card-img-inner span{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.2)}
+
+  /* Badges */
+  .badge{position:absolute;top:9px;left:9px;font-family:'Barlow Condensed',Arial Narrow,sans-serif;font-style:italic;font-weight:900;font-size:11px;text-transform:uppercase;padding:2px 8px;border-radius:3px;letter-spacing:.02em}
+
+  /* Body */
+  .card-body{padding:12px 14px 14px}
+  .card-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+  .tag{font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.12em;padding:2px 7px;border-radius:2px;border:1px solid}
+  .card-name{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.85);line-height:1.3;margin-bottom:8px}
+  .card-price-row{display:flex;align-items:baseline;gap:8px}
+  .price{font-family:'Barlow Condensed',Arial Narrow,sans-serif;font-style:italic;font-weight:900;font-size:20px;color:#00ECF1}
+  .price-orig{font-family:'Barlow Condensed',Arial Narrow,sans-serif;font-style:italic;font-weight:800;font-size:14px;color:rgba(255,255,255,.25);text-decoration:line-through}
+  .card-size{font-weight:600;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.28);margin-top:4px}
+</style>
+</head>
+<body>
+<div class="row">
+
+  <!-- Standard -->
+  <div class="card">
+    <div class="card-img">
+      <div class="card-img-inner"><span>Photo</span></div>
+      <span class="badge" style="background:#00ECF1;color:#080A09">VTG</span>
+    </div>
+    <div class="card-body">
+      <div class="card-tags">
+        <span class="tag" style="color:#00ECF1;border-color:rgba(0,236,241,.25);background:rgba(0,236,241,.07)">VTG</span>
+        <span class="tag" style="color:rgba(255,255,255,.4);border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.04)">Y2K</span>
+      </div>
+      <div class="card-name">VTG NASCAR AOP</div>
+      <div class="card-price-row"><span class="price">$45.00</span></div>
+      <div class="card-size">Size L</div>
+    </div>
+  </div>
+
+  <!-- Sale -->
+  <div class="card">
+    <div class="card-img">
+      <div class="card-img-inner"><span>Photo</span></div>
+      <span class="badge" style="background:#F322B3;color:#fff">SALE</span>
+    </div>
+    <div class="card-body">
+      <div class="card-tags">
+        <span class="tag" style="color:#F322B3;border-color:rgba(243,34,179,.3);background:rgba(243,34,179,.07)">SALE</span>
+        <span class="tag" style="color:rgba(255,255,255,.4);border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.04)">SINGLE STITCH</span>
+      </div>
+      <div class="card-name">VTG Jerry Rice 49ers Tee</div>
+      <div class="card-price-row">
+        <span class="price" style="color:#F322B3">$14.99</span>
+        <span class="price-orig">$45.00</span>
+      </div>
+      <div class="card-size">Size M</div>
+    </div>
+  </div>
+
+  <!-- Collab / 1of1 -->
+  <div class="card" style="border-color:rgba(243,34,179,.25)">
+    <div class="card-img">
+      <div class="card-img-inner"><span>Photo</span></div>
+      <span class="badge" style="background:#F322B3;color:#fff">COLLAB</span>
+    </div>
+    <div class="card-body">
+      <div class="card-tags">
+        <span class="tag" style="color:#F322B3;border-color:rgba(243,34,179,.3);background:rgba(243,34,179,.07)">COLLAB</span>
+        <span class="tag" style="color:#00ECF1;border-color:rgba(0,236,241,.25);background:rgba(0,236,241,.07)">1/1</span>
+      </div>
+      <div class="card-name">Carhartt × JMSSHS Hoodie</div>
+      <div class="card-price-row"><span class="price">$120.00</span></div>
+      <div class="card-size">Size S–3XL</div>
+    </div>
+  </div>
+
+  <!-- Sold out -->
+  <div class="card" style="opacity:.55">
+    <div class="card-img" style="background:#1E1F1E">
+      <div class="card-img-inner"><span>Photo</span></div>
+    </div>
+    <div class="card-body">
+      <div class="card-tags">
+        <span class="tag" style="color:rgba(255,255,255,.3);border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.03)">SOLD OUT</span>
+      </div>
+      <div class="card-name">Jordan 1 High OG Chicago</div>
+      <div class="card-price-row"><span class="price" style="color:rgba(255,255,255,.3)">$420.00</span></div>
+      <div class="card-size">Size 11</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

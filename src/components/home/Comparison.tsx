@@ -1,18 +1,11 @@
 import { BRAND } from '@/lib/constants'
 
-interface ComparisonCard {
-  title: string
-  tagLabel: string
-  tagClasses: string
-  bullets: string[]
-  elevated?: boolean
-}
-
-const cards: ComparisonCard[] = [
+const cards = [
   {
     title: 'vs. StockX / GOAT',
     tagLabel: 'Try It First',
-    tagClasses: 'bg-minted-tint text-minted',
+    tagColor: 'text-minted',
+    tagBg: 'bg-minted/10 border border-minted/25',
     bullets: [
       'No buyer protection fees',
       'Try before you commit',
@@ -23,7 +16,8 @@ const cards: ComparisonCard[] = [
   {
     title: 'vs. Thrift Stores',
     tagLabel: 'Curated. Not Random.',
-    tagClasses: 'bg-flash-tint text-flash',
+    tagColor: 'text-flash',
+    tagBg: 'bg-flash/10 border border-flash/25',
     bullets: [
       'Screened & authenticated',
       'No digging through garbage',
@@ -35,7 +29,8 @@ const cards: ComparisonCard[] = [
   {
     title: 'vs. eBay / Depop',
     tagLabel: 'See It. Own It.',
-    tagClasses: 'bg-cash-tint text-cash',
+    tagColor: 'text-cash',
+    tagBg: 'bg-cash/10 border border-cash/25',
     bullets: [
       'No waiting for shipping',
       'No mystery sizing',
@@ -49,10 +44,13 @@ export default function Comparison() {
   return (
     <section className="section bg-surface">
       <div className="container">
-        <h2 className="font-display text-display-md text-ink">
+        <h2
+          className="font-display italic font-black uppercase text-white"
+          style={{ fontSize: 'var(--text-display-md)', lineHeight: 1.0 }}
+        >
           Why In-Store Wins
         </h2>
-        <p className="font-sans text-[15px] text-ink3 mt-2 mb-10">
+        <p className="font-sans font-semibold text-[14px] text-white/40 mt-2 mb-10">
           vs. StockX&nbsp;·&nbsp;vs. Thrift&nbsp;·&nbsp;vs. eBay
         </p>
 
@@ -60,19 +58,21 @@ export default function Comparison() {
           {cards.map((card) => (
             <div
               key={card.title}
-              className={`bg-canvas rounded-lg p-8 ${card.elevated ? 'shadow-card-hover' : 'shadow-card'}`}
+              className={`bg-surface2 rounded-sm p-8 border ${card.elevated ? 'border-minted/30' : 'border-white/[0.07]'}`}
+              style={card.elevated ? { boxShadow: '0 0 24px rgba(0,236,241,.08)' } : undefined}
             >
-              <h3 className="font-display text-2xl text-ink mb-3">
+              <h3
+                className="font-display italic font-black uppercase text-white mb-3"
+                style={{ fontSize: '1.5rem', letterSpacing: '0.01em', lineHeight: 1 }}
+              >
                 {card.title}
               </h3>
-              <span
-                className={`${card.tagClasses} font-sans font-semibold text-[11px] tracking-[0.06em] uppercase px-3 py-1 rounded-full inline-block mb-5`}
-              >
+              <span className={`${card.tagBg} ${card.tagColor} font-sans font-bold text-[10px] tracking-[0.12em] uppercase px-3 py-1 rounded-sm inline-block mb-5`}>
                 {card.tagLabel}
               </span>
               <ul className="space-y-3">
                 {card.bullets.map((bullet) => (
-                  <li key={bullet} className="font-sans text-sm text-ink2">
+                  <li key={bullet} className="font-sans font-semibold text-[13px] text-white/50">
                     <span className="text-minted mr-2">✓</span>
                     {bullet}
                   </li>
@@ -83,12 +83,15 @@ export default function Comparison() {
         </div>
 
         {/* Bottom callout banner */}
-        <div className="bg-ink rounded-lg p-10 flex flex-col md:flex-row items-center justify-between gap-6 mt-10">
+        <div className="bg-leather rounded-sm p-10 flex flex-col md:flex-row items-center justify-between gap-6 mt-10 border border-white/[0.07]">
           <div>
-            <p className="font-display text-display-md text-white">
+            <p
+              className="font-display italic font-black uppercase text-white"
+              style={{ fontSize: 'var(--text-display-md)', lineHeight: 1.0 }}
+            >
               We&apos;re not a warehouse. We&apos;re a shop.
             </p>
-            <p className="font-sans text-sm text-white/50 mt-2">
+            <p className="font-sans font-semibold text-[13px] text-white/35 tracking-[0.06em] uppercase mt-2">
               302 Park Central East&nbsp;·&nbsp;Downtown Springfield
             </p>
           </div>
@@ -96,7 +99,7 @@ export default function Comparison() {
             href={BRAND.address.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-minted text-ink font-sans font-bold text-[12px] tracking-[0.06em] px-6 py-3 rounded hover:bg-white transition-all duration-200 whitespace-nowrap"
+            className="bg-minted text-leather font-sans font-bold text-[12px] tracking-[0.14em] uppercase px-6 py-3 rounded-sm hover:bg-white transition-colors duration-150 whitespace-nowrap"
           >
             GET DIRECTIONS →
           </a>

@@ -1,0 +1,203 @@
+/* =====================================================================
+   JAMIESSHOESS — Design Tokens
+   Sneakers & Vintage · Springfield, MO (the 417)
+   Source of truth: official brand palette sheet + logo/font reference sheets
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Rajdhani:wght@400;500;600;700&family=Pacifico&display=swap');
+
+/* ─────────────────────────────────────────────────────────────────────
+   BRAND PALETTE  — Official named colors (source: palette reference sheet)
+   ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* Named brand colors */
+  --js-sole:    #FFFFFF;   /* SOLE   — white; product cards, highlights          */
+  --js-minted:  #00ECF1;   /* MINTED — cyan; primary logo color, headings        */
+  --js-cash:    #5AE131;   /* CASH   — lime green; stars, accents, CTAs           */
+  --js-flash:   #F322B3;   /* FLASH  — hot pink/magenta; banners, bold accents    */
+  --js-leather: #080A09;   /* LEATHER — near-black; backgrounds, heavy outlines   */
+
+  /* Extended tints / shades */
+  --js-minted-dark:  #00B8BF;  /* pressed minted / shadow                        */
+  --js-flash-dark:   #C4168C;  /* pressed flash                                  */
+  --js-cash-dark:    #40A820;  /* pressed cash                                   */
+
+  /* PRIMARY UI PALETTE — MINTED + FLASH
+     The brand runs on two accent colors: cyan (MINTED) and hot pink (FLASH).
+     CASH (lime green) is reserved for product tags (1/1, VTG) only — not UI.  */
+
+  /* Semantic surface roles */
+  --bg:          var(--js-leather);   /* page background — almost always BLACK   */
+  --bg-alt:      #111312;             /* slightly lifted dark surface             */
+  --surface:     var(--js-sole);      /* product cards, modal background          */
+  --fg:          var(--js-sole);      /* primary text on dark backgrounds         */
+  --fg-muted:    rgba(255,255,255,.55);
+  --fg-on-light: var(--js-leather);  /* text when sitting on white/pale surfaces */
+  --fg-accent:   var(--js-minted);   /* default accent text                      */
+  --border:      rgba(255,255,255,.12);
+  --border-neon: var(--js-minted);
+
+  /* Alert / utility */
+  --js-sale:    #FF2D2D;
+  --js-1of1:    var(--js-cash);       /* "1/1" badge highlight = lime             */
+
+  /* ─── TYPE FAMILIES ───────────────────────────────────────────────
+     NOTE — brand uses proprietary fonts not on Google Fonts:
+       • Monte Stella Heavy Turbo & Bold Turbo  (heavy condensed italic display)
+       • Carlson Script                          (elegant calligraphic)
+       • Termina                                 (geometric wide sans)
+       • Kabisaf Demo                            (graffiti hand-lettering)
+     The closest available Google Font substitutes are used here.
+     FLAG: provide font files to upgrade from substitutes.              */
+
+  --font-display:  'Barlow Condensed', 'Arial Narrow', sans-serif;
+    /* Sub for Monte Stella Heavy/Bold Turbo — heavy condensed italic   */
+  --font-ui:       'Rajdhani', system-ui, sans-serif;
+    /* Sub for Termina — geometric condensed sans, good for nav + tags  */
+  --font-script:   'Pacifico', cursive;
+    /* Sub for Carlson Script — round, friendly script                  */
+  --font-mono:     ui-monospace, 'Cascadia Code', monospace;
+    /* Prices, codes, sizes — intentionally utilitarian                 */
+
+  /* ─── TYPE SCALE ──────────────────────────────────────────────────── */
+  --fs-hero:    clamp(64px, 12vw, 160px);   /* huge throw-up / hero               */
+  --fs-h1:      clamp(42px, 7vw, 96px);
+  --fs-h2:      clamp(28px, 4vw, 52px);
+  --fs-h3:      24px;
+  --fs-lead:    20px;
+  --fs-body:    16px;
+  --fs-sm:      14px;
+  --fs-tag:     11px;   /* mono uppercase product tags                            */
+
+  --lh-tight:   0.90;   /* display caps sit tight, touching                       */
+  --lh-snug:    1.10;
+  --lh-body:    1.55;
+
+  --tracking-display: 0.01em;
+  --tracking-wide:    0.08em;
+  --tracking-tag:     0.16em;   /* widest — uppercase product tags                */
+
+  /* ─── SPACING (4px base) ─────────────────────────────────────────── */
+  --s-1:  4px;   --s-2:  8px;   --s-3: 12px;  --s-4: 16px;
+  --s-5: 24px;   --s-6: 32px;   --s-7: 48px;  --s-8: 64px;  --s-9: 96px;
+
+  /* ─── BORDER RADIUS ─────────────────────────────────────────────── */
+  /* Brand runs hard-edged to semi-rounded; no soft large radii        */
+  --r-0:    0px;
+  --r-xs:   2px;
+  --r-sm:   4px;
+  --r-md:   8px;
+  --r-lg:  16px;
+  --r-pill: 999px;
+  --r-circle: 50%;  /* JS circular badge */
+
+  /* ─── BORDERS ───────────────────────────────────────────────────── */
+  --bw:       2px;
+  --bw-bold:  3px;
+  --bw-heavy: 5px;   /* heavy black outline — the signature graffiti sticker edge */
+
+  /* ─── SHADOWS / GLOW ─────────────────────────────────────────────
+     Brand uses NEON GLOW (colored box-shadows) not soft drop shadows.
+     Cards on dark: tight offset sticker, or neon halo.               */
+  --sh-sticker:       4px 4px 0 var(--js-leather);        /* offset sticker       */
+  --sh-sticker-white: 4px 4px 0 var(--js-sole);
+  --sh-glow-minted:   0 0 18px rgba(0,236,241,.55), 0 0 40px rgba(0,236,241,.25);
+  --sh-glow-flash:    0 0 18px rgba(243,34,179,.55), 0 0 40px rgba(243,34,179,.25);
+  --sh-glow-cash:     0 0 18px rgba(90,225,49,.55),  0 0 40px rgba(90,225,49,.25);
+  --sh-card:          0 2px 0 rgba(255,255,255,.06), 0 12px 32px -8px rgba(0,0,0,.7);
+  --sh-float:         0 20px 60px -20px rgba(0,0,0,.9);
+
+  /* ─── LAYOUT ─────────────────────────────────────────────────────── */
+  --maxw: 1260px;
+  --gutter: clamp(16px, 4vw, 48px);
+}
+
+/* =====================================================================
+   SEMANTIC ELEMENT DEFAULTS — scope with .js-scope
+   ===================================================================== */
+.js-scope {
+  font-family: var(--font-ui);
+  color: var(--fg);
+  background: var(--bg);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Display — heavy condensed italic (Monte Stella sub) */
+.js-display, .js-scope h1 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 900;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  margin: 0;
+}
+.js-hero {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 900;
+  font-size: var(--fs-hero);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  margin: 0;
+}
+.js-scope h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  text-transform: uppercase;
+  margin: 0;
+}
+.js-scope h3 {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  margin: 0;
+}
+.js-script {
+  font-family: var(--font-script);
+  font-style: normal;
+  font-weight: 400;
+}
+.js-scope p { margin: 0 0 1em; max-width: 60ch; text-wrap: pretty; }
+
+/* Mono uppercase tag — sizes, SKUs, prices, "1/1", hours */
+.js-tag {
+  font-family: var(--font-ui);
+  font-size: var(--fs-tag);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tag);
+}
+.js-price {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+
+/* Color utility classes */
+.text-minted { color: var(--js-minted); }
+.text-flash  { color: var(--js-flash); }
+.text-cash   { color: var(--js-cash); }
+.text-sole   { color: var(--js-sole); }
+.text-leather { color: var(--js-leather); }
+
+/* Neon glow utilities */
+.glow-minted { box-shadow: var(--sh-glow-minted); }
+.glow-flash  { box-shadow: var(--sh-glow-flash); }
+.glow-cash   { box-shadow: var(--sh-glow-cash); }
+
+/* Heavy outline utility (sticker style) */
+.js-sticker {
+  border: var(--bw-heavy) solid var(--js-leather);
+  box-shadow: var(--sh-sticker);
+}

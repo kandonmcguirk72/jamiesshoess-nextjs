@@ -3,7 +3,7 @@ import { BRAND } from '@/lib/constants'
 
 export default function Stats() {
   return (
-    <section className="bg-canvas border-y border-line py-12">
+    <section className="bg-leather border-y border-white/[0.07] py-12">
       <div className="container">
         <div className="grid grid-cols-2 lg:grid-cols-4">
           {BRAND.stats.map((stat, i) => {
@@ -14,16 +14,19 @@ export default function Stats() {
               <FadeIn
                 key={stat.label}
                 delay={i * 100}
-                className="text-center px-8 py-8 border-r border-line last:border-r-0 border-b lg:border-b-0"
+                className="text-center px-8 py-8 border-r border-white/[0.07] last:border-r-0 border-b border-b-white/[0.07] lg:border-b-0"
               >
-                <span className="font-display text-[3.5rem] leading-none text-ink block">
+                <span
+                  className="font-display italic font-black text-[3.5rem] leading-none text-white block"
+                  style={{ letterSpacing: '0.01em' }}
+                >
                   <span className="text-minted">{firstChar}</span>
                   {rest}
                 </span>
-                <span className="font-sans font-semibold text-label uppercase text-ink3 mt-2 block tracking-[0.12em]">
+                <span className="font-sans font-bold text-[10px] tracking-[0.16em] uppercase text-white/35 mt-2 block">
                   {stat.label}
                 </span>
-                <p className="font-sans text-[13px] text-ink3 leading-relaxed mt-1 max-w-[180px] mx-auto">
+                <p className="font-sans text-[13px] text-white/40 leading-relaxed mt-1 max-w-[180px] mx-auto">
                   {stat.desc}
                 </p>
               </FadeIn>

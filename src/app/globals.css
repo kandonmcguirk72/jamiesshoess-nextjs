@@ -1,77 +1,104 @@
 @import "tailwindcss";
 
 @theme {
-  /* --- Brand Colors --- */
-  --color-minted: #00ECF1;
-  --color-flash: #F322B3;
-  --color-cash: #5AE131;
+  /* ── Brand Colors (official palette) ── */
+  --color-leather: #080A09;   /* near-black — page background */
+  --color-sole:    #FFFFFF;   /* white — cards, highlights */
+  --color-minted:  #00ECF1;   /* cyan — primary accent */
+  --color-flash:   #F322B3;   /* hot pink — secondary accent */
+  --color-cash:    #5AE131;   /* lime green — product tags, stars */
 
-  /* --- Page Palette --- */
-  --color-canvas: #FFFFFF;
-  --color-surface: #F8F8F6;
-  --color-ink: #0F0F0E;
+  /* ── Tints ── */
+  --color-minted-dark: #00B8BF;
+  --color-flash-dark:  #C4168C;
+  --color-cash-dark:   #40A820;
+
+  /* ── Surfaces (dark UI layer) ── */
+  --color-surface:  #111312;  /* slightly lifted dark */
+  --color-surface2: #1B1D1C;  /* product card bg */
+
+  /* ── Light retail surfaces (product cards / modals) ── */
+  --color-canvas:  #FFFFFF;
+  --color-paper:   #F4F1EA;   /* warm bone — vintage feel */
+
+  /* ── Text ── */
+  --color-ink:  #0F0F0E;   /* near-black text on light */
   --color-ink2: #3D3D3C;
   --color-ink3: #6B6B6B;
-  --color-line: #E8E8E6;
+
+  /* ── Borders ── */
+  --color-line:  #E8E8E6;
   --color-line2: #D4D4D1;
 
-  /* --- Tints --- */
-  --color-minted-tint: #E6FEFF;
-  --color-flash-tint: #FEE6F8;
-  --color-cash-tint: #EDFEE6;
+  /* ── Alert ── */
+  --color-sale: #FF2D2D;
 
-  /* --- Typography --- */
-  --font-display: var(--font-bebas), sans-serif;
-  --font-sans: var(--font-jakarta), sans-serif;
+  /* ── Typography ── */
+  --font-display: var(--font-barlow), 'Arial Narrow', sans-serif;
+  --font-sans:    var(--font-rajdhani), system-ui, sans-serif;
 
-  /* Display Sizes */
+  /* Display scale */
   --text-display-2xl: clamp(4rem, 12vw, 10rem);
-  --text-display-2xl--line-height: 0.9;
-  --text-display-2xl--letter-spacing: 0.02em;
+  --text-display-2xl--line-height: 0.90;
+  --text-display-2xl--letter-spacing: 0.01em;
 
-  --text-display-xl: clamp(3rem, 8vw, 7rem);
+  --text-display-xl: clamp(2.625rem, 7vw, 6rem);
   --text-display-xl--line-height: 0.92;
-  --text-display-xl--letter-spacing: 0.03em;
+  --text-display-xl--letter-spacing: 0.01em;
 
-  --text-display-lg: clamp(2rem, 5vw, 4.5rem);
-  --text-display-lg--line-height: 1.0;
-  --text-display-lg--letter-spacing: 0.03em;
+  --text-display-lg: clamp(2rem, 5vw, 3.25rem);
+  --text-display-lg--line-height: 0.95;
+  --text-display-lg--letter-spacing: 0.01em;
 
-  --text-display-md: clamp(1.5rem, 3vw, 3rem);
-  --text-display-md--line-height: 1.1;
-  --text-display-md--letter-spacing: 0.03em;
+  --text-display-md: clamp(1.5rem, 3vw, 2.25rem);
+  --text-display-md--line-height: 1.0;
+  --text-display-md--letter-spacing: 0.01em;
 
-  --text-label: 0.6875rem;
+  --text-hero: clamp(4rem, 12vw, 10rem);
+  --text-hero--line-height: 0.90;
+
+  --text-label:    0.6875rem;
   --text-label--line-height: 1;
-  --text-label--letter-spacing: 0.12em;
+  --text-label--letter-spacing: 0.16em;
 
   --text-label-lg: 0.75rem;
   --text-label-lg--line-height: 1;
-  --text-label-lg--letter-spacing: 0.1em;
+  --text-label-lg--letter-spacing: 0.14em;
 
-  /* --- Shadows --- */
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-nav: 0 1px 0 #E8E8E6;
+  /* ── Shadows ── */
+  /* Neon glow (colored box-shadow) — brand signature */
+  --shadow-glow-minted: 0 0 18px rgba(0,236,241,.55), 0 0 40px rgba(0,236,241,.25);
+  --shadow-glow-flash:  0 0 18px rgba(243,34,179,.55), 0 0 40px rgba(243,34,179,.25);
+  --shadow-glow-cash:   0 0 18px rgba(90,225,49,.55),  0 0 40px rgba(90,225,49,.25);
 
-  /* --- Max Widths --- */
-  --max-width-site: 1440px;
+  /* Offset sticker shadow — hard physical feel */
+  --shadow-sticker:       4px 4px 0 #080A09;
+  --shadow-sticker-white: 4px 4px 0 #FFFFFF;
+
+  /* Soft card / modal shadows */
+  --shadow-card:        0 2px 0 rgba(255,255,255,.06), 0 12px 32px -8px rgba(0,0,0,.7);
+  --shadow-card-hover:  0 0 20px rgba(0,236,241,.12), 0 16px 40px -8px rgba(0,0,0,.8);
+  --shadow-float:       0 20px 60px -20px rgba(0,0,0,.9);
+  --shadow-nav:         0 4px 32px rgba(0,0,0,.85);
+
+  /* ── Layout ── */
+  --max-width-site: 1260px;
   --max-width-copy: 640px;
 
-  /* --- Animations --- */
-  --animate-ticker: ticker 35s linear infinite;
+  /* ── Animations ── */
+  --animate-ticker:  ticker  35s linear infinite;
   --animate-marquee: marquee 28s linear infinite;
-  --animate-fade-up: fadeUp 0.5s ease forwards;
+  --animate-fade-up: fadeUp  0.4s ease forwards;
 }
 
 @keyframes ticker {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 @keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 @keyframes fadeUp {
@@ -88,9 +115,9 @@ html {
 }
 
 body {
-  background: #FFFFFF;
-  color: #0F0F0E;
-  font-family: var(--font-jakarta), sans-serif;
+  background: #080A09;
+  color: #FFFFFF;
+  font-family: var(--font-rajdhani), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -106,7 +133,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   left: 1rem;
   z-index: 9999;
   background: #00ECF1;
-  color: #0F0F0E;
+  color: #080A09;
   padding: 0.5rem 1rem;
   font-weight: 700;
   font-size: 0.875rem;
@@ -116,9 +143,9 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 
 /* ===================== LAYOUT ===================== */
 .container {
-  width: min(1440px, 100%);
+  width: min(1260px, 100%);
   margin-inline: auto;
-  padding-inline: clamp(1rem, 4vw, 2rem);
+  padding-inline: clamp(1rem, 4vw, 3rem);
 }
 .container-sm {
   width: min(960px, 100%);
@@ -134,14 +161,12 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .section    { padding-block: clamp(4rem, 10vw, 7rem); }
 .section-sm { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
 
-hr, .rule { border: none; border-top: 1px solid #E8E8E6; }
-
 /* ===================== IMAGE ZOOM ===================== */
 .img-zoom             { overflow: hidden; }
 .img-zoom img         { transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
 .img-zoom:hover img   { transform: scale(1.04); }
 
-/* ===================== UNDERLINE HOVER ===================== */
+/* ===================== UNDERLINE SWEEP ===================== */
 .underline-minted {
   position: relative;
   display: inline-block;
@@ -162,5 +187,25 @@ hr, .rule { border: none; border-top: 1px solid #E8E8E6; }
 details summary { list-style: none; cursor: pointer; }
 details summary::-webkit-details-marker { display: none; }
 
-/* ===================== ANNOUNCEMENT BAR TICKER ===================== */
-.ann-ticker { display: flex; animation: ticker 35s linear infinite; white-space: nowrap; }
+/* ===================== ANNOUNCEMENT TICKER ===================== */
+.ann-ticker { display: flex; animation: ticker 30s linear infinite; white-space: nowrap; }
+
+/* ===================== NEON GLOW UTILITIES ===================== */
+.glow-minted { box-shadow: var(--shadow-glow-minted); }
+.glow-flash  { box-shadow: var(--shadow-glow-flash); }
+.glow-cash   { box-shadow: var(--shadow-glow-cash); }
+
+/* ===================== PRODUCT TAG ===================== */
+.js-tag {
+  display: inline-block;
+  font-family: var(--font-rajdhani), system-ui, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+
+/* ===================== RULE ===================== */
+hr, .rule { border: none; border-top: 1px solid rgba(255,255,255,.08); }

@@ -3,73 +3,112 @@ import { BRAND } from '@/lib/constants'
 
 export default function Hero() {
   return (
-    <section className="min-h-svh flex flex-col md:flex-row bg-canvas">
-      {/* Left: full-bleed photography */}
-      <div className="relative w-full md:w-[55%] h-[60vw] md:h-auto min-h-[400px]">
-        <Image
-          src={BRAND.images.heroStorefront}
-          alt="JAMIESSHOESS storefront at 302 Park Central East, Springfield MO"
-          fill
-          priority
-          sizes="(max-width:768px) 100vw, 55vw"
-          className="object-cover"
-        />
-      </div>
+    <section
+      className="relative w-full flex justify-center"
+      style={{ background: '#080A09', padding: 'clamp(64px,9vw,100px) 0 clamp(56px,8vw,88px)' }}
+    >
+      <div
+        className="w-full flex flex-col items-center text-center"
+        style={{ maxWidth: 680, padding: '0 clamp(20px,5vw,40px)', gap: 28 }}
+      >
+        {/* Logo glow ring */}
+        <div
+          className="rounded-full flex items-center justify-center"
+          style={{
+            width: 120,
+            height: 120,
+            border: '2px solid rgba(0,236,241,.5)',
+            boxShadow: '0 0 24px rgba(0,236,241,.35), 0 0 56px rgba(0,236,241,.15)',
+            background: 'rgba(8,10,9,0.5)',
+            flexShrink: 0,
+          }}
+        >
+          <Image
+            src="/brand/logos/logo-circle-badge-transparent.png"
+            alt="JAMIESSHOESS"
+            width={112}
+            height={112}
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+            priority
+          />
+        </div>
 
-      {/* Right: content */}
-      <div className="w-full md:w-[45%] flex flex-col justify-center px-8 md:px-12 lg:px-16 py-16 md:py-0 bg-canvas">
-
-        {/* Eyebrow */}
-        <span className="font-sans font-semibold text-[11px] tracking-[0.2em] uppercase text-minted mb-4 block">
-          SPRINGFIELD, MO · ROUTE 66
-        </span>
-
-        {/* Headline */}
-        <h1 className="font-display text-display-2xl text-ink leading-[0.85] mb-6">
-          JAMIES<br />SHOESS
-        </h1>
-
-        {/* Subhead */}
-        <p className="font-sans text-base text-ink3 leading-relaxed max-w-[420px] mb-8">
-          Sneakers · Vintage · All Hand-Picked · Nothing Online Touches What&apos;s In Here
-        </p>
-
-        {/* Trust badges */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {['✓ 100% Authentic', '✓ 6K+ Followers', '⏱ Weekly Drops'].map((badge) => (
-            <span
-              key={badge}
-              className="bg-surface border border-line rounded-full px-4 py-1.5 font-sans font-semibold text-[11px] tracking-[0.06em] text-ink"
-            >
-              {badge}
+        {/* Headline block */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <p className="font-sans font-bold text-[11px] tracking-[0.22em] uppercase text-white/30">
+            Springfield, MO · Downtown · The 417
+          </p>
+          <h1
+            className="font-display italic font-black uppercase text-white"
+            style={{ fontSize: 'clamp(42px,7vw,64px)', lineHeight: 0.92, letterSpacing: '0.01em' }}
+          >
+            <span style={{ textShadow: '3px 3px 0 rgba(243,34,179,.55)' }}>
+              Vintage Clothing
             </span>
+            <br />
+            <span className="text-minted" style={{ textShadow: '3px 3px 0 rgba(243,34,179,.4)' }}>
+              &amp; Sneakers
+            </span>
+          </h1>
+          <p className="font-sans font-medium text-[14px] text-white/40 leading-relaxed" style={{ maxWidth: 480, margin: '0 auto' }}>
+            Hand-picked vintage clothing, authenticated sneakers, exclusive collabs, and in-house merch — all in one store.
+          </p>
+        </div>
+
+        {/* Stats row */}
+        <div
+          className="flex items-center justify-center flex-wrap gap-x-7 gap-y-2"
+          style={{ borderTop: '1px solid rgba(255,255,255,.06)', borderBottom: '1px solid rgba(255,255,255,.06)', padding: '14px 0', width: '100%' }}
+        >
+          {[
+            { val: '6,100+', label: 'Instagram Followers' },
+            { val: 'Weekly', label: 'New Drops' },
+            { val: '100%',   label: 'Authenticated' },
+          ].map((s) => (
+            <div key={s.label} className="flex flex-col items-center gap-0.5">
+              <span
+                className="font-display italic font-black uppercase text-minted"
+                style={{ fontSize: 20, letterSpacing: '0.01em', lineHeight: 1 }}
+              >
+                {s.val}
+              </span>
+              <span className="font-sans font-bold text-[9px] tracking-[0.14em] uppercase text-white/30">
+                {s.label}
+              </span>
+            </div>
           ))}
         </div>
 
         {/* CTAs */}
-        <div className="flex flex-wrap gap-3 mb-8">
+        <div className="flex gap-3 flex-wrap justify-center">
           <a
-            href={BRAND.social.marketplace.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-ink text-white font-sans font-bold text-[13px] tracking-[0.06em] px-7 py-3.5 rounded hover:bg-minted hover:text-ink transition-all duration-200"
+            href="/#products"
+            className="font-display italic font-black uppercase text-leather rounded-sm transition-all duration-150 hover:bg-white active:scale-[0.97]"
+            style={{
+              fontSize: 17,
+              background: '#00ECF1',
+              padding: '13px 40px',
+              letterSpacing: '0.02em',
+              boxShadow: '0 0 28px rgba(0,236,241,.4)',
+            }}
           >
-            SHOP THE STORE →
+            Browse the Store
           </a>
           <a
-            href="/about"
-            className="bg-canvas text-ink font-sans font-semibold text-[13px] px-5 py-3.5 rounded border border-line2 hover:border-ink transition-all duration-200"
+            href={BRAND.social.instagram.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-display italic font-black uppercase text-white rounded-sm border border-white/20 transition-all duration-150 hover:border-white/50 hover:text-white"
+            style={{ fontSize: 17, padding: '12px 32px', letterSpacing: '0.02em' }}
           >
-            Our Story
+            @JAMIESSHOESS ↗
           </a>
         </div>
 
-        {/* Hours pill */}
-        <p className="font-sans font-medium text-[12px] text-ink3">
-          <span className="text-cash mr-1.5">●</span>
-          Open Wed – Sat · 12 PM – 7 PM
+        {/* Hours */}
+        <p className="font-sans font-semibold text-[10px] tracking-[0.14em] uppercase text-white/20">
+          Open Wed–Thu&nbsp;&nbsp;12–6 PM&nbsp;&nbsp;·&nbsp;&nbsp;Fri–Sat&nbsp;&nbsp;12–7 PM&nbsp;&nbsp;·&nbsp;&nbsp;Free Local Pickup
         </p>
-
       </div>
     </section>
   )

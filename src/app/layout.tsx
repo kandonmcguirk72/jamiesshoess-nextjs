@@ -1,22 +1,25 @@
 import type { Metadata, Viewport } from 'next'
-import { Bebas_Neue, Plus_Jakarta_Sans } from 'next/font/google'
+import { Barlow_Condensed, Rajdhani } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
+import { CartProvider } from '@/lib/cart-context'
+import CartDrawer from '@/components/ui/CartDrawer'
 import AnnouncementBar from '@/components/layout/AnnouncementBar'
 import Nav from '@/components/layout/Nav'
 import Footer from '@/components/layout/Footer'
 import './globals.css'
 
-const bebas = Bebas_Neue({
-  weight: '400',
+const barlow = Barlow_Condensed({
+  weight: ['400', '600', '700', '800', '900'],
+  style: ['normal', 'italic'],
   subsets: ['latin'],
-  variable: '--font-bebas',
+  variable: '--font-barlow',
   display: 'swap',
 })
 
-const jakarta = Plus_Jakarta_Sans({
+const rajdhani = Rajdhani({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
-  variable: '--font-jakarta',
+  variable: '--font-rajdhani',
   display: 'swap',
 })
 
@@ -37,18 +40,21 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#FFFFFF',
+  themeColor: '#080A09',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bebas.variable} ${jakarta.variable}`}>
+    <html lang="en" className={`${barlow.variable} ${rajdhani.variable}`}>
       <body>
-        <a href="#main-content" className="skip-link">Skip to content</a>
-        <AnnouncementBar />
-        <Nav />
-        <main id="main-content">{children}</main>
-        <Footer />
+        <CartProvider>
+          <a href="#main-content" className="skip-link">Skip to content</a>
+          <AnnouncementBar />
+          <Nav />
+          <main id="main-content">{children}</main>
+          <Footer />
+          <CartDrawer />
+        </CartProvider>
         <Analytics />
       </body>
     </html>

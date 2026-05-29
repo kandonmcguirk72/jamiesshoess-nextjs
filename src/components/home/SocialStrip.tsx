@@ -2,8 +2,8 @@ import { BRAND } from '@/lib/constants'
 
 export default function SocialStrip() {
   return (
-    <section className="bg-canvas border-t border-line py-12 text-center">
-      <p className="font-sans text-[13px] text-ink3 mb-6">
+    <section className="bg-leather border-t border-white/[0.07] py-12 text-center">
+      <p className="font-sans font-bold text-[10px] tracking-[0.2em] uppercase text-white/25 mb-6">
         617 posts · 6,147 followers · New drops weekly
       </p>
 
@@ -12,30 +12,30 @@ export default function SocialStrip() {
           href={BRAND.social.instagram.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="border border-ink text-ink font-sans font-semibold text-[12px] tracking-[0.06em]
-                     px-[22px] py-2.5 rounded hover:bg-ink hover:text-white transition-all duration-200"
+          className="border border-white/15 text-white/50 font-sans font-bold text-[11px] tracking-[0.14em] uppercase
+                     px-[22px] py-2.5 rounded-sm hover:border-minted hover:text-minted transition-all duration-150"
         >
-          → Instagram @JAMIESSHOESS
+          INSTAGRAM @JAMIESSHOESS
         </a>
 
         <a
           href={BRAND.social.tiktok.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="border border-ink text-ink font-sans font-semibold text-[12px] tracking-[0.06em]
-                     px-[22px] py-2.5 rounded hover:bg-ink hover:text-white transition-all duration-200"
+          className="border border-white/15 text-white/50 font-sans font-bold text-[11px] tracking-[0.14em] uppercase
+                     px-[22px] py-2.5 rounded-sm hover:border-minted hover:text-minted transition-all duration-150"
         >
-          → TikTok @JAMIESSHOESS417
+          TIKTOK @JAMIESSHOESS417
         </a>
 
         <a
           href={BRAND.social.facebook.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="border border-ink text-ink font-sans font-semibold text-[12px] tracking-[0.06em]
-                     px-[22px] py-2.5 rounded hover:bg-ink hover:text-white transition-all duration-200"
+          className="border border-white/15 text-white/50 font-sans font-bold text-[11px] tracking-[0.14em] uppercase
+                     px-[22px] py-2.5 rounded-sm hover:border-minted hover:text-minted transition-all duration-150"
         >
-          → Facebook
+          FACEBOOK
         </a>
       </div>
     </section>
