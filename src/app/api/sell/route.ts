@@ -35,15 +35,6 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const blobToken = process.env.BLOB_READ_WRITE_TOKEN
-    if (!blobToken) {
-      safeLogger.error('BLOB_READ_WRITE_TOKEN not configured')
-      return NextResponse.json(
-        { error: 'Image storage not configured' },
-        { status: 500 }
-      )
-    }
-
     // Log sell request (sanitized)
     safeLogger.info('Sell form submitted', {
       itemName: sanitizeString(name),
@@ -58,25 +49,24 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Upload image to Vercel Blob
-    const timestamp = Date.now()
-    const blobFilename = `sell-requests/${timestamp}-${photo.name || 'photo.jpg'}`
-    const arrayBuffer = await photo.arrayBuffer()
-
+    // Upload image to Vercel Blob (optional)
     let imageUrl = ''
-    try {
-      const blob = await put(blobFilename, arrayBuffer, {
-        access: 'public',
-        contentType: photo.type,
-      })
-      imageUrl = blob.url
-      safeLogger.info('Image uploaded to Blob storage', { url: imageUrl })
-    } catch (blobError) {
-      safeLogger.error('Blob upload failed', blobError)
-      return NextResponse.json(
-        { error: 'Failed to upload image' },
-        { status: 500 }
-      )
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+    if (blobToken) {
+      const timestamp = Date.now()
+      const blobFilename = `sell-requests/${timestamp}-${photo.name || 'photo.jpg'}`
+      const arrayBuffer = await photo.arrayBuffer()
+
+      try {
+        const blob = await put(blobFilename, arrayBuffer, {
+          access: 'public',
+          contentType: photo.type,
+        })
+        imageUrl = blob.url
+        safeLogger.info('Image uploaded to Blob storage', { url: imageUrl })
+      } catch (blobError) {
+        safeLogger.warn('Blob upload failed, will attach image instead', blobError)
+      }
     }
 
     // Initialize Resend with API key
@@ -103,10 +93,12 @@ export async function POST(req: NextRequest) {
           </p>
 
           <h3>Photo:</h3>
-          <img src="${imageUrl}" alt="Submitted item" style="max-width: 300px; height: auto; border-radius: 4px; margin: 12px 0;" />
-          <p style="margin-top: 8px; font-size: 12px; color: #666;">
-            <a href="${imageUrl}" style="color: #0066cc;">View full-size image</a> (${(photo.size / 1024).toFixed(1)} KB)
-          </p>
+          ${imageUrl ? `
+            <img src="${imageUrl}" alt="Submitted item" style="max-width: 300px; height: auto; border-radius: 4px; margin: 12px 0;" />
+            <p style="margin-top: 8px; font-size: 12px; color: #666;">
+              <a href="${imageUrl}" style="color: #0066cc;">View full-size image</a> (${(photo.size / 1024).toFixed(1)} KB)
+            </p>
+          ` : `<p style="font-size: 12px; color: #666;">Photo uploaded (${(photo.size / 1024).toFixed(1)} KB)</p>`}
 
           <hr style="margin: 20px 0; border: none; border-top: 1px solid #ddd;" />
           <p style="font-size: 12px; color: #666; margin-top: 12px;">
