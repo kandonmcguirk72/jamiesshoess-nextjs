@@ -5,6 +5,7 @@ import ProductsSection from '@/components/home/ProductsSection'
 import FeaturesBar from '@/components/home/FeaturesBar'
 import InstagramCTA from '@/components/home/InstagramCTA'
 import StorySection from '@/components/home/StorySection'
+import ReviewCTA from '@/components/home/ReviewCTA'
 
 export default function HomePage() {
   return (
@@ -28,6 +29,9 @@ export default function HomePage() {
 
       {/* Brand story */}
       <StorySection />
+
+      {/* Google review CTA */}
+      <ReviewCTA />
     </>
   )
 }

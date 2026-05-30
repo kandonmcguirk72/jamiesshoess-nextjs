@@ -94,6 +94,16 @@ export default function Footer() {
           </a>
         </div>
 
+        {/* Google Review Link */}
+        <a
+          href="https://g.page/r/CbeaVjJFxqYEEAI/review"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-sans font-bold text-[10px] tracking-[0.12em] uppercase text-minted hover:text-white transition-colors duration-150"
+        >
+          ⭐ Leave a Review
+        </a>
+
         {/* Copyright */}
         <p className="font-sans font-semibold text-[10px] tracking-[0.14em] uppercase text-white/20">
           © 2025 JAMIESSHOESS · Springfield, MO

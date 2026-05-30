@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { label: 'SHOP',     href: '/#products' },
   { label: 'VINTAGE',  href: '/#products' },
   { label: 'MERCH',    href: '/#products' },
+  { label: 'SELL',     href: '/sell' },
   { label: 'ABOUT',    href: '/about' },
 ]
 
