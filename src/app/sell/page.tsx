@@ -188,8 +188,8 @@ export default function SellPage() {
             {/* Submit */}
             <button
               type="submit"
-              disabled={loading || !previewUrl}
-              className="bg-minted text-leather font-display italic font-black uppercase py-4 rounded transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white"
+              disabled={loading}
+              className="w-full bg-minted text-leather font-display italic font-black uppercase py-4 rounded transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white"
               style={{ fontSize: 16, letterSpacing: '0.02em' }}
             >
               {loading ? 'Sending...' : 'SEND'}
