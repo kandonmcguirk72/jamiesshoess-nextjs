@@ -57,7 +57,7 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
   const [hovered, setHovered] = useState(false)
   const firstTag = product.tags.find((t) => ['SALE','1/1','COLLAB','VTG'].includes(t))
   const badgeColor = firstTag ? BADGE_COLOR[firstTag] : null
-  const imgBg = product.id % 3 === 0 ? '#252826' : product.id % 3 === 1 ? '#222624' : '#262428'
+  const imgBg = product.id % 3 === 0 ? '#F5F5F5' : product.id % 3 === 1 ? '#F0F0F0' : '#FAFAFA'
 
   return (
     <div
@@ -65,11 +65,11 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: '#1B1D1C',
+        background: '#ffffff',
         borderRadius: 6,
         overflow: 'hidden',
         cursor: 'pointer',
-        border: `1px solid ${hovered ? 'rgba(0,236,241,.35)' : 'rgba(255,255,255,.09)'}`,
+        border: `1px solid ${hovered ? 'rgba(0,236,241,.35)' : 'rgba(0,0,0,.08)'}`,
         boxShadow: hovered ? '0 0 20px rgba(0,236,241,.1)' : 'none',
         transition: 'border-color .18s, box-shadow .18s',
       }}
@@ -78,7 +78,7 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
       <div style={{ width:'100%', aspectRatio:'1', display:'flex', alignItems:'center', justifyContent:'center', position:'relative', background: imgBg }}>
         <span
           className="font-display italic font-black uppercase select-none"
-          style={{ fontSize: 48, color: 'rgba(255,255,255,0.04)', letterSpacing: '0.01em', userSelect: 'none' }}
+          style={{ fontSize: 48, color: 'rgba(0,0,0,0.05)', letterSpacing: '0.01em', userSelect: 'none' }}
           aria-hidden="true"
         >
           JS
@@ -92,7 +92,7 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
       {/* Body */}
       <div style={{ padding:'12px 14px 14px' }}>
         <div style={{ marginBottom:5 }}>{product.tags.slice(0,3).map((t) => <Tag key={t} label={t} />)}</div>
-        <div className="font-sans font-bold text-[13px] tracking-[0.05em] uppercase text-white/85 leading-tight mb-1.5">
+        <div className="font-sans font-bold text-[13px] tracking-[0.05em] uppercase leading-tight mb-1.5" style={{ color:'#1B1D1C' }}>
           {product.name}
         </div>
         <div className="flex items-baseline gap-2">
@@ -103,12 +103,12 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
             ${product.price.toFixed(2)}
           </span>
           {product.origPrice && (
-            <span className="font-display italic font-bold text-[14px] text-white/25 line-through">
+            <span className="font-display italic font-bold text-[14px] line-through" style={{ color:'#999' }}>
               ${product.origPrice.toFixed(2)}
             </span>
           )}
         </div>
-        <div className="font-sans font-semibold text-[9px] tracking-[0.12em] uppercase text-white/28 mt-0.5">
+        <div className="font-sans font-semibold text-[9px] tracking-[0.12em] uppercase mt-0.5" style={{ color:'#666' }}>
           SIZE: {product.size}
         </div>
         {hovered && (
