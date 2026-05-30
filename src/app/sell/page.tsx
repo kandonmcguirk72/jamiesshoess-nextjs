@@ -186,21 +186,14 @@ export default function SellPage() {
             )}
 
             {/* Submit */}
-            {previewUrl && (
-              <button
-                type="submit"
-                disabled={loading}
-                className="bg-minted text-leather font-display italic font-black uppercase py-4 rounded transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white"
-                style={{ fontSize: 16, letterSpacing: '0.02em' }}
-              >
-                {loading ? 'Sending...' : 'Send to JAMIESSHOESS'}
-              </button>
-            )}
-            {!previewUrl && (
-              <div className="text-center py-4 font-sans text-[13px] text-white/40 bg-white/[0.03] border border-white/[0.1] rounded">
-                ↑ Upload a photo to unlock submission
-              </div>
-            )}
+            <button
+              type="submit"
+              disabled={loading || !previewUrl}
+              className="bg-minted text-leather font-display italic font-black uppercase py-4 rounded transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white"
+              style={{ fontSize: 16, letterSpacing: '0.02em' }}
+            >
+              {loading ? 'Sending...' : 'SEND'}
+            </button>
 
             <p className="font-sans text-[12px] text-white/40 text-center">
               We'll contact you within 1–2 business days. Store hours: Wed–Thu 12–6pm · Fri–Sat 12–7pm (Central Time)
