@@ -11,19 +11,52 @@ interface Product extends CartItem {
 }
 
 const PRODUCTS: Product[] = [
-  { id:1,  name:'VTG NASCAR AOP',           full:'VTG NASCAR AOP (SIZE L)',                    size:'L',        price:45,    cat:'vintage',  tags:['VTG','Y2K'],                  emoji:'🏎️' },
-  { id:2,  name:'VTG JERRY RICE 49ERS TEE', full:'VTG 1998 JERRY RICE 49ERS TEE (SIZE M)',    size:'M',        price:14.99, cat:'vintage',  tags:['VTG','SINGLE STITCH','SALE'], emoji:'🏈', origPrice:45 },
-  { id:4,  name:'AIR MAX 90 OG 1985',       full:'NIKE AIR MAX 90 OG 1985 (SIZE 10)',          size:'10',       price:285,   cat:'sneakers', tags:['1/1','VTG'],                  emoji:'👟' },
-  { id:6,  name:'JMSSHS MERCH HOODIE',      full:'JAMIESSHOESS HOODIE (SIZE S–3XL)',            size:'S–3XL',   price:65,    cat:'merch',    tags:[],                             emoji:'👕' },
-  { id:7,  name:'VTG STARTER NFL JACKET',   full:'VTG STARTER NFL AOP JACKET (SIZE XL)',       size:'XL',       price:89,    cat:'vintage',  tags:['VTG','Y2K'],                  emoji:'🏈' },
-  { id:8,  name:'NIKE SB DUNK LOW',         full:'NIKE SB DUNK LOW (SIZE 9.5)',                size:'9.5',      price:185,   cat:'sneakers', tags:[],                             emoji:'👟' },
-  { id:9,  name:'VTG SINGLE STITCH TEE',    full:'VTG SINGLE STITCH GRAPHIC TEE (SIZE M)',     size:'M',        price:28,    cat:'vintage',  tags:['VTG','SINGLE STITCH'],        emoji:'👕' },
-  { id:10, name:'JORDAN 1 HIGH OG',         full:'AIR JORDAN 1 HIGH OG CHICAGO (SIZE 11)',     size:'11',       price:420,   cat:'sneakers', tags:['1/1'],                        emoji:'👟' },
-  { id:11, name:'VTG DENIM JACKET',         full:'VTG 90s DENIM JACKET (SIZE M)',              size:'M',        price:55,    cat:'vintage',  tags:['VTG'],                        emoji:'🧥' },
-  { id:12, name:'JMSSHS CREW SWEATSHIRT',   full:'JAMIESSHOESS CREW SWEATSHIRT (SIZE S–3XL)',  size:'S–3XL',   price:55,    cat:'merch',    tags:[],                             emoji:'👕' },
+  { id:1,  name:'1/1 JAMIESSHOESS HOODIE', full:'1/1 JAMIESSHOESS HOODIE (SIZE XXL)', size:'XXL', price:45, cat:'merch', tags:['1/1'], emoji:'👕' },
+  { id:2,  name:'1/1 JAMIESSHOESS CREW', full:'1/1 JAMIESSHOESS CREW (SIZE XL)', size:'XL', price:50, cat:'merch', tags:['1/1'], emoji:'👕' },
+  { id:3,  name:'1/1 JAMIESSHOESS CREW', full:'1/1 JAMIESSHOESS CREW (SIZE 2XL)', size:'2XL', price:35, cat:'merch', tags:['1/1'], emoji:'👕' },
+  { id:4,  name:'1/1 JAMIESSHOESS CREWNECK', full:'1/1 JAMIESSHOESS CREWNECK (SIZE 3XL)', size:'3XL', price:45, cat:'merch', tags:['1/1'], emoji:'👕' },
+  { id:5,  name:'1/1 JAMIESSHOESS HOODIE', full:'1/1 JAMIESSHOESS HOODIE (SIZE M)', size:'M', price:60, cat:'merch', tags:['1/1'], emoji:'👕' },
+  { id:6,  name:'JAMIESSHOESS OG TEE', full:'JAMIESSHOESS OG TEE (SIZE S-3XL)', size:'S–3XL', price:30, cat:'merch', tags:['NEW'], emoji:'👕' },
+  { id:7,  name:'VTG NASCAR AOP', full:'VTG NASCAR AOP (SIZE L)', size:'L', price:100, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:8,  name:'VTG MARK MCGWIRE TEE', full:'VTG MARK MCGWIRE TEE (FITS XL)', size:'XL', price:35, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:9,  name:'VTG Y2K JIMMY NEUTRON TEE', full:'VTG Y2K JIMMY NEUTRON TEE (SIZE S-M)', size:'S–M', price:30, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:10,  name:'VTG GUESS TEE', full:'VTG GUESS TEE (SIZE L)', size:'L', price:30, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:11,  name:'VTG GUESS TEE', full:'VTG GUESS TEE (SIZE M)', size:'M', price:30, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:12,  name:'VTG SINGLE STITCH LEVIS TEE', full:'VTG SINGLE STITCH LEVIS TEE (FITS S-M)', size:'S–M', price:30, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:13,  name:'VTG ELVIS TEE', full:'VTG ELVIS TEE (SIZE M)', size:'M', price:30, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:14,  name:'VTG TASMANIAN DEVIL TEE', full:'VTG TASMANIAN DEVIL TEE (SIZE XL)', size:'XL', price:35, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:15,  name:'VTG Y2K SKATE TEE', full:'VTG Y2K SKATE TEE (SIZE S)', size:'S', price:25, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:16,  name:'VTG 1998 JERRY RICE 49ERS TEE', full:'VTG 1998 JERRY RICE 49ERS TEE (SIZE M)', size:'M', price:60, cat:'vintage', tags:['1/1','VTG'], emoji:'👕' },
+  { id:17,  name:'VTG 1985 WORLD SERIES KC ROYALS TEE', full:'VTG 1985 WORLD SERIES KC ROYALS TEE (SIZE M)', size:'M', price:40, cat:'vintage', tags:['1/1','VTG'], emoji:'👕' },
+  { id:18,  name:'VTG 2007 JOHN CENA WRESTLING TEE', full:'VTG 2007 JOHN CENA WRESTLING TEE (SIZE L)', size:'L', price:40, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:19,  name:'VTG FEAR FACTOR TEE', full:'VTG FEAR FACTOR TEE (SIZE XL)', size:'XL', price:40, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:20,  name:'WMNS HARLEY JACKET', full:'WMNS HARLEY JACKET (SIZE XL)', size:'XL', price:35, cat:'vintage', tags:[], emoji:'👕' },
+  { id:21,  name:'VTG ST. LOUIS RAMS PULL OVER', full:'VTG ST. LOUIS RAMS PULL OVER (SIZE L-XL)', size:'L–XL', price:30, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:22,  name:'VTG 2009 AOP TEE', full:'VTG 2009 AOP TEE (SIZE M)', size:'M', price:60, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:23,  name:'VTG WOMENS HARLEY VEST', full:'VTG WOMENS HARLEY VEST (SIZE L)', size:'L', price:35, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:24,  name:'VTG HARLEY DENIM TOP', full:'VTG HARLEY DENIM TOP (FITS L)', size:'L', price:35, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:25,  name:'VTG BUM EQUIPMENT TEE', full:'VTG BUM EQUIPMENT TEE (FITS XL)', size:'XL', price:25, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:26,  name:'VTG WOLF TEE', full:'VTG WOLF TEE (SIZE 3XL)', size:'3XL', price:35, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:27,  name:'VTG 2008 SUPERMAN THERMAL', full:'VTG 2008 SUPERMAN THERMAL (SIZE L)', size:'L', price:25, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:28,  name:'VTG 2008 HARLEY TEE', full:'VTG 2008 HARLEY TEE (SIZE XXL)', size:'XXL', price:30, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:29,  name:'VTG NOTRE DAME TEE', full:'VTG NOTRE DAME TEE (SIZE L)', size:'L', price:65, cat:'vintage', tags:['1/1','VTG'], emoji:'👕' },
+  { id:30,  name:'VTG JNCO MOTO TEE', full:'VTG JNCO MOTO TEE (FITS S-M)', size:'S–M', price:80, cat:'vintage', tags:['1/1','VTG'], emoji:'👕' },
+  { id:31,  name:'VTG CHIEFS SINGLE STITCH', full:'VTG CHIEFS SINGLE STITCH (FITS XL)', size:'XL', price:25, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:32,  name:'VTG JNCO LONG SLEEVE TEE', full:'VTG JNCO LONG SLEEVE TEE (FITS S-M)', size:'S–M', price:80, cat:'vintage', tags:['1/1','VTG'], emoji:'👕' },
+  { id:33,  name:'VTG RAMS JERSEY', full:'VTG RAMS JERSEY (SIZE XL)', size:'XL', price:35, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:34,  name:'JAMIESSHOESS 1/1 CAMO TEE', full:'JAMIESSHOESS 1/1 CAMO TEE (FITS L)', size:'L', price:30, cat:'merch', tags:['1/1'], emoji:'👕' },
+  { id:35,  name:'JAMIESSHOESS X JOHN DEERE 1/1 LONG SLEEVE', full:'JAMIESSHOESS X JOHN DEERE 1/1 LONG SLEEVE (SIZE M)', size:'M', price:40, cat:'merch', tags:['1/1'], emoji:'👕' },
+  { id:36,  name:'Carhartt X Jamiesshoess Beanie', full:'Carhartt X Jamiesshoess Beanie', size:'One Size', price:30, cat:'headwear', tags:['NEW'], emoji:'👕' },
+  { id:37,  name:'Carhartt X Jamiesshoess Beanie (Alt)', full:'Carhartt X Jamiesshoess Beanie (Alt)', size:'One Size', price:30, cat:'headwear', tags:['NEW'], emoji:'👕' },
+  { id:38,  name:'Vintage Sweater', full:'Vintage Sweater (SIZE L)', size:'L', price:22, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:39,  name:'Vintage KU Crewneck', full:'Vintage KU Crewneck (SIZE XL)', size:'XL', price:20, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:40,  name:'Vintage Sweater', full:'Vintage Sweater (SIZE XXL)', size:'XXL', price:22, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:41,  name:'Harley Davidson Button Up', full:'Harley Davidson Button Up (SIZE XL)', size:'XL', price:14.99, cat:'vintage', tags:['VTG'], emoji:'👕' },
+  { id:42,  name:'Vintage 1996 Grateful Dead Tee', full:'Vintage 1996 Grateful Dead Tee (SIZE S)', size:'S', price:35, cat:'vintage', tags:['1/1'], emoji:'👕' },
+  { id:43,  name:'Vintage Cardinals 3pc Lot', full:'Vintage Cardinals 3pc Lot (SIZE XL)', size:'XL', price:35, cat:'vintage', tags:['VTG'], emoji:'👕' },
 ]
 
-const FILTERS = ['Shop', 'Sneakers', 'Vintage', 'Merch']
+const FILTERS = ['Shop', 'Vintage', 'Merch', 'Headwear']
 
 const TAG_MAP: Record<string, { bg: string; color: string }> = {
   VTG:            { bg:'#E8F9FA', color:'#006B70' },
@@ -31,12 +64,14 @@ const TAG_MAP: Record<string, { bg: string; color: string }> = {
   '1/1':          { bg:'#EDFCE8', color:'#2A7A12' },
   SALE:           { bg:'#FFEAEA', color:'#CC0000' },
   'SINGLE STITCH':{ bg:'#F5F5F5', color:'#555' },
+  NEW:            { bg:'#FFF8DC', color:'#FF6B35' },
 }
 
 const BADGE_COLOR: Record<string, string> = {
   SALE: '#FF2D2D',
   '1/1': '#00ECF1',
   VTG: '#00ECF1',
+  NEW: '#FF6B35',
 }
 
 
@@ -51,7 +86,7 @@ function Tag({ label }: { label: string }) {
 
 function ProductCard({ product, onQuickView }: { product: Product; onQuickView: (p: Product) => void }) {
   const [hovered, setHovered] = useState(false)
-  const firstTag = product.tags.find((t) => ['SALE','1/1','COLLAB','VTG'].includes(t))
+  const firstTag = product.tags.find((t) => ['SALE','1/1','NEW','VTG'].includes(t))
   const badgeColor = firstTag ? BADGE_COLOR[firstTag] : null
   const imgBg = product.id % 3 === 0 ? '#F5F5F5' : product.id % 3 === 1 ? '#F0F0F0' : '#FAFAFA'
 
