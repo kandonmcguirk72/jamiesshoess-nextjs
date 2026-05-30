@@ -33,7 +33,7 @@ export default function StorySection() {
               What started as a side operation grew into a full business built on sourcing knowledge, accurate pricing, and a straightforward approach to buying and selling. Every item on the floor is hand-selected — no filler, no fakes.
             </p>
             <p className="font-sans font-semibold text-[15px] text-white/70 leading-[1.75]">
-              We carry vintage clothing, sneakers, accessories, exclusive collaborations, and an in-house merch line. We also do trades and selective buying during store hours.
+              We carry vintage clothing, sneakers, accessories, and an in-house merch line. We also do trades and selective buying during store hours.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-4">

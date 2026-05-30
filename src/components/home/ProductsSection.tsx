@@ -13,9 +13,7 @@ interface Product extends CartItem {
 const PRODUCTS: Product[] = [
   { id:1,  name:'VTG NASCAR AOP',           full:'VTG NASCAR AOP (SIZE L)',                    size:'L',        price:45,    cat:'vintage',  tags:['VTG','Y2K'],                  emoji:'🏎️' },
   { id:2,  name:'VTG JERRY RICE 49ERS TEE', full:'VTG 1998 JERRY RICE 49ERS TEE (SIZE M)',    size:'M',        price:14.99, cat:'vintage',  tags:['VTG','SINGLE STITCH','SALE'], emoji:'🏈', origPrice:45 },
-  { id:3,  name:'CARHARTT × JMSSHS HOODIE', full:'CARHARTT × JAMIESSHOESS HOODIE (SIZE S–3XL)',size:'S–3XL',   price:120,   cat:'collab',   tags:['COLLAB','1/1'],               emoji:'🧥' },
   { id:4,  name:'AIR MAX 90 OG 1985',       full:'NIKE AIR MAX 90 OG 1985 (SIZE 10)',          size:'10',       price:285,   cat:'sneakers', tags:['1/1','VTG'],                  emoji:'👟' },
-  { id:5,  name:'JOHN DEERE × JMSSHS HAT',  full:'JOHN DEERE × JAMIESSHOESS WORK HAT',        size:'ONE SIZE', price:45,    cat:'collab',   tags:['COLLAB'],                     emoji:'🧢' },
   { id:6,  name:'JMSSHS MERCH HOODIE',      full:'JAMIESSHOESS HOODIE (SIZE S–3XL)',            size:'S–3XL',   price:65,    cat:'merch',    tags:[],                             emoji:'👕' },
   { id:7,  name:'VTG STARTER NFL JACKET',   full:'VTG STARTER NFL AOP JACKET (SIZE XL)',       size:'XL',       price:89,    cat:'vintage',  tags:['VTG','Y2K'],                  emoji:'🏈' },
   { id:8,  name:'NIKE SB DUNK LOW',         full:'NIKE SB DUNK LOW (SIZE 9.5)',                size:'9.5',      price:185,   cat:'sneakers', tags:[],                             emoji:'👟' },
@@ -25,7 +23,7 @@ const PRODUCTS: Product[] = [
   { id:12, name:'JMSSHS CREW SWEATSHIRT',   full:'JAMIESSHOESS CREW SWEATSHIRT (SIZE S–3XL)',  size:'S–3XL',   price:55,    cat:'merch',    tags:[],                             emoji:'👕' },
 ]
 
-const FILTERS = ['Shop', 'Sneakers', 'Vintage', 'Merch', 'Collab']
+const FILTERS = ['Shop', 'Sneakers', 'Vintage', 'Merch']
 
 const TAG_MAP: Record<string, { bg: string; color: string }> = {
   VTG:            { bg:'#E8F9FA', color:'#006B70' },
@@ -33,13 +31,11 @@ const TAG_MAP: Record<string, { bg: string; color: string }> = {
   '1/1':          { bg:'#EDFCE8', color:'#2A7A12' },
   SALE:           { bg:'#FFEAEA', color:'#CC0000' },
   'SINGLE STITCH':{ bg:'#F5F5F5', color:'#555' },
-  COLLAB:         { bg:'#FFF0F8', color:'#B0006E' },
 }
 
 const BADGE_COLOR: Record<string, string> = {
   SALE: '#FF2D2D',
   '1/1': '#00ECF1',
-  COLLAB: '#F322B3',
   VTG: '#00ECF1',
 }
 

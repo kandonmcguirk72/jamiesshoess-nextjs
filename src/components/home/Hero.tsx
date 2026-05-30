@@ -51,7 +51,7 @@ export default function Hero() {
             </span>
           </h1>
           <p className="font-sans font-medium text-[14px] text-white/40 leading-relaxed" style={{ maxWidth: 480, margin: '0 auto' }}>
-            Hand-picked vintage clothing, authenticated sneakers, exclusive collabs, and in-house merch — all in one store.
+            Hand-picked vintage clothing, authenticated sneakers, and in-house merch — all in one store.
           </p>
         </div>
 
