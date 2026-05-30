@@ -192,8 +192,24 @@ export default function SellPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-minted text-leather font-display italic font-black uppercase py-4 rounded text-[16px] transition-all hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{ letterSpacing: '0.02em' }}
+              style={{
+                width: '100%',
+                padding: '16px',
+                marginTop: '8px',
+                background: '#00ECF1',
+                color: '#080A09',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '16px',
+                fontWeight: 900,
+                textTransform: 'uppercase',
+                letterSpacing: '0.02em',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                opacity: loading ? 0.5 : 1,
+                transition: 'background 0.15s',
+              }}
+              onMouseEnter={(e) => !loading && (e.currentTarget.style.background = '#ffffff')}
+              onMouseLeave={(e) => !loading && (e.currentTarget.style.background = '#00ECF1')}
             >
               {loading ? 'SENDING...' : 'SEND'}
             </button>
