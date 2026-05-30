@@ -49,11 +49,10 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Upload image to Vercel Blob (optional) or use base64 fallback
+    // Upload image to Vercel Blob or attach to email
     let imageUrl = ''
-    let base64Image = ''
-    const blobToken = process.env.BLOB_READ_WRITE_TOKEN
     const arrayBuffer = await photo.arrayBuffer()
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN
 
     if (blobToken) {
       const timestamp = Date.now()
@@ -66,27 +65,22 @@ export async function POST(req: NextRequest) {
         })
         imageUrl = blob.url
         console.log('✅ Blob upload SUCCESS - URL:', imageUrl)
-        console.log('✅ Image accessible at:', imageUrl)
         safeLogger.info('Image uploaded to Blob storage', { url: imageUrl })
       } catch (blobError) {
         console.error('❌ Blob upload failed:', blobError)
-        safeLogger.warn('Blob upload failed, trying base64 fallback', blobError)
-        // Fall back to base64
-        const bytes = new Uint8Array(arrayBuffer)
-        base64Image = Buffer.from(bytes).toString('base64')
+        safeLogger.warn('Blob upload failed, will attach to email instead', {
+          error: blobError instanceof Error ? blobError.message : String(blobError),
+        })
       }
     } else {
-      // No blob token, use base64 fallback
-      console.log('⚠️ No BLOB_READ_WRITE_TOKEN, using base64 fallback')
-      const bytes = new Uint8Array(arrayBuffer)
-      base64Image = Buffer.from(bytes).toString('base64')
+      console.log('⚠️ No BLOB_READ_WRITE_TOKEN, will attach image to email')
     }
 
     // Initialize Resend with API key
     const resend = new Resend(apiKey)
 
-    // Send email via Resend
-    const result = await resend.emails.send({
+    // Build email with inline image (either blob URL or embedded attachment)
+    const emailConfig: any = {
       from: 'JAMIESSHOESS <noreply@resend.dev>',
       to: 'kandonmcguirk72@gmail.com',
       subject: `New Sell Request: ${sanitizeString(name)}`,
@@ -106,17 +100,14 @@ export async function POST(req: NextRequest) {
           </p>
 
           <h3>Photo:</h3>
-          ${imageUrl ? `
-            <img src="${imageUrl}" alt="Submitted item" style="max-width: 400px; height: auto; border-radius: 8px; margin: 16px 0;" />
-            <p style="margin: 12px 0; font-size: 12px; color: #666;">
-              <strong>Image URL:</strong><br />
-              <a href="${imageUrl}" style="color: #0066cc; word-break: break-all;">${imageUrl}</a><br />
-              Size: ${(photo.size / 1024).toFixed(1)} KB
-            </p>
-          ` : base64Image ? `
-            <img src="data:${photo.type};base64,${base64Image}" alt="Submitted item" style="max-width: 400px; height: auto; border-radius: 8px; margin: 16px 0;" />
-            <p style="margin: 12px 0; font-size: 12px; color: #666;">Size: ${(photo.size / 1024).toFixed(1)} KB (embedded)</p>
-          ` : `<p style="font-size: 12px; color: #666;">Photo: ${(photo.size / 1024).toFixed(1)} KB</p>`}
+          ${imageUrl
+            ? `<img src="${imageUrl}" alt="Submitted item" style="max-width: 400px; height: auto; border-radius: 8px; margin: 16px 0;" />`
+            : `<img src="cid:photo" alt="Submitted item" style="max-width: 400px; height: auto; border-radius: 8px; margin: 16px 0;" />`
+          }
+          <p style="margin: 12px 0; font-size: 12px; color: #666;">
+            Size: ${(photo.size / 1024).toFixed(1)} KB
+            ${imageUrl ? `| <a href="${imageUrl}" style="color: #0066cc;">View Online</a>` : ''}
+          </p>
 
           <hr style="margin: 20px 0; border: none; border-top: 1px solid #ddd;" />
           <p style="font-size: 12px; color: #666; margin-top: 12px;">
@@ -124,7 +115,21 @@ export async function POST(req: NextRequest) {
           </p>
         </div>
       `,
-    })
+    }
+
+    // Always attach the image inline (fallback if blob fails, or supplement for reliability)
+    if (!imageUrl) {
+      emailConfig.attachments = [
+        {
+          filename: photo.name || 'photo.jpg',
+          content: Buffer.from(arrayBuffer),
+          contentType: photo.type,
+        },
+      ]
+    }
+
+    // Send email via Resend
+    const result = await resend.emails.send(emailConfig)
 
     if (result.error) {
       safeLogger.error('Resend email failed', {
