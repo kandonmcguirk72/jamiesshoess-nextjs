@@ -69,7 +69,7 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
         borderRadius: 6,
         overflow: 'hidden',
         cursor: 'pointer',
-        border: `1px solid ${hovered ? 'rgba(0,236,241,.35)' : 'rgba(0,0,0,.08)'}`,
+        border: `1px solid ${hovered ? 'rgba(0,236,241,.35)' : 'rgba(0,0,0,.25)'}`,
         boxShadow: hovered ? '0 0 20px rgba(0,236,241,.1)' : 'none',
         transition: 'border-color .18s, box-shadow .18s',
       }}
@@ -87,38 +87,6 @@ function ProductCard({ product, onQuickView }: { product: Product; onQuickView: 
           <span style={{ position:'absolute', top:10, left:10, background:badgeColor, color: badgeColor==='#F322B3'?'#fff':'#080A09', fontFamily:"'Barlow Condensed',sans-serif", fontStyle:'italic', fontWeight:900, fontSize:11, textTransform:'uppercase', padding:'2px 8px', borderRadius:3 }}>
             {firstTag}
           </span>
-        )}
-      </div>
-      {/* Body */}
-      <div style={{ padding:'12px 14px 14px' }}>
-        <div style={{ marginBottom:5 }}>{product.tags.slice(0,3).map((t) => <Tag key={t} label={t} />)}</div>
-        <div className="font-sans font-bold text-[13px] tracking-[0.05em] uppercase leading-tight mb-1.5" style={{ color:'#1B1D1C' }}>
-          {product.name}
-        </div>
-        <div className="flex items-baseline gap-2">
-          <span
-            className="font-display italic font-black text-[20px]"
-            style={{ color: product.origPrice ? '#F322B3' : '#00ECF1', letterSpacing:'0.01em' }}
-          >
-            ${product.price.toFixed(2)}
-          </span>
-          {product.origPrice && (
-            <span className="font-display italic font-bold text-[14px] line-through" style={{ color:'#999' }}>
-              ${product.origPrice.toFixed(2)}
-            </span>
-          )}
-        </div>
-        <div className="font-sans font-semibold text-[9px] tracking-[0.12em] uppercase mt-0.5" style={{ color:'#666' }}>
-          SIZE: {product.size}
-        </div>
-        {hovered && (
-          <button
-            onClick={(e) => { e.stopPropagation(); onQuickView(product) }}
-            className="mt-2.5 w-full font-sans font-bold text-[11px] tracking-[0.14em] uppercase text-minted rounded transition-colors duration-150"
-            style={{ background:'rgba(0,236,241,.1)', border:'1px solid rgba(0,236,241,.35)', padding:'9px 0' }}
-          >
-            QUICK VIEW
-          </button>
         )}
       </div>
     </div>
