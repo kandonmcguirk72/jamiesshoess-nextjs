@@ -9,10 +9,8 @@ import SearchBar from '@/components/SearchBar'
 
 const NAV_LINKS = [
   { label: 'SHOP',     href: '/#products' },
-  { label: 'SNEAKERS', href: '/#products' },
   { label: 'VINTAGE',  href: '/#products' },
   { label: 'MERCH',    href: '/#products' },
-  { label: 'COLLAB',   href: '/#products' },
   { label: 'ABOUT',    href: '/about' },
 ]
 
