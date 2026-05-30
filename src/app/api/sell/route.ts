@@ -1,5 +1,7 @@
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
+import { safeLogger } from '@/lib/safe-logger'
+import { sanitizeString, containsSensitiveData } from '@/lib/sanitize'
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,22 +15,42 @@ export async function POST(req: NextRequest) {
 
     // Validate required fields
     if (!name || !contact || !description || !photo) {
+      safeLogger.warn('Sell form submission missing required fields', {
+        hasName: !!name,
+        hasContact: !!contact,
+        hasDescription: !!description,
+        hasPhoto: !!photo,
+      })
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
     // Check API key exists
     const apiKey = process.env.RESEND_API_KEY
     if (!apiKey) {
+      safeLogger.error('RESEND_API_KEY not configured')
       return NextResponse.json(
         { error: 'Email service not configured' },
         { status: 500 }
       )
     }
 
+    // Log sell request (sanitized)
+    safeLogger.info('Sell form submitted', {
+      itemName: sanitizeString(name),
+      timestamp: new Date().toISOString(),
+      photoSize: photo.size,
+    })
+
+    // Warn if contact info looks suspicious
+    if (containsSensitiveData(contact)) {
+      safeLogger.warn('Contact info contains unusual patterns', {
+        field: 'contact',
+      })
+    }
+
     // Convert file to base64
     const buffer = await photo.arrayBuffer()
     const base64 = Buffer.from(buffer).toString('base64')
-    const mimeType = photo.type || 'image/jpeg'
 
     // Initialize Resend with API key
     const resend = new Resend(apiKey)
@@ -37,7 +59,7 @@ export async function POST(req: NextRequest) {
     const result = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: 'kandonmcguirk72@gmail.com',
-      subject: `New Sell Request: ${name}`,
+      subject: `New Sell Request: ${sanitizeString(name)}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <h2>New Item Submission</h2>
@@ -51,7 +73,7 @@ export async function POST(req: NextRequest) {
           </p>
 
           <p style="margin-top: 20px; font-size: 12px; color: #666;">
-            <em>Photo attached below</em>
+            <em>Photo attached (${(photo.size / 1024).toFixed(1)} KB)</em>
           </p>
         </div>
       `,
@@ -64,13 +86,20 @@ export async function POST(req: NextRequest) {
     })
 
     if (result.error) {
-      console.error('Resend error:', result.error)
+      safeLogger.error('Resend email failed', {
+        errorName: result.error.name,
+        errorMessage: sanitizeString(result.error.message),
+      })
       return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
     }
 
+    safeLogger.info('Sell request email sent successfully', {
+      emailId: result.data?.id,
+    })
+
     return NextResponse.json({ success: true, id: result.data?.id }, { status: 200 })
   } catch (error) {
-    console.error('API error:', error)
+    safeLogger.error('Sell API error', error)
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 }
