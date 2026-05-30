@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 
     // Send email via Resend
     const result = await resend.emails.send({
-      from: 'JAMIESSHOESS <noreply@jamiesshoess.com>',
+      from: 'onboarding@resend.dev',
       to: 'kandonmcguirk72@gmail.com',
       subject: `New Sell Request: ${name}`,
       html: `
