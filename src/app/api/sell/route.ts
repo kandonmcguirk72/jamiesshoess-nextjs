@@ -82,10 +82,10 @@ export async function POST(req: NextRequest) {
     // Initialize Resend with API key
     const resend = new Resend(apiKey)
 
-    // Send email via Resend from verified domain
+    // Send email via Resend
     const result = await resend.emails.send({
-      from: 'JAMIESSHOESS <noreply@jamiesshoess.com>',
-      to: 'kandon@jamiesshoess.com',
+      from: 'JAMIESSHOESS <onboarding@resend.dev>',
+      to: 'kandonmcguirk72@gmail.com',
       subject: `New Sell Request: ${sanitizeString(name)}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
