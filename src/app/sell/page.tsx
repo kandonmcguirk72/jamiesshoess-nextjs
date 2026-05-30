@@ -6,13 +6,48 @@ export default function SellPage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+  const [fileError, setFileError] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB in bytes
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) {
+      setFileError('')
+      return
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      setFileError(`File is too large. Maximum size is 5MB, but you selected ${(file.size / 1024 / 1024).toFixed(1)}MB.`)
+      e.target.value = ''
+      return
+    }
+
+    setFileError('')
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setError('')
     setSuccess(false)
+
+    // Final validation before submit
+    const photoInput = (e.currentTarget.elements.namedItem('photo') as HTMLInputElement)
+    const file = photoInput?.files?.[0]
+
+    if (!file) {
+      setError('Please upload a photo')
+      setLoading(false)
+      return
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      setError(`Photo is too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum is 5MB.`)
+      setLoading(false)
+      return
+    }
 
     const formData = new FormData(e.currentTarget)
 
@@ -131,8 +166,12 @@ export default function SellPage() {
                 name="photo"
                 accept="image/*"
                 required
+                onChange={handleFileChange}
                 className="w-full bg-white/[0.05] border border-white/[0.1] rounded px-4 py-3 font-sans text-[14px] text-white"
               />
+              {fileError && (
+                <p className="text-red-400 font-sans text-[12px] mt-2">⚠ {fileError}</p>
+              )}
             </div>
 
             {/* Error */}

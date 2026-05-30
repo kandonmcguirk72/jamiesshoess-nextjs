@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
+import { put } from '@vercel/blob'
 import { safeLogger } from '@/lib/safe-logger'
 import { sanitizeString, containsSensitiveData } from '@/lib/sanitize'
 
@@ -24,12 +25,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    // Check API key exists
+    // Check API keys exist
     const apiKey = process.env.RESEND_API_KEY
     if (!apiKey) {
       safeLogger.error('RESEND_API_KEY not configured')
       return NextResponse.json(
         { error: 'Email service not configured' },
+        { status: 500 }
+      )
+    }
+
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+    if (!blobToken) {
+      safeLogger.error('BLOB_READ_WRITE_TOKEN not configured')
+      return NextResponse.json(
+        { error: 'Image storage not configured' },
         { status: 500 }
       )
     }
@@ -48,41 +58,62 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Convert file to base64
-    const buffer = await photo.arrayBuffer()
-    const base64 = Buffer.from(buffer).toString('base64')
+    // Upload image to Vercel Blob
+    const timestamp = Date.now()
+    const blobFilename = `sell-requests/${timestamp}-${photo.name || 'photo.jpg'}`
+    const arrayBuffer = await photo.arrayBuffer()
+
+    let imageUrl = ''
+    try {
+      const blob = await put(blobFilename, arrayBuffer, {
+        access: 'public',
+        contentType: photo.type,
+      })
+      imageUrl = blob.url
+      safeLogger.info('Image uploaded to Blob storage', { url: imageUrl })
+    } catch (blobError) {
+      safeLogger.error('Blob upload failed', blobError)
+      return NextResponse.json(
+        { error: 'Failed to upload image' },
+        { status: 500 }
+      )
+    }
 
     // Initialize Resend with API key
     const resend = new Resend(apiKey)
 
-    // Send email via Resend
+    // Send email via Resend from verified domain
     const result = await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: 'kandonmcguirk72@gmail.com',
+      from: 'JAMIESSHOESS <noreply@jamiesshoess.com>',
+      to: 'kandon@jamiesshoess.com',
       subject: `New Sell Request: ${sanitizeString(name)}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
           <h2>New Item Submission</h2>
-          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-          <p><strong>Contact:</strong> ${escapeHtml(contact)}</p>
-          <p><strong>Asking Price:</strong> ${price ? '$' + escapeHtml(price) : 'Not specified'}</p>
+
+          <div style="background: #f9f9f9; padding: 16px; border-radius: 8px; margin: 16px 0;">
+            <p style="margin: 8px 0;"><strong>Name:</strong> ${escapeHtml(name)}</p>
+            <p style="margin: 8px 0;"><strong>Contact:</strong> ${escapeHtml(contact)}</p>
+            <p style="margin: 8px 0;"><strong>Asking Price:</strong> ${price ? '$' + escapeHtml(price) : 'Not specified'}</p>
+          </div>
 
           <h3>Description:</h3>
-          <p style="white-space: pre-wrap; background: #f5f5f5; padding: 12px; border-radius: 4px;">
+          <p style="white-space: pre-wrap; background: #f5f5f5; padding: 12px; border-radius: 4px; margin: 12px 0;">
             ${escapeHtml(description)}
           </p>
 
-          <p style="margin-top: 20px; font-size: 12px; color: #666;">
-            <em>Photo attached (${(photo.size / 1024).toFixed(1)} KB)</em>
+          <h3>Photo:</h3>
+          <img src="${imageUrl}" alt="Submitted item" style="max-width: 300px; height: auto; border-radius: 4px; margin: 12px 0;" />
+          <p style="margin-top: 8px; font-size: 12px; color: #666;">
+            <a href="${imageUrl}" style="color: #0066cc;">View full-size image</a> (${(photo.size / 1024).toFixed(1)} KB)
+          </p>
+
+          <hr style="margin: 20px 0; border: none; border-top: 1px solid #ddd;" />
+          <p style="font-size: 12px; color: #666; margin-top: 12px;">
+            Submitted via JAMIESSHOESS Sell Form
           </p>
         </div>
       `,
-      attachments: [
-        {
-          filename: photo.name || 'photo.jpg',
-          content: base64,
-        },
-      ],
     })
 
     if (result.error) {
@@ -95,6 +126,7 @@ export async function POST(req: NextRequest) {
 
     safeLogger.info('Sell request email sent successfully', {
       emailId: result.data?.id,
+      imageUrl,
     })
 
     return NextResponse.json({ success: true, id: result.data?.id }, { status: 200 })
