@@ -1,13 +1,12 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 
 export default function SellPage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
   const [fileError, setFileError] = useState('')
-  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB in bytes
 
@@ -63,7 +62,6 @@ export default function SellPage() {
       }
 
       setSuccess(true)
-      e.currentTarget.reset()
       setTimeout(() => setSuccess(false), 5000)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
@@ -160,8 +158,7 @@ export default function SellPage() {
                 Photo (Required) — Max 5MB
               </label>
               <input
-                ref={fileInputRef}
-                id="photo"
+                id="photo-input"
                 type="file"
                 name="photo"
                 accept="image/*"

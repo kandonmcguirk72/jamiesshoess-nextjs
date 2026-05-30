@@ -49,13 +49,15 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Upload image to Vercel Blob (optional)
+    // Upload image to Vercel Blob (optional) or use base64 fallback
     let imageUrl = ''
+    let base64Image = ''
     const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+    const arrayBuffer = await photo.arrayBuffer()
+
     if (blobToken) {
       const timestamp = Date.now()
       const blobFilename = `sell-requests/${timestamp}-${photo.name || 'photo.jpg'}`
-      const arrayBuffer = await photo.arrayBuffer()
 
       try {
         const blob = await put(blobFilename, arrayBuffer, {
@@ -63,10 +65,21 @@ export async function POST(req: NextRequest) {
           contentType: photo.type,
         })
         imageUrl = blob.url
+        console.log('✅ Blob upload SUCCESS - URL:', imageUrl)
+        console.log('✅ Image accessible at:', imageUrl)
         safeLogger.info('Image uploaded to Blob storage', { url: imageUrl })
       } catch (blobError) {
-        safeLogger.warn('Blob upload failed, will attach image instead', blobError)
+        console.error('❌ Blob upload failed:', blobError)
+        safeLogger.warn('Blob upload failed, trying base64 fallback', blobError)
+        // Fall back to base64
+        const bytes = new Uint8Array(arrayBuffer)
+        base64Image = Buffer.from(bytes).toString('base64')
       }
+    } else {
+      // No blob token, use base64 fallback
+      console.log('⚠️ No BLOB_READ_WRITE_TOKEN, using base64 fallback')
+      const bytes = new Uint8Array(arrayBuffer)
+      base64Image = Buffer.from(bytes).toString('base64')
     }
 
     // Initialize Resend with API key
@@ -74,7 +87,7 @@ export async function POST(req: NextRequest) {
 
     // Send email via Resend
     const result = await resend.emails.send({
-      from: 'JAMIESSHOESS <onboarding@resend.dev>',
+      from: 'JAMIESSHOESS <noreply@resend.dev>',
       to: 'kandonmcguirk72@gmail.com',
       subject: `New Sell Request: ${sanitizeString(name)}`,
       html: `
@@ -94,11 +107,16 @@ export async function POST(req: NextRequest) {
 
           <h3>Photo:</h3>
           ${imageUrl ? `
-            <img src="${imageUrl}" alt="Submitted item" style="max-width: 300px; height: auto; border-radius: 4px; margin: 12px 0;" />
-            <p style="margin-top: 8px; font-size: 12px; color: #666;">
-              <a href="${imageUrl}" style="color: #0066cc;">View full-size image</a> (${(photo.size / 1024).toFixed(1)} KB)
+            <img src="${imageUrl}" alt="Submitted item" style="max-width: 400px; height: auto; border-radius: 8px; margin: 16px 0;" />
+            <p style="margin: 12px 0; font-size: 12px; color: #666;">
+              <strong>Image URL:</strong><br />
+              <a href="${imageUrl}" style="color: #0066cc; word-break: break-all;">${imageUrl}</a><br />
+              Size: ${(photo.size / 1024).toFixed(1)} KB
             </p>
-          ` : `<p style="font-size: 12px; color: #666;">Photo uploaded (${(photo.size / 1024).toFixed(1)} KB)</p>`}
+          ` : base64Image ? `
+            <img src="data:${photo.type};base64,${base64Image}" alt="Submitted item" style="max-width: 400px; height: auto; border-radius: 8px; margin: 16px 0;" />
+            <p style="margin: 12px 0; font-size: 12px; color: #666;">Size: ${(photo.size / 1024).toFixed(1)} KB (embedded)</p>
+          ` : `<p style="font-size: 12px; color: #666;">Photo: ${(photo.size / 1024).toFixed(1)} KB</p>`}
 
           <hr style="margin: 20px 0; border: none; border-top: 1px solid #ddd;" />
           <p style="font-size: 12px; color: #666; margin-top: 12px;">
@@ -116,9 +134,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
     }
 
+    console.log('✅ Email sent successfully:', result.data?.id)
     safeLogger.info('Sell request email sent successfully', {
       emailId: result.data?.id,
-      imageUrl,
+      imageUrl: imageUrl || 'base64-embedded',
     })
 
     return NextResponse.json({ success: true, id: result.data?.id }, { status: 200 })
