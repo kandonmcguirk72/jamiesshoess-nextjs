@@ -41,14 +41,6 @@ export default function SellPage() {
     setError('')
     setSuccess(false)
 
-    // Validate terms agreement — read directly from DOM, not React state
-    const termsCheckbox = (e.currentTarget.elements.namedItem('termsAgreed') as HTMLInputElement)
-    if (!termsCheckbox?.checked) {
-      setError('You must agree to the Terms of Service to submit')
-      setLoading(false)
-      return
-    }
-
     // Final validation before submit
     const photoInput = (e.currentTarget.elements.namedItem('photo') as HTMLInputElement)
     const file = photoInput?.files?.[0]
@@ -201,7 +193,7 @@ export default function SellPage() {
                 id="termsAgreed"
                 type="checkbox"
                 name="termsAgreed"
-                defaultChecked={false}
+                required
                 className="w-5 h-5 mt-0.5 cursor-pointer accent-minted"
               />
               <label htmlFor="termsAgreed" className="font-sans text-[13px] text-white/70 cursor-pointer flex-1">
