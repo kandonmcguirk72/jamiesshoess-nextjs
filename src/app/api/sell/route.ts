@@ -70,8 +70,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    // Validate terms agreement
-    if (termsAgreed !== 'true') {
+    // Validate terms agreement (checkbox sends "on" when checked)
+    if (!termsAgreed) {
       return NextResponse.json({ error: 'You must agree to the Terms of Service' }, { status: 400 })
     }
 

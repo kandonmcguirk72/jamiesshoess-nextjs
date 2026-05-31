@@ -64,7 +64,6 @@ export default function SellPage() {
     }
 
     const formData = new FormData(e.currentTarget)
-    formData.append('termsAgreed', 'true')
 
     try {
       const res = await fetch('/api/sell', {
