@@ -8,7 +8,6 @@ export default function SellPage() {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
   const [fileError, setFileError] = useState('')
-  const [termsAgreed, setTermsAgreed] = useState(false)
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB in bytes
   const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
@@ -42,8 +41,9 @@ export default function SellPage() {
     setError('')
     setSuccess(false)
 
-    // Validate terms agreement
-    if (!termsAgreed) {
+    // Validate terms agreement — read directly from DOM, not React state
+    const termsCheckbox = (e.currentTarget.elements.namedItem('termsAgreed') as HTMLInputElement)
+    if (!termsCheckbox?.checked) {
       setError('You must agree to the Terms of Service to submit')
       setLoading(false)
       return
@@ -201,8 +201,7 @@ export default function SellPage() {
                 id="termsAgreed"
                 type="checkbox"
                 name="termsAgreed"
-                checked={termsAgreed}
-                onChange={(e) => setTermsAgreed(e.target.checked)}
+                defaultChecked={false}
                 className="w-5 h-5 mt-0.5 cursor-pointer accent-minted"
               />
               <label htmlFor="termsAgreed" className="font-sans text-[13px] text-white/70 cursor-pointer flex-1">
