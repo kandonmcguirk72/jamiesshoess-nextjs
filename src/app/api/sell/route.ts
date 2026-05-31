@@ -1,17 +1,63 @@
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
 import { put } from '@vercel/blob'
+import convert from 'heic-convert'
 import { safeLogger } from '@/lib/safe-logger'
 import { sanitizeString, containsSensitiveData } from '@/lib/sanitize'
 
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heic-sequence']
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.heic']
+
+// Simple in-memory rate limiter: max 10 submissions per IP per hour
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000 // 1 hour
+const MAX_REQUESTS_PER_WINDOW = 10
+
+function getRateLimitKey(ip: string): string {
+  return `sell-form:${ip}`
+}
+
+function checkRateLimit(ip: string): { allowed: boolean; remaining: number } {
+  const now = Date.now()
+  const key = getRateLimitKey(ip)
+  const limit = rateLimitMap.get(key)
+
+  if (!limit || now > limit.resetTime) {
+    rateLimitMap.set(key, { count: 1, resetTime: now + RATE_LIMIT_WINDOW })
+    return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - 1 }
+  }
+
+  if (limit.count >= MAX_REQUESTS_PER_WINDOW) {
+    return { allowed: false, remaining: 0 }
+  }
+
+  limit.count++
+  return { allowed: true, remaining: MAX_REQUESTS_PER_WINDOW - limit.count }
+}
+
 export async function POST(req: NextRequest) {
   try {
+    // Check rate limit
+    const clientIp = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
+    const rateLimitCheck = checkRateLimit(clientIp)
+
+    if (!rateLimitCheck.allowed) {
+      safeLogger.warn('Rate limit exceeded for sell form', { ip: clientIp })
+      const response = NextResponse.json(
+        { error: 'Too many submissions. Please try again in an hour.' },
+        { status: 429 }
+      )
+      response.headers.set('Cache-Control', 'no-store')
+      return response
+    }
+
     const formData = await req.formData()
 
     const name = formData.get('name') as string
     const contact = formData.get('contact') as string
     const description = formData.get('description') as string
     const price = formData.get('price') as string
+    const termsAgreed = formData.get('termsAgreed') as string
     const photo = formData.get('photo') as File
 
     // Validate required fields
@@ -23,6 +69,34 @@ export async function POST(req: NextRequest) {
         hasPhoto: !!photo,
       })
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    }
+
+    // Validate terms agreement
+    if (termsAgreed !== 'true') {
+      return NextResponse.json({ error: 'You must agree to the Terms of Service' }, { status: 400 })
+    }
+
+    // Validate file type (server-side, not just client)
+    const fileExtension = photo.name?.substring(photo.name.lastIndexOf('.')).toLowerCase() || ''
+    if (!ALLOWED_MIME_TYPES.includes(photo.type) || !ALLOWED_EXTENSIONS.includes(fileExtension)) {
+      safeLogger.warn('Invalid file type submitted', {
+        fileName: photo.name,
+        mimeType: photo.type,
+        extension: fileExtension,
+      })
+      return NextResponse.json(
+        { error: 'Invalid file type. Please upload JPG, PNG, WEBP, or HEIC images only.' },
+        { status: 400 }
+      )
+    }
+
+    // Validate file size (5MB limit)
+    const MAX_FILE_SIZE = 5 * 1024 * 1024
+    if (photo.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { error: `File too large. Maximum size is 5MB, received ${(photo.size / 1024 / 1024).toFixed(1)}MB.` },
+        { status: 400 }
+      )
     }
 
     // Check API keys exist
@@ -49,23 +123,43 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Upload image to Vercel Blob or attach to email
+    // Convert HEIC to JPEG if needed, then upload
     let imageUrl = ''
-    const arrayBuffer = await photo.arrayBuffer()
-    const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+    let photoBlob = photo
+    let photoMimeType = photo.type
+    let photoFileName = photo.name || 'photo.jpg'
 
+    // Convert HEIC/HEIC-sequence to JPEG
+    if (photo.type === 'image/heic' || photo.type === 'image/heic-sequence') {
+      try {
+        const jpegBlob = await convert({ blob: photo, toType: 'image/jpeg' })
+        photoBlob = jpegBlob as any as File
+        photoMimeType = 'image/jpeg'
+        photoFileName = photoFileName.replace(/\.heic$/i, '.jpg')
+        safeLogger.info('HEIC converted to JPEG', { originalName: photo.name })
+      } catch (heicError) {
+        safeLogger.error('HEIC conversion failed', heicError)
+        return NextResponse.json({ error: 'Failed to process HEIC image' }, { status: 500 })
+      }
+    }
+
+    const photoBuffer = await photoBlob.arrayBuffer()
+
+    // Upload to Vercel Blob if token available
+    const blobToken = process.env.BLOB_READ_WRITE_TOKEN
     if (blobToken) {
       const timestamp = Date.now()
-      const blobFilename = `sell-requests/${timestamp}-${photo.name || 'photo.jpg'}`
+      const blobFilename = `sell-requests/${timestamp}-${photoFileName}`
 
       try {
-        const blob = await put(blobFilename, arrayBuffer, {
+        const blob = await put(blobFilename, photoBuffer, {
           access: 'public',
-          contentType: photo.type,
+          contentType: photoMimeType,
         })
         imageUrl = blob.url
         console.log('✅ Blob upload SUCCESS - URL:', imageUrl)
-        safeLogger.info('Image uploaded to Blob storage', { url: imageUrl })
+        console.log('✅ Image accessible at:', imageUrl)
+        safeLogger.info('Image uploaded to Blob storage', { url: imageUrl, fileName: photoFileName })
       } catch (blobError) {
         console.error('❌ Blob upload failed:', blobError)
         safeLogger.warn('Blob upload failed, will attach to email instead', {
@@ -117,13 +211,13 @@ export async function POST(req: NextRequest) {
       `,
     }
 
-    // Always attach the image inline (fallback if blob fails, or supplement for reliability)
+    // Attach image if no blob URL (will display inline with cid:photo reference)
     if (!imageUrl) {
       emailConfig.attachments = [
         {
-          filename: photo.name || 'photo.jpg',
-          content: Buffer.from(arrayBuffer),
-          contentType: photo.type,
+          filename: photoFileName,
+          content: Buffer.from(photoBuffer),
+          contentType: photoMimeType,
         },
       ]
     }
@@ -145,7 +239,9 @@ export async function POST(req: NextRequest) {
       imageUrl: imageUrl || 'base64-embedded',
     })
 
-    return NextResponse.json({ success: true, id: result.data?.id }, { status: 200 })
+    const response = NextResponse.json({ success: true, id: result.data?.id }, { status: 200 })
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+    return response
   } catch (error) {
     safeLogger.error('Sell API error', error)
     return NextResponse.json({ error: 'Server error' }, { status: 500 })

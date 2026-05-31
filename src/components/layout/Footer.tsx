@@ -104,6 +104,23 @@ export default function Footer() {
           ⭐ Leave a Review
         </a>
 
+        {/* Legal Links */}
+        <div className="flex items-center gap-4 text-white/40">
+          <a
+            href="/terms"
+            className="font-sans text-[10px] tracking-[0.08em] uppercase hover:text-minted transition-colors duration-150"
+          >
+            Terms
+          </a>
+          <span className="text-white/20">·</span>
+          <a
+            href="/privacy"
+            className="font-sans text-[10px] tracking-[0.08em] uppercase hover:text-minted transition-colors duration-150"
+          >
+            Privacy
+          </a>
+        </div>
+
         {/* Copyright */}
         <p className="font-sans font-semibold text-[10px] tracking-[0.14em] uppercase text-white/20">
           © 2025 JAMIESSHOESS · Springfield, MO

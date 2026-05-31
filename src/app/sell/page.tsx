@@ -1,19 +1,29 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function SellPage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
   const [fileError, setFileError] = useState('')
+  const [termsAgreed, setTermsAgreed] = useState(false)
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB in bytes
+  const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heic-sequence']
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) {
       setFileError('')
+      return
+    }
+
+    // Validate file type
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      setFileError('Invalid file type. Please upload JPG, PNG, WEBP, or HEIC images only.')
+      e.target.value = ''
       return
     }
 
@@ -32,12 +42,25 @@ export default function SellPage() {
     setError('')
     setSuccess(false)
 
+    // Validate terms agreement
+    if (!termsAgreed) {
+      setError('You must agree to the Terms of Service to submit')
+      setLoading(false)
+      return
+    }
+
     // Final validation before submit
     const photoInput = (e.currentTarget.elements.namedItem('photo') as HTMLInputElement)
     const file = photoInput?.files?.[0]
 
     if (!file) {
       setError('Please upload a photo')
+      setLoading(false)
+      return
+    }
+
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      setError('Invalid file type. Please upload JPG, PNG, WEBP, or HEIC images only.')
       setLoading(false)
       return
     }
@@ -49,6 +72,7 @@ export default function SellPage() {
     }
 
     const formData = new FormData(e.currentTarget)
+    formData.append('termsAgreed', 'true')
 
     try {
       const res = await fetch('/api/sell', {
@@ -171,6 +195,24 @@ export default function SellPage() {
               )}
             </div>
 
+            {/* Terms Agreement */}
+            <div className="flex items-start gap-3">
+              <input
+                id="termsAgreed"
+                type="checkbox"
+                name="termsAgreed"
+                checked={termsAgreed}
+                onChange={(e) => setTermsAgreed(e.target.checked)}
+                className="w-5 h-5 mt-0.5 cursor-pointer accent-minted"
+              />
+              <label htmlFor="termsAgreed" className="font-sans text-[13px] text-white/70 cursor-pointer flex-1">
+                I confirm I own this item and agree to the{' '}
+                <Link href="/terms" className="text-minted hover:text-white transition-colors font-semibold">
+                  Terms of Service
+                </Link>
+              </label>
+            </div>
+
             {/* Error */}
             {error && (
               <div className="bg-red-500/20 border border-red-500/50 rounded px-4 py-3 font-sans text-[14px] text-red-200">
@@ -214,6 +256,12 @@ export default function SellPage() {
             <p className="font-sans text-[12px] text-white/40 text-center">
               We'll contact you within 1–2 business days.
             </p>
+
+            <div className="bg-white/[0.03] border border-white/[0.07] rounded px-4 py-3 mt-6">
+              <p className="font-sans text-[12px] text-white/50 leading-relaxed">
+                <strong className="text-white/70">Disclaimer:</strong> Submitting your item does not guarantee we will purchase it. All acquisition offers and decisions are at the sole discretion of JAMIESSHOESS. We authenticate items to the best of our ability but make no guarantees regarding authenticity.
+              </p>
+            </div>
           </form>
         </div>
       </section>
