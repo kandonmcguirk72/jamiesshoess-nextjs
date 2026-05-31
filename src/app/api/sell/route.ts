@@ -1,12 +1,11 @@
 import { Resend } from 'resend'
 import { NextRequest, NextResponse } from 'next/server'
 import { put } from '@vercel/blob'
-import convert from 'heic-convert'
 import { safeLogger } from '@/lib/safe-logger'
 import { sanitizeString, containsSensitiveData } from '@/lib/sanitize'
 
-const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heic-sequence']
-const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.heic']
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp']
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp']
 
 // Simple in-memory rate limiter: max 10 submissions per IP per hour
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
@@ -85,7 +84,7 @@ export async function POST(req: NextRequest) {
         extension: fileExtension,
       })
       return NextResponse.json(
-        { error: 'Invalid file type. Please upload JPG, PNG, WEBP, or HEIC images only.' },
+        { error: 'Invalid file type. Please upload JPG, PNG, or WEBP images only. Convert HEIC photos on your phone first.' },
         { status: 400 }
       )
     }
@@ -123,27 +122,11 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // Convert HEIC to JPEG if needed, then upload
+    // Upload image to Vercel Blob
     let imageUrl = ''
-    let photoBlob = photo
-    let photoMimeType = photo.type
-    let photoFileName = photo.name || 'photo.jpg'
-
-    // Convert HEIC/HEIC-sequence to JPEG
-    if (photo.type === 'image/heic' || photo.type === 'image/heic-sequence') {
-      try {
-        const jpegBlob = await convert({ blob: photo, toType: 'image/jpeg' })
-        photoBlob = jpegBlob as any as File
-        photoMimeType = 'image/jpeg'
-        photoFileName = photoFileName.replace(/\.heic$/i, '.jpg')
-        safeLogger.info('HEIC converted to JPEG', { originalName: photo.name })
-      } catch (heicError) {
-        safeLogger.error('HEIC conversion failed', heicError)
-        return NextResponse.json({ error: 'Failed to process HEIC image' }, { status: 500 })
-      }
-    }
-
-    const photoBuffer = await photoBlob.arrayBuffer()
+    const photoMimeType = photo.type
+    const photoFileName = photo.name || 'photo.jpg'
+    const photoBuffer = await photo.arrayBuffer()
 
     // Upload to Vercel Blob if token available
     const blobToken = process.env.BLOB_READ_WRITE_TOKEN

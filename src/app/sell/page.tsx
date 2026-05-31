@@ -11,7 +11,7 @@ export default function SellPage() {
   const [termsAgreed, setTermsAgreed] = useState(false)
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB in bytes
-  const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heic-sequence']
+  const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -22,7 +22,7 @@ export default function SellPage() {
 
     // Validate file type
     if (!ALLOWED_TYPES.includes(file.type)) {
-      setFileError('Invalid file type. Please upload JPG, PNG, WEBP, or HEIC images only.')
+      setFileError('Invalid file type. Please upload JPG, PNG, or WEBP images. (Convert HEIC photos on your phone first)')
       e.target.value = ''
       return
     }
@@ -60,7 +60,7 @@ export default function SellPage() {
     }
 
     if (!ALLOWED_TYPES.includes(file.type)) {
-      setError('Invalid file type. Please upload JPG, PNG, WEBP, or HEIC images only.')
+      setError('Invalid file type. Please upload JPG, PNG, or WEBP images.')
       setLoading(false)
       return
     }
@@ -179,7 +179,7 @@ export default function SellPage() {
             {/* Photo */}
             <div>
               <label htmlFor="photo" className="font-sans font-bold text-[12px] tracking-[0.12em] uppercase text-minted block mb-2">
-                Photo (Required) — Max 5MB
+                Photo (Required) — JPG, PNG, WEBP — Max 5MB
               </label>
               <input
                 id="photo-input"
