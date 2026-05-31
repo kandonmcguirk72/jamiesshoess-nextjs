@@ -196,10 +196,10 @@ export default function SellPage() {
                 className="w-5 h-5 mt-0.5 cursor-pointer accent-minted"
               />
               <label htmlFor="termsAgreed" className="font-sans text-[13px] text-white/70 cursor-pointer flex-1">
-                I confirm I own this item and agree to the{' '}
+                I confirm I own this item and have the right to sell it. I agree to the{' '}
                 <Link href="/terms" className="text-minted hover:text-white transition-colors font-semibold">
                   Terms of Service
-                </Link>
+                </Link>.
               </label>
             </div>
 
@@ -247,11 +247,9 @@ export default function SellPage() {
               We'll contact you within 1–2 business days.
             </p>
 
-            <div className="bg-white/[0.03] border border-white/[0.07] rounded px-4 py-3 mt-6">
-              <p className="font-sans text-[12px] text-white/50 leading-relaxed">
-                <strong className="text-white/70">Disclaimer:</strong> Submitting your item does not guarantee we will purchase it. All acquisition offers and decisions are at the sole discretion of JAMIESSHOESS. We authenticate items to the best of our ability but make no guarantees regarding authenticity.
-              </p>
-            </div>
+            <p className="font-sans text-[11px] text-white/30 text-center leading-relaxed">
+              Submitting this form does not guarantee we will purchase your item. All offers are made at the sole discretion of JAMIESSHOESS.
+            </p>
           </form>
         </div>
       </section>

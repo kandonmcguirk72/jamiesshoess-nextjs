@@ -56,27 +56,32 @@ export default function Hero() {
         </div>
 
         {/* Stats row */}
-        <div
-          className="flex items-center justify-center flex-wrap gap-x-7 gap-y-2"
-          style={{ borderTop: '1px solid rgba(255,255,255,.06)', borderBottom: '1px solid rgba(255,255,255,.06)', padding: '14px 0', width: '100%' }}
-        >
-          {[
-            { val: '6,100+', label: 'Instagram Followers' },
-            { val: 'Weekly', label: 'New Drops' },
-            { val: '100%',   label: 'Authenticated' },
-          ].map((s) => (
-            <div key={s.label} className="flex flex-col items-center gap-0.5">
-              <span
-                className="font-display italic font-black uppercase text-minted"
-                style={{ fontSize: 20, letterSpacing: '0.01em', lineHeight: 1 }}
-              >
-                {s.val}
-              </span>
-              <span className="font-sans font-bold text-[9px] tracking-[0.14em] uppercase text-white/30">
-                {s.label}
-              </span>
-            </div>
-          ))}
+        <div style={{ width: '100%' }}>
+          <div
+            className="flex items-center justify-center flex-wrap gap-x-7 gap-y-2"
+            style={{ borderTop: '1px solid rgba(255,255,255,.06)', borderBottom: '1px solid rgba(255,255,255,.06)', padding: '14px 0' }}
+          >
+            {[
+              { val: '6,100+', label: 'Instagram Followers' },
+              { val: 'Weekly', label: 'New Drops' },
+              { val: '100%',   label: 'Authenticated*' },
+            ].map((s) => (
+              <div key={s.label} className="flex flex-col items-center gap-0.5">
+                <span
+                  className="font-display italic font-black uppercase text-minted"
+                  style={{ fontSize: 20, letterSpacing: '0.01em', lineHeight: 1 }}
+                >
+                  {s.val}
+                </span>
+                <span className="font-sans font-bold text-[9px] tracking-[0.14em] uppercase text-white/30">
+                  {s.label}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p className="font-sans text-[10px] text-white/25 leading-relaxed text-center mt-2">
+            *Authentication represents our best professional judgment. JAMIESSHOESS is not liable for manufacturer defects or authentication disputes on items previously purchased.
+          </p>
         </div>
 
         {/* CTAs */}

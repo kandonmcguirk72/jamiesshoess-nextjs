@@ -27,13 +27,13 @@ export default function StorySection() {
           {/* Left — the bio */}
           <div className="flex flex-col gap-5">
             <p className="font-sans font-semibold text-[15px] text-white/70 leading-[1.75]">
-              JAMIESSHOESS is a vintage clothing and sneaker resale shop in downtown Springfield, MO. Owner Jamie spent over a decade in the resale market before opening the physical store at 302 Park Central East.
+              JAMIESSHOESS is a vintage clothing and sneaker shop rooted in Springfield. We're located at 302 Park Central East in the heart of downtown, and we're grateful to be part of this community every day.
             </p>
             <p className="font-sans font-semibold text-[15px] text-white/70 leading-[1.75]">
-              What started as a side operation grew into a full business built on sourcing knowledge, accurate pricing, and a straightforward approach to buying and selling. Every item on the floor is hand-selected — no filler, no fakes.
+              We carry vintage clothing, authenticated sneakers, and our own in-house merch — all hand-picked and honest. No fakes, no filler, just good stuff at fair prices.
             </p>
             <p className="font-sans font-semibold text-[15px] text-white/70 leading-[1.75]">
-              We carry vintage clothing, sneakers, accessories, and an in-house merch line. We also do trades and selective buying during store hours.
+              Whether you're here to shop, trade, or just look around, you're always welcome. Springfield is home, and this store is for the people in it.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
