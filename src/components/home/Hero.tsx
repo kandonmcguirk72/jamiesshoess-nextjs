@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section
       className="relative w-full flex justify-center"
-      style={{ background: '#080A09', padding: 'clamp(64px,9vw,100px) 0 clamp(56px,8vw,88px)' }}
+      style={{ background: 'var(--bg-page)', padding: 'clamp(64px,9vw,100px) 0 clamp(56px,8vw,88px)' }}
     >
       <div
         className="w-full flex flex-col items-center text-center"
@@ -50,7 +50,7 @@ export default function Hero() {
               &amp; Sneakers
             </span>
           </h1>
-          <p className="font-sans font-medium text-[14px] text-white/40 leading-relaxed" style={{ maxWidth: 480, margin: '0 auto' }}>
+          <p className="font-sans font-medium text-[14px] text-white leading-relaxed" style={{ maxWidth: 480, margin: '0 auto' }}>
             Hand-picked vintage clothing, authenticated sneakers, and in-house merch — all in one store.
           </p>
         </div>

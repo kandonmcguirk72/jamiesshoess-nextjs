@@ -1,5 +1,88 @@
 @import "tailwindcss";
 
+/* ===================== THEME VARIABLES ===================== */
+:root {
+  /* Surface layers */
+  --bg-page:         #080A09;
+  --bg-elevated:     #111312;
+  --bg-card:         #0d0f0e;
+  --bg-nav:          #111312;
+  --bg-nav-scrolled: rgba(17,19,18,0.96);
+
+  /* Semantic tokens — dark (default) */
+  --color-bg:           #080A09;
+  --color-bg-card:      #111311;
+  --color-bg-surface:   #1a1c1a;
+  --color-bg-nav:       #080A09;
+  --color-text-primary: #FFFFFF;
+  --color-text-muted:   #FFFFFF;
+  --color-text-size:    #888888;
+  --color-text-filter:  rgba(255,255,255,0.4);
+  --color-accent:       #00ECF1;
+  --color-accent-subtle: rgba(0,236,241,0.10);
+  --color-border:       rgba(255,255,255,0.12);
+  --color-card-shadow:  none;
+  --color-ticker-bg:    #000000;
+  --color-ticker-text:  #FFFFFF;
+}
+
+[data-theme='light'] {
+  /* Surface layers */
+  --bg-page:         #F5F5F0;
+  --bg-elevated:     #FFFFFF;
+  --bg-card:         #FFFFFF;
+  --bg-nav:          #FFFFFF;
+  --bg-nav-scrolled: rgba(255,255,255,0.96);
+
+  /* Semantic tokens — light */
+  --color-bg:           #F5F5F0;
+  --color-bg-card:      #FFFFFF;
+  --color-bg-surface:   #EDEAE4;
+  --color-bg-nav:       #FFFFFF;
+  --color-text-primary: #111111;
+  --color-text-muted:   #444444;
+  --color-text-size:    #666666;
+  --color-text-filter:  rgba(17,17,17,0.45);
+  --color-accent:       #0055CC;
+  --color-accent-subtle: rgba(0,85,204,0.08);
+  --color-border:       #E5E5E0;
+  --color-card-shadow:  0 2px 12px rgba(0,0,0,0.08);
+  --color-ticker-bg:    #111111;
+  --color-ticker-text:  #FFFFFF;
+}
+
+/* Light mode text overrides */
+[data-theme='light'] body { color: #111111; }
+[data-theme='light'] .text-white { color: #111111; }
+[data-theme='light'] .text-white\/70 { color: rgba(17,17,17,0.70); }
+[data-theme='light'] .text-white\/60 { color: rgba(17,17,17,0.60); }
+[data-theme='light'] .text-white\/55 { color: rgba(17,17,17,0.55); }
+[data-theme='light'] .text-white\/50 { color: rgba(17,17,17,0.50); }
+[data-theme='light'] .text-white\/45 { color: rgba(17,17,17,0.45); }
+[data-theme='light'] .text-white\/40 { color: rgba(17,17,17,0.40); }
+[data-theme='light'] .text-white\/35 { color: rgba(17,17,17,0.35); }
+[data-theme='light'] .text-white\/30 { color: rgba(17,17,17,0.30); }
+[data-theme='light'] .text-white\/25 { color: rgba(17,17,17,0.25); }
+[data-theme='light'] .text-white\/20 { color: rgba(17,17,17,0.20); }
+
+/* Light mode border overrides */
+[data-theme='light'] .border-white\/\[0\.07\] { border-color: rgba(17,17,17,0.10); }
+[data-theme='light'] .border-white\/\[0\.08\] { border-color: rgba(17,17,17,0.12); }
+[data-theme='light'] .border-white\/\[0\.06\] { border-color: rgba(17,17,17,0.08); }
+[data-theme='light'] .border-t.border-white\/\[0\.07\] { border-color: rgba(17,17,17,0.10); }
+
+/* Light mode form input backgrounds */
+[data-theme='light'] .bg-white\/\[0\.05\] { background: rgba(17,17,17,0.05); }
+[data-theme='light'] .bg-white\/\[0\.04\] { background: rgba(17,17,17,0.04); }
+[data-theme='light'] .bg-white\/\[0\.03\] { background: rgba(17,17,17,0.03); }
+
+/* Light mode nav minted text stays cyan (brand) */
+[data-theme='light'] .text-minted { color: #0055CC; }
+
+/* Light mode footer */
+[data-theme='light'] footer { background: #EEEEEA; }
+[data-theme='light'] footer .text-minted { color: #0055CC; }
+
 @theme {
   /* ── Brand Colors (official palette) ── */
   --color-leather: #080A09;   /* near-black — page background */
@@ -115,7 +198,7 @@ html {
 }
 
 body {
-  background: #080A09;
+  background: var(--bg-page);
   color: #FFFFFF;
   font-family: var(--font-rajdhani), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -209,3 +292,11 @@ details summary::-webkit-details-marker { display: none; }
 
 /* ===================== RULE ===================== */
 hr, .rule { border: none; border-top: 1px solid rgba(255,255,255,.08); }
+
+/* ===================== THEME TRANSITION ===================== */
+*, *::before, *::after {
+  transition: background-color 0.2s ease, color 0.2s ease,
+              border-color 0.2s ease, box-shadow 0.2s ease;
+}
+/* Don't animate transforms or layout — only color/shadow */
+img, svg, video { transition: none; }
