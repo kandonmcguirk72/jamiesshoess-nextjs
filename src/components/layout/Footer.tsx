@@ -40,7 +40,7 @@ export default function Footer() {
   return (
     <footer
       className="border-t border-white/[0.07]"
-      style={{ background: '#080A09' }}
+      style={{ background: 'var(--bg-page)' }}
     >
       <div
         className="flex flex-col items-center gap-5 py-10"
@@ -96,12 +96,13 @@ export default function Footer() {
 
         {/* Google Review Link */}
         <a
-          href="https://g.page/r/CbeaVjJFxqYEEAI/review"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-sans font-bold text-[10px] tracking-[0.12em] uppercase text-minted hover:text-white transition-colors duration-150"
+          href="/review"
+          className="inline-flex items-center gap-1.5 font-sans font-bold text-[10px] tracking-[0.12em] uppercase text-minted hover:text-white transition-colors duration-150"
         >
-          ⭐ Leave a Review
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="12,2 14.9,8.6 22,9.6 17,14.4 18.2,21.5 12,18.1 5.8,21.5 7,14.4 2,9.6 9.1,8.6" />
+          </svg>
+          Leave a Review
         </a>
 
         {/* Legal Links */}

@@ -4,7 +4,7 @@ export default function InstagramCTA() {
   return (
     <section
       className="border-t border-white/[0.06]"
-      style={{ background: '#080A09', padding: 'clamp(48px,7vw,72px) clamp(20px,5vw,52px)' }}
+      style={{ background: 'var(--bg-page)', padding: 'clamp(48px,7vw,72px) clamp(20px,5vw,52px)' }}
     >
       <div
         className="flex flex-col md:flex-row items-center md:items-end justify-between gap-10"

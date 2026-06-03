@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main style={{ background: '#080A09', minHeight: 'calc(100vh - 64px)' }}>
+    <main style={{ background: 'var(--bg-page)', minHeight: 'calc(100vh - 64px)' }}>
       <section style={{ borderBottom: '1px solid rgba(255,255,255,.07)', padding: 'clamp(40px,6vw,80px) clamp(16px,4vw,52px)' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <p className="font-sans font-bold text-[10px] tracking-[0.24em] uppercase text-minted/70 mb-3">Legal</p>

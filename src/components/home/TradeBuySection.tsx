@@ -17,7 +17,7 @@ export default function TradeBuySection() {
   return (
     <section
       className="border-t border-white/[0.07]"
-      style={{ background:'#080A09', padding:'64px clamp(16px,4vw,52px)' }}
+      style={{ background:'var(--bg-page)', padding:'64px clamp(16px,4vw,52px)' }}
     >
       <div style={{ maxWidth:1260, margin:'0 auto', display:'grid', gridTemplateColumns:'1fr 1fr', gap:24 }}>
         {CARDS.map((card) => (

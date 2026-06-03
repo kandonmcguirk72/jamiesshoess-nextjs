@@ -81,7 +81,7 @@ export default function AdminPage() {
           style={{
             width: '100%',
             maxWidth: 400,
-            background: '#111312',
+            background: 'var(--bg-elevated)',
             border: '1px solid rgba(255,255,255,0.1)',
             borderRadius: 8,
             padding: '40px 32px',
@@ -147,7 +147,7 @@ export default function AdminPage() {
             {/* Visitor Stats */}
             <div
               style={{
-                background: '#111312',
+                background: 'var(--bg-elevated)',
                 border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: 8,
                 padding: 24,
@@ -163,7 +163,7 @@ export default function AdminPage() {
 
             <div
               style={{
-                background: '#111312',
+                background: 'var(--bg-elevated)',
                 border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: 8,
                 padding: 24,
@@ -179,7 +179,7 @@ export default function AdminPage() {
 
             <div
               style={{
-                background: '#111312',
+                background: 'var(--bg-elevated)',
                 border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: 8,
                 padding: 24,
@@ -197,7 +197,7 @@ export default function AdminPage() {
           {/* Top Pages */}
           <div
             style={{
-              background: '#111312',
+              background: 'var(--bg-elevated)',
               border: '1px solid rgba(255,255,255,0.1)',
               borderRadius: 8,
               padding: 24,

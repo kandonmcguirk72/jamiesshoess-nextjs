@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Barlow_Condensed, Rajdhani } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import { CartProvider } from '@/lib/cart-context'
-import CartDrawer from '@/components/ui/CartDrawer'
+import Providers from '@/components/Providers'
 import AnnouncementBar from '@/components/layout/AnnouncementBar'
 import Nav from '@/components/layout/Nav'
 import Footer from '@/components/layout/Footer'
@@ -45,16 +45,17 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${barlow.variable} ${rajdhani.variable}`}>
+    <html lang="en" className={`${barlow.variable} ${rajdhani.variable}`} suppressHydrationWarning>
       <body>
+        <Providers>
         <CartProvider>
           <a href="#main-content" className="skip-link">Skip to content</a>
           <AnnouncementBar />
           <Nav />
           <main id="main-content">{children}</main>
           <Footer />
-          <CartDrawer />
         </CartProvider>
+        </Providers>
         <Analytics />
       </body>
     </html>

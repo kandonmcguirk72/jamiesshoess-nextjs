@@ -26,7 +26,7 @@ export default function CartDrawer() {
         style={{
           width: 380,
           maxWidth: '94vw',
-          background: '#080A09',
+          background: 'var(--bg-page)',
           boxShadow: '-8px 0 40px rgba(0,0,0,.7)',
           transform: isCartOpen ? 'translateX(0)' : 'translateX(100%)',
           transition: 'transform .28s cubic-bezier(.4,0,.2,1)',

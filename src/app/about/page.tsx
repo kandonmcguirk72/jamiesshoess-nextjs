@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main style={{ background: '#080A09' }}>
+    <main style={{ background: 'var(--bg-page)' }}>
       {/* Hero */}
       <section
         style={{
-          background: '#080A09',
+          background: 'var(--bg-page)',
           borderBottom: '1px solid rgba(255,255,255,.06)',
           padding: 'clamp(60px,10vw,100px) clamp(20px,5vw,52px)',
         }}
@@ -47,7 +47,7 @@ export default function AboutPage() {
               Where it started
             </p>
             <p className="font-sans font-medium text-[15px] text-white/60 leading-[1.8]">
-              Jamie Logan grew up in Springfield—a place with big dreams and real potential. From an early age, Jamie had a gift: the ability to find <span className="text-white/80 font-semibold">the one</span>. Not just any shoe, but the authentic piece worth owning. The rare sneaker hiding in plain sight. The vintage gem that told a story.
+              JAMIESSHOESS is a little shop in the heart of Springfield doing something we love — bringing together vintage clothing, authentic sneakers, and good energy all under one roof at 302 Park Central East.
             </p>
           </div>
 
@@ -72,7 +72,7 @@ export default function AboutPage() {
               The move that changed everything
             </p>
             <p className="font-sans font-medium text-[15px] text-white/60 leading-[1.8]">
-              When Jamie committed to Springfield, it wasn&apos;t a vacation—it was a <span className="text-white/80 font-semibold">bet on himself</span>. Starting from scratch in a new city, with a vision and not much else, Jamie started building. Sourcing vintage pieces. Tracking down rare sneakers. Learning the business from the ground up. Every early morning, every late night, every &quot;are you sure?&quot; moment—Jamie stayed the course.
+              We built this place to be more than a store. It&apos;s a space where you can dig through racks, find something you didn&apos;t know you were looking for, and leave feeling inspired. Whether you grew up thrifting on weekends, have been collecting sneakers for years, or you&apos;re just curious what all the fuss is about — you belong here.
             </p>
           </div>
 
@@ -82,7 +82,10 @@ export default function AboutPage() {
               Today
             </p>
             <p className="font-sans font-medium text-[15px] text-white/60 leading-[1.8]">
-              JAMIESSHOESS is now a real, living, breathing shop right here at 302 Park Central East. A curated mix of <span className="text-white/80 font-semibold">vintage treasures and sought-after sneakers</span>—handpicked by someone who genuinely loves what they do. Every item has been chosen with care. You won&apos;t find filler here. You&apos;ll find pieces with character, history, and style—things you actually want to wear.
+              Every item we carry is hand-picked. We don&apos;t do fakes, we don&apos;t do filler. Just honest pieces with character, priced fairly.
+            </p>
+            <p className="font-sans font-medium text-[15px] text-white/60 leading-[1.8]" style={{ marginTop: 16 }}>
+              Springfield is our home and this community is why we do it. When you shop with us, you&apos;re helping us grow something we believe in — and helping us give back to the community that&apos;s supported us from day one. We&apos;re grateful for every single person who walks through that door.
             </p>
           </div>
 

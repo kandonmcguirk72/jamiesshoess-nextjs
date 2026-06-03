@@ -3,16 +3,42 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useTheme } from 'next-themes'
 import { BRAND } from '@/lib/constants'
-import { useCart } from '@/lib/cart-context'
 import SearchBar from '@/components/SearchBar'
 
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return <div style={{ width: 18, height: 18 }} />
+  const isLight = theme === 'light'
+  return (
+    <button
+      onClick={() => setTheme(isLight ? 'dark' : 'light')}
+      aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
+      className="text-white/40 hover:text-minted transition-colors duration-150"
+    >
+      {isLight ? (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      ) : (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+      )}
+    </button>
+  )
+}
+
 const NAV_LINKS = [
-  { label: 'SHOP',     href: '/#products' },
-  { label: 'VINTAGE',  href: '/#products' },
-  { label: 'MERCH',    href: '/#products' },
-  { label: 'SELL',     href: '/sell' },
-  { label: 'ABOUT',    href: '/about' },
+  { label: 'SHOP',    href: '/#products' },
+  { label: 'VINTAGE', href: '/?filter=vintage#products' },
+  { label: 'MERCH',   href: '/?filter=merch#products' },
+  { label: 'SELL',    href: '/sell' },
+  { label: 'ABOUT',   href: '/about' },
 ]
 
 function InstagramIcon() {
@@ -26,20 +52,9 @@ function InstagramIcon() {
 }
 
 
-function CartIcon() {
-  return (
-    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <path d="M16 10a4 4 0 0 1-8 0" />
-    </svg>
-  )
-}
-
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const { cart, openCart } = useCart()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -51,7 +66,7 @@ export default function Nav() {
     <header
       className="sticky top-0 z-50 border-b border-white/[0.07]"
       style={{
-        background: scrolled ? 'rgba(17,19,18,0.96)' : '#111312',
+        background: scrolled ? 'var(--bg-nav-scrolled)' : 'var(--bg-nav)',
         boxShadow: scrolled ? '0 4px 40px rgba(0,0,0,.9)' : 'none',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         transition: 'background 0.2s, box-shadow 0.2s',
@@ -91,6 +106,7 @@ export default function Nav() {
 
         {/* Desktop actions */}
         <div className="hidden md:flex items-center gap-5 flex-shrink-0">
+          <ThemeToggle />
           <a
             href={BRAND.social.instagram.url}
             target="_blank"
@@ -100,49 +116,17 @@ export default function Nav() {
           >
             <InstagramIcon />
           </a>
-          <button
-            aria-label={`Cart (${cart.length})`}
-            onClick={openCart}
-            className="relative text-white/40 hover:text-minted transition-colors duration-150"
-          >
-            <CartIcon />
-            {cart.length > 0 && (
-              <span
-                className="absolute -top-1.5 -right-1.5 font-sans font-bold text-[10px] text-white flex items-center justify-center rounded-full"
-                style={{ width: 17, height: 17, background: '#F322B3', fontSize: 9 }}
-              >
-                {cart.length}
-              </span>
-            )}
-          </button>
           <a
-            href={BRAND.social.marketplace.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/#products"
             className="font-sans font-bold text-[11px] tracking-[0.14em] uppercase text-leather bg-minted px-4 py-2 rounded-sm hover:bg-white transition-colors duration-150"
           >
             SHOP NOW
           </a>
         </div>
 
-        {/* Mobile search + cart */}
+        {/* Mobile search */}
         <div className="flex md:hidden items-center gap-3">
           <SearchBar />
-          <button
-            aria-label={`Cart (${cart.length})`}
-            onClick={openCart}
-            className="relative text-white/40 hover:text-minted transition-colors duration-150"
-          >
-            <CartIcon />
-            {cart.length > 0 && (
-              <span
-                className="absolute -top-1.5 -right-1.5 font-sans font-bold text-[10px] text-white flex items-center justify-center rounded-full"
-                style={{ width: 17, height: 17, background: '#F322B3', fontSize: 9 }}
-              >
-                {cart.length}
-              </span>
-            )}
-          </button>
         </div>
 
         {/* Mobile hamburger */}
@@ -168,7 +152,7 @@ export default function Nav() {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
             className="overflow-hidden border-t border-white/[0.07] md:hidden"
-            style={{ background: '#111312' }}
+            style={{ background: 'var(--bg-nav)' }}
           >
             <div className="flex flex-col gap-0" style={{ padding: '8px 0 16px' }}>
               {NAV_LINKS.map((link) => (
@@ -187,9 +171,7 @@ export default function Nav() {
                   Wed–Thu 12–6 · Fri–Sat 12–7
                 </p>
                 <a
-                  href={BRAND.social.marketplace.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/#products"
                   className="block w-full bg-minted text-leather font-sans font-bold text-[12px] tracking-[0.14em] uppercase text-center py-3 rounded-sm"
                   onClick={() => setMenuOpen(false)}
                 >
