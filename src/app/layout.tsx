@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Barlow_Condensed, Rajdhani } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
-import { CartProvider } from '@/lib/cart-context'
 import Providers from '@/components/Providers'
 import AnnouncementBar from '@/components/layout/AnnouncementBar'
 import Nav from '@/components/layout/Nav'
@@ -48,13 +47,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${barlow.variable} ${rajdhani.variable}`} suppressHydrationWarning>
       <body>
         <Providers>
-        <CartProvider>
           <a href="#main-content" className="skip-link">Skip to content</a>
           <AnnouncementBar />
           <Nav />
           <main id="main-content">{children}</main>
           <Footer />
-        </CartProvider>
         </Providers>
         <Analytics />
       </body>

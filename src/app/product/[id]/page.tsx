@@ -141,9 +141,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               {/* Action buttons */}
               <div className="flex flex-col gap-3 pt-1">
                 <a
-                  href="https://instagram.com/jamiesshoess"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`mailto:kandon@jamiesshoess.com?subject=${reserveSubject}&body=${reserveBody}`}
                   className="font-display italic font-black uppercase text-leather text-center rounded-sm transition-all duration-150 hover:bg-white active:scale-[0.97]"
                   style={{
                     fontSize: 18,
@@ -151,19 +149,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                     padding: '16px 0',
                     letterSpacing: '0.02em',
                     boxShadow: '0 0 28px rgba(0,236,241,.4)',
-                    display: 'block',
-                  }}
-                >
-                  DM to Buy on Instagram ↗
-                </a>
-                <a
-                  href={`mailto:kandon@jamiesshoess.com?subject=${reserveSubject}&body=${reserveBody}`}
-                  className="font-display italic font-black uppercase text-white text-center rounded-sm border transition-all duration-150 hover:border-minted hover:text-minted"
-                  style={{
-                    fontSize: 16,
-                    padding: '14px 0',
-                    letterSpacing: '0.02em',
-                    borderColor: 'rgba(255,255,255,.15)',
                     display: 'block',
                   }}
                 >

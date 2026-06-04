@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, Suspense } from 'react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { PRODUCTS } from '@/lib/products'
 import type { Product } from '@/lib/products'
 
@@ -64,16 +64,16 @@ function ProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Info */}
-      <div style={{ padding: '10px 12px 8px', flex: 1, display: 'flex', flexDirection: 'column', gap: 4 }}>
+      <div style={{ padding: '10px 12px 12px', flex: 1, display: 'flex', flexDirection: 'column', gap: 3 }}>
         <div style={{ fontFamily: "'Barlow Condensed',sans-serif", fontWeight: 700, fontSize: 12, textTransform: 'uppercase', letterSpacing: '.08em', color: 'var(--color-text-primary)', lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {product.name}
         </div>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <span style={{ fontFamily: "'Barlow Condensed',sans-serif", fontStyle: 'italic', fontWeight: 900, fontSize: 18, color: 'var(--color-accent)', lineHeight: 1 }}>
             ${product.price % 1 === 0 ? product.price : product.price.toFixed(2)}
           </span>
           <span style={{ fontFamily: 'inherit', fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', color: 'var(--color-text-size)', lineHeight: 1 }}>
-            · SZ {product.size}
+            SZ {product.size}
           </span>
         </div>
       </div>
@@ -82,14 +82,15 @@ function ProductCard({ product }: { product: Product }) {
   )
 }
 
-export default function ProductsSection() {
+function ProductsSectionInner() {
+  const searchParams = useSearchParams()
   const [activeFilter, setActiveFilter] = useState('shop')
 
+  // Sync filter from URL — handles nav link clicks (SHOP/VINTAGE/MERCH)
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const f = params.get('filter')?.toLowerCase()
-    if (f && VALID_FILTERS.includes(f)) setActiveFilter(f)
-  }, [])
+    const f = searchParams.get('filter')?.toLowerCase()
+    setActiveFilter(f && VALID_FILTERS.includes(f) ? f : 'shop')
+  }, [searchParams])
 
   const handleFilter = (f: string) => {
     setActiveFilter(f)
@@ -161,5 +162,13 @@ export default function ProductsSection() {
         )}
       </div>
     </section>
+  )
+}
+
+export default function ProductsSection() {
+  return (
+    <Suspense fallback={null}>
+      <ProductsSectionInner />
+    </Suspense>
   )
 }
