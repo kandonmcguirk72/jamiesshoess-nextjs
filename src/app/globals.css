@@ -70,11 +70,22 @@
 [data-theme='light'] .border-white\/\[0\.08\] { border-color: rgba(17,17,17,0.12); }
 [data-theme='light'] .border-white\/\[0\.06\] { border-color: rgba(17,17,17,0.08); }
 [data-theme='light'] .border-t.border-white\/\[0\.07\] { border-color: rgba(17,17,17,0.10); }
+[data-theme='light'] .border-white\/20 { border-color: rgba(17,17,17,0.20); }
+[data-theme='light'] .hover\:border-white\/50:hover { border-color: rgba(17,17,17,0.40); }
+[data-theme='light'] .hover\:text-white:hover { color: #111111; }
+
+/* Hamburger bars — invert in light mode */
+.hamburger-bar { background: #FFFFFF; }
+[data-theme='light'] .hamburger-bar { background: #111111; }
+
+/* Mobile nav hover bg */
+[data-theme='light'] .hover\:bg-white\/\[0\.03\]:hover { background: rgba(17,17,17,0.04); }
 
 /* Light mode form input backgrounds */
 [data-theme='light'] .bg-white\/\[0\.05\] { background: rgba(17,17,17,0.05); }
 [data-theme='light'] .bg-white\/\[0\.04\] { background: rgba(17,17,17,0.04); }
 [data-theme='light'] .bg-white\/\[0\.03\] { background: rgba(17,17,17,0.03); }
+
 
 /* Light mode nav minted text stays cyan (brand) */
 [data-theme='light'] .text-minted { color: #0055CC; }
@@ -292,6 +303,23 @@ details summary::-webkit-details-marker { display: none; }
 
 /* ===================== RULE ===================== */
 hr, .rule { border: none; border-top: 1px solid rgba(255,255,255,.08); }
+
+/* ===================== STORE PHOTO GRID ===================== */
+.store-photo-card:hover .store-photo-img { transform: scale(1.04); }
+.store-photo-card:hover .store-photo-caption { opacity: 1 !important; }
+/* Caption text always white — must be legible over any photo */
+[data-theme='light'] .store-photo-caption span { color: #FFFFFF !important; }
+
+/* ===================== CUSTOMER MARQUEE ===================== */
+@keyframes customerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ===================== MOBILE STICKY BAR ===================== */
+@media (max-width: 768px) {
+  body { padding-bottom: 60px; }
+}
 
 /* ===================== THEME TRANSITION ===================== */
 *, *::before, *::after {

@@ -44,8 +44,8 @@ function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
       className="font-sans font-bold text-[10px] tracking-[0.14em] uppercase flex items-center gap-1.5 rounded-sm border transition-all duration-150 hover:border-minted hover:text-minted"
       style={{
         padding: '6px 10px',
-        border: '1px solid rgba(255,255,255,0.18)',
-        color: 'rgba(255,255,255,0.6)',
+        border: '1px solid var(--color-border)',
+        color: 'var(--color-text-filter)',
       }}
     >
       {isLight ? (
@@ -116,22 +116,21 @@ export default function Nav() {
           JAMIESSHOESS
         </Link>
 
-        {/* Desktop nav links — centered */}
-        <nav className="hidden md:flex items-center gap-8 flex-1 justify-center" aria-label="Main navigation">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="font-sans font-bold text-[11px] tracking-[0.14em] uppercase text-white/45 hover:text-white transition-colors duration-150"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Search — desktop */}
-        <div className="hidden md:block">
+        {/* Desktop: Search + Nav buttons */}
+        <div className="hidden md:flex items-center gap-3 flex-1 px-5">
           <SearchBar />
+          <nav className="flex items-center gap-2" aria-label="Main navigation">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="font-sans font-bold text-[11px] tracking-[0.14em] uppercase text-white rounded-sm border border-white/20 hover:border-white/50 hover:bg-white/[0.05] transition-all duration-150"
+                style={{ padding: '5px 11px' }}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
         </div>
 
         {/* Desktop actions */}
@@ -166,9 +165,9 @@ export default function Nav() {
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
         >
-          <span className={`block w-5 h-[1.5px] bg-white transition-all duration-200 ${menuOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
-          <span className={`block w-5 h-[1.5px] bg-white transition-all duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
-          <span className={`block w-5 h-[1.5px] bg-white transition-all duration-200 ${menuOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`} />
+          <span className={`block w-5 h-[1.5px] hamburger-bar transition-all duration-200 ${menuOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
+          <span className={`block w-5 h-[1.5px] hamburger-bar transition-all duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block w-5 h-[1.5px] hamburger-bar transition-all duration-200 ${menuOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`} />
         </button>
       </div>
 

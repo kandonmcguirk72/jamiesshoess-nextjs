@@ -53,8 +53,8 @@ export default function StorySection() {
                 href={BRAND.address.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-display italic font-black uppercase text-white rounded-sm border-2 transition-all duration-150 hover:border-minted hover:text-minted text-center"
-                style={{ fontSize: 15, padding: '10px 28px', borderColor: 'rgba(255,255,255,.15)', letterSpacing: '0.02em' }}
+                className="font-display italic font-black uppercase text-white rounded-sm border-2 border-white/20 transition-all duration-150 hover:border-minted hover:text-minted text-center"
+                style={{ fontSize: 15, padding: '10px 28px', letterSpacing: '0.02em' }}
               >
                 Get Directions
               </a>

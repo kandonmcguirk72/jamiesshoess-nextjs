@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { PRODUCTS } from '@/lib/products'
+import { PRODUCTS, SQUARESPACE_STORE_URL } from '@/lib/products'
 
 const BADGE_COLOR: Record<string, string> = {
   SALE: '#FF2D2D',
@@ -32,15 +32,13 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const product = PRODUCTS.find((p) => p.id === Number(id))
   if (!product) notFound()
 
+  const isTemplate = product.template === true
   const firstTag = product.tags.find((t) => ['SALE', '1/1', 'NEW', 'VTG'].includes(t))
   const badgeColor = firstTag ? BADGE_COLOR[firstTag] : null
   const description = product.description || DEFAULT_DESCRIPTION
   const isHighPrice = product.price >= 60
 
-  const reserveSubject = encodeURIComponent(`Reserve: ${product.full}`)
-  const reserveBody = encodeURIComponent(
-    `Hi JAMIESSHOESS,\n\nI'd like to reserve the following item:\n\n${product.full} — $${product.price % 1 === 0 ? product.price : product.price.toFixed(2)}\n\nPlease let me know if it's still available!`
-  )
+  const buyUrl = product.squarespaceUrl ?? SQUARESPACE_STORE_URL
 
   return (
     <main className="min-h-screen" style={{ background: 'var(--bg-page)' }}>
@@ -109,7 +107,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               {/* Size badge */}
               <div
                 className="inline-flex items-center gap-3"
-                style={{ borderTop: '1px solid rgba(255,255,255,.07)', borderBottom: '1px solid rgba(255,255,255,.07)', padding: '10px 0' }}
+                style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', padding: '10px 0' }}
               >
                 <span className="font-sans font-bold text-[10px] tracking-[0.18em] uppercase text-white/35">Size</span>
                 <span
@@ -140,24 +138,42 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
               {/* Action buttons */}
               <div className="flex flex-col gap-3 pt-1">
-                <a
-                  href={`mailto:kandon@jamiesshoess.com?subject=${reserveSubject}&body=${reserveBody}`}
-                  className="font-display italic font-black uppercase text-leather text-center rounded-sm transition-all duration-150 hover:bg-white active:scale-[0.97]"
-                  style={{
-                    fontSize: 18,
-                    background: '#00ECF1',
-                    padding: '16px 0',
-                    letterSpacing: '0.02em',
-                    boxShadow: '0 0 28px rgba(0,236,241,.4)',
-                    display: 'block',
-                  }}
-                >
-                  Reserve This Item
-                </a>
+                {isTemplate ? (
+                  <div
+                    className="font-display italic font-black uppercase text-center rounded-sm"
+                    style={{
+                      fontSize: 18,
+                      background: 'rgba(243,34,179,0.1)',
+                      border: '1px solid rgba(243,34,179,0.3)',
+                      color: '#F322B3',
+                      padding: '16px 0',
+                      letterSpacing: '0.02em',
+                    }}
+                  >
+                    Coming Soon — Follow @JAMIESSHOESS
+                  </div>
+                ) : (
+                  <a
+                    href={buyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-display italic font-black uppercase text-leather text-center rounded-sm transition-all duration-150 hover:bg-white active:scale-[0.97]"
+                    style={{
+                      fontSize: 18,
+                      background: '#00ECF1',
+                      padding: '16px 0',
+                      letterSpacing: '0.02em',
+                      boxShadow: '0 0 28px rgba(0,236,241,.4)',
+                      display: 'block',
+                    }}
+                  >
+                    Buy Now
+                  </a>
+                )}
               </div>
 
               <p className="font-sans font-semibold text-[10px] tracking-[0.14em] uppercase text-white/25 text-center">
-                Pick up in store · 302 Park Central East, Springfield MO
+                Checkout via our shop · Local pickup · 302 Park Central East, Springfield MO
               </p>
             </div>
           </div>

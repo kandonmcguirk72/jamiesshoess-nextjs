@@ -50,7 +50,7 @@ export default function Hero() {
               &amp; Sneakers
             </span>
           </h1>
-          <p className="font-sans font-medium text-[14px] text-white leading-relaxed" style={{ maxWidth: 480, margin: '0 auto' }}>
+          <p className="font-sans font-medium text-[14px] leading-relaxed" style={{ color: '#FFFFFF', maxWidth: 480, margin: '0 auto' }}>
             Hand-picked vintage clothing, authenticated sneakers, and in-house merch — all in one store.
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function Hero() {
         <div style={{ width: '100%' }}>
           <div
             className="flex items-center justify-center flex-wrap gap-x-7 gap-y-2"
-            style={{ borderTop: '1px solid rgba(255,255,255,.06)', borderBottom: '1px solid rgba(255,255,255,.06)', padding: '14px 0' }}
+            style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', padding: '14px 0' }}
           >
             {[
               { val: '6,100+', label: 'Instagram Followers' },
