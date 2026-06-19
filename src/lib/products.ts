@@ -8,6 +8,7 @@ export interface Product {
   tags: string[]
   origPrice?: number
   img: string
+  images?: string[]
   stock: number
   emoji: string
   description: string

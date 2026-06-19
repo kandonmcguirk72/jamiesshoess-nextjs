@@ -10,8 +10,11 @@ import InstagramCTA from '@/components/home/InstagramCTA'
 import StorySection from '@/components/home/StorySection'
 import ReviewCTA from '@/components/home/ReviewCTA'
 import EmailCapture from '@/components/home/EmailCapture'
+import { fetchProductImageMap } from '@/lib/squarespace'
 
-export default function HomePage() {
+export default async function HomePage() {
+  const imageMap = await fetchProductImageMap()
+
   return (
     <>
       <Script
@@ -21,7 +24,7 @@ export default function HomePage() {
       />
       <Hero />
       <CountdownBanner />
-      <ProductsSection />
+      <ProductsSection imageMap={imageMap} />
       <FeaturesBar />
       <StorePhotos />
       <CustomerStrip />

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect, Suspense } from 'react'
+import { useState, useMemo, useEffect, useRef, useCallback, Suspense } from 'react'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { PRODUCTS } from '@/lib/products'
@@ -17,17 +17,58 @@ const VALID_FILTER_IDS = FILTERS.map((f) => f.id)
 
 const AVAILABLE = PRODUCTS.filter((p) => p.stock > 0)
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product, imageMap }: { product: Product; imageMap: Record<string, string[]> }) {
   const router = useRouter()
+  const [activeIndex, setActiveIndex] = useState(0)
   const [hovered, setHovered] = useState(false)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const touchStartX = useRef<number | null>(null)
 
   const isTemplate = product.template === true
+  const sqsSlug = product.squarespaceUrl?.split('/p/')?.[1]
+  const imgs = (sqsSlug && imageMap[sqsSlug]?.length)
+    ? imageMap[sqsSlug]
+    : (product.images?.length ? product.images : [product.img])
+  const hasMultiple = imgs.length > 1
+
+  const startCycle = useCallback(() => {
+    if (!hasMultiple) return
+    intervalRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % imgs.length)
+    }, 800)
+  }, [hasMultiple, imgs.length])
+
+  const stopCycle = useCallback(() => {
+    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null }
+  }, [])
+
+  useEffect(() => {
+    if (hovered && !isTemplate) { startCycle() }
+    else { stopCycle(); setActiveIndex(0) }
+    return stopCycle
+  }, [hovered, isTemplate, startCycle, stopCycle])
+
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches[0].clientX
+  }
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (touchStartX.current === null || !hasMultiple) return
+    const delta = touchStartX.current - e.changedTouches[0].clientX
+    if (Math.abs(delta) > 40) {
+      setActiveIndex((prev) =>
+        delta > 0 ? (prev + 1) % imgs.length : (prev - 1 + imgs.length) % imgs.length
+      )
+    }
+    touchStartX.current = null
+  }
 
   return (
     <div
       onClick={isTemplate ? undefined : () => router.push(`/product/${product.id}`)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onTouchStart={isTemplate ? undefined : handleTouchStart}
+      onTouchEnd={isTemplate ? undefined : handleTouchEnd}
       style={{
         background: 'var(--color-bg-card)',
         borderRadius: 10,
@@ -43,7 +84,7 @@ function ProductCard({ product }: { product: Product }) {
       {/* Image */}
       <div style={{ width: '100%', aspectRatio: '4/5', position: 'relative', background: 'var(--color-bg-surface)', flexShrink: 0 }}>
         <Image
-          src={product.img}
+          src={imgs[activeIndex] ?? product.img}
           alt={isTemplate ? 'Coming soon listing' : product.full}
           fill
           sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 220px"
@@ -56,21 +97,14 @@ function ProductCard({ product }: { product: Product }) {
           <div style={{
             position: 'absolute', inset: 0,
             background: 'rgba(8,10,9,0.55)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
             <span style={{
               fontFamily: "'Barlow Condensed',sans-serif",
-              fontStyle: 'italic',
-              fontWeight: 900,
-              fontSize: 13,
-              textTransform: 'uppercase',
-              letterSpacing: '0.12em',
-              color: '#F322B3',
-              border: '1px solid rgba(243,34,179,0.5)',
-              padding: '6px 16px',
-              borderRadius: 3,
+              fontStyle: 'italic', fontWeight: 900, fontSize: 13,
+              textTransform: 'uppercase', letterSpacing: '0.12em',
+              color: '#F322B3', border: '1px solid rgba(243,34,179,0.5)',
+              padding: '6px 16px', borderRadius: 3,
             }}>
               Coming Soon
             </span>
@@ -89,48 +123,69 @@ function ProductCard({ product }: { product: Product }) {
               fontFamily: "'Barlow Condensed',sans-serif",
               fontStyle: 'italic', fontWeight: 900,
               fontSize: 11, textTransform: 'uppercase',
-              letterSpacing: '0.1em',
-              padding: '3px 10px', borderRadius: 3,
+              letterSpacing: '0.1em', padding: '3px 10px', borderRadius: 3,
             }}>
               {badgeTag}
             </span>
           ) : null
         })()}
+
+        {/* Multi-image dots */}
+        {hasMultiple && !isTemplate && (
+          <div style={{
+            position: 'absolute', bottom: 8, left: 0, right: 0,
+            display: 'flex', justifyContent: 'center', gap: 4,
+            pointerEvents: 'none',
+          }}>
+            {imgs.map((_, i) => (
+              <span key={i} style={{
+                display: 'block',
+                width: i === activeIndex ? 14 : 5,
+                height: 5, borderRadius: 3,
+                background: i === activeIndex ? '#00ECF1' : 'rgba(0,236,241,0.3)',
+                transition: 'width .2s, background .2s',
+              }} />
+            ))}
+          </div>
+        )}
+
+        {/* Image counter */}
+        {hasMultiple && !isTemplate && (
+          <div style={{
+            position: 'absolute', top: 8, right: 8,
+            background: 'rgba(8,10,9,0.72)', color: '#8A9290',
+            fontSize: 10, fontFamily: "'Barlow Condensed',sans-serif",
+            fontWeight: 700, letterSpacing: '0.08em',
+            padding: '2px 6px', borderRadius: 2,
+          }}>
+            {activeIndex + 1}/{imgs.length}
+          </div>
+        )}
       </div>
 
       {/* Info */}
       <div style={{ padding: '10px 12px 12px', flex: 1, display: 'flex', flexDirection: 'column', gap: 4 }}>
         <div style={{
           fontFamily: "'Barlow Condensed',sans-serif",
-          fontWeight: 600,
-          fontSize: '0.8rem',
-          textTransform: 'uppercase',
-          letterSpacing: '0.08em',
+          fontWeight: 600, fontSize: '0.8rem',
+          textTransform: 'uppercase', letterSpacing: '0.08em',
           color: isTemplate ? 'var(--color-text-size)' : 'var(--color-text-primary)',
-          lineHeight: 1.25,
-          wordBreak: 'break-word',
-          overflowWrap: 'break-word',
+          lineHeight: 1.25, wordBreak: 'break-word', overflowWrap: 'break-word',
         }}>
           {product.name}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2 }}>
           <span style={{
-            fontFamily: "'Barlow Condensed',sans-serif",
-            fontWeight: 700,
+            fontFamily: "'Barlow Condensed',sans-serif", fontWeight: 700,
             fontSize: '1.1rem',
-            color: isTemplate ? 'var(--color-text-size)' : '#FFFFFF',
-            lineHeight: 1,
+            color: isTemplate ? 'var(--color-text-size)' : '#FFFFFF', lineHeight: 1,
           }}>
             {isTemplate ? '—' : `$${product.price % 1 === 0 ? product.price : product.price.toFixed(2)}`}
           </span>
           <span style={{
-            fontFamily: 'inherit',
-            fontSize: '0.75rem',
-            fontWeight: 700,
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            color: 'var(--color-text-size)',
-            lineHeight: 1,
+            fontFamily: 'inherit', fontSize: '0.75rem', fontWeight: 700,
+            textTransform: 'uppercase', letterSpacing: '0.05em',
+            color: 'var(--color-text-size)', lineHeight: 1,
           }}>
             SZ {product.size}
           </span>
@@ -140,7 +195,7 @@ function ProductCard({ product }: { product: Product }) {
   )
 }
 
-function ProductsSectionInner() {
+function ProductsSectionInner({ imageMap }: { imageMap: Record<string, string[]> }) {
   const searchParams = useSearchParams()
   const [activeFilter, setActiveFilter] = useState('shop')
 
@@ -210,7 +265,7 @@ function ProductsSectionInner() {
         {/* Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(180px,1fr))', gap: 16 }}>
           {filtered.map((p) => (
-            <ProductCard key={p.id} product={p} />
+            <ProductCard key={p.id} product={p} imageMap={imageMap} />
           ))}
         </div>
 
@@ -224,10 +279,10 @@ function ProductsSectionInner() {
   )
 }
 
-export default function ProductsSection() {
+export default function ProductsSection({ imageMap = {} }: { imageMap?: Record<string, string[]> }) {
   return (
     <Suspense fallback={null}>
-      <ProductsSectionInner />
+      <ProductsSectionInner imageMap={imageMap} />
     </Suspense>
   )
 }
