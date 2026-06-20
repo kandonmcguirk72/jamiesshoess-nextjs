@@ -4,10 +4,8 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/webp', 'image/avif'],
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.squarespace-cdn.com',
-      },
+      { protocol: 'https', hostname: 'images.squarespace-cdn.com' },
+      { protocol: 'https', hostname: 'static1.squarespace.com' },
     ],
   },
   headers: async () => [

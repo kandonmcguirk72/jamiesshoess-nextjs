@@ -69,6 +69,7 @@ const NAV_LINKS = [
   { label: 'MERCH',   href: '/?filter=merch#products' },
   { label: 'SELL',    href: '/sell' },
   { label: 'ABOUT',   href: '/about' },
+  { label: 'CART',    href: 'https://shop.jamiesshoes.com/cart', external: true },
 ]
 
 function InstagramIcon() {
@@ -120,16 +121,19 @@ export default function Nav() {
         <div className="hidden md:flex items-center gap-3 flex-1 px-5">
           <SearchBar />
           <nav className="flex items-center gap-2" aria-label="Main navigation">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="font-sans font-bold text-[11px] tracking-[0.14em] uppercase text-white rounded-sm border border-white/20 hover:border-white/50 hover:bg-white/[0.05] transition-all duration-150"
-                style={{ padding: '5px 11px' }}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const cls = "font-sans font-bold text-[11px] tracking-[0.14em] uppercase text-white rounded-sm border border-white/20 hover:border-white/50 hover:bg-white/[0.05] transition-all duration-150"
+              const style = { padding: '5px 11px' }
+              return link.external ? (
+                <a key={link.label} href={link.href} className={cls} style={style}>
+                  {link.label}
+                </a>
+              ) : (
+                <Link key={link.label} href={link.href} className={cls} style={style}>
+                  {link.label}
+                </Link>
+              )
+            })}
           </nav>
         </div>
 
@@ -184,16 +188,18 @@ export default function Nav() {
             style={{ background: 'var(--bg-nav)' }}
           >
             <div className="flex flex-col gap-0" style={{ padding: '8px 0 16px' }}>
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="font-sans font-bold text-[13px] tracking-[0.12em] uppercase text-white/60 hover:text-minted hover:bg-white/[0.03] transition-colors duration-150 px-6 py-3"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {NAV_LINKS.map((link) => {
+                const cls = "font-sans font-bold text-[13px] tracking-[0.12em] uppercase text-white/60 hover:text-minted hover:bg-white/[0.03] transition-colors duration-150 px-6 py-3"
+                return link.external ? (
+                  <a key={link.label} href={link.href} className={cls} onClick={() => setMenuOpen(false)}>
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link key={link.label} href={link.href} className={cls} onClick={() => setMenuOpen(false)}>
+                    {link.label}
+                  </Link>
+                )
+              })}
               <div className="border-t border-white/[0.07] mt-2">
                 <ThemeToggle mobile />
               </div>
