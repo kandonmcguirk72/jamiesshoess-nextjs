@@ -1,8 +1,9 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { PRODUCTS, SQUARESPACE_STORE_URL } from '@/lib/products'
+import { fetchProductImageMap } from '@/lib/squarespace'
+import ProductGallery from '@/components/ProductGallery'
 
 const BADGE_COLOR: Record<string, string> = {
   SALE: '#FF2D2D',
@@ -40,6 +41,13 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
   const buyUrl = product.squarespaceUrl ?? SQUARESPACE_STORE_URL
 
+  // Fetch multi-image gallery from Squarespace
+  const imageMap = await fetchProductImageMap()
+  const sqsSlug = product.squarespaceUrl?.split('/p/')?.[1]
+  const galleryImages = (sqsSlug && imageMap[sqsSlug]?.length)
+    ? imageMap[sqsSlug]
+    : (product.images?.length ? product.images : [product.img])
+
   return (
     <main className="min-h-screen" style={{ background: 'var(--bg-page)' }}>
       <section style={{ padding: 'clamp(32px,5vw,64px) clamp(16px,4vw,52px)' }}>
@@ -58,27 +66,13 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
 
-            {/* Image */}
-            <div style={{ position: 'relative', aspectRatio: '1', borderRadius: 8, overflow: 'hidden', background: '#F2F2F0' }}>
-              <Image
-                src={product.img}
-                alt={product.full}
-                fill
-                sizes="(max-width:768px) 100vw, 500px"
-                style={{ objectFit: 'cover' }}
-                priority
-              />
-              {firstTag && badgeColor && (
-                <span style={{
-                  position: 'absolute', top: 16, left: 16,
-                  background: badgeColor, color: '#080A09',
-                  fontFamily: "'Barlow Condensed',sans-serif", fontStyle: 'italic', fontWeight: 900,
-                  fontSize: 13, textTransform: 'uppercase', padding: '3px 12px', borderRadius: 4,
-                }}>
-                  {firstTag}
-                </span>
-              )}
-            </div>
+            {/* Gallery */}
+            <ProductGallery
+              images={galleryImages}
+              alt={product.full}
+              badge={firstTag ?? null}
+              badgeColor={badgeColor}
+            />
 
             {/* Details */}
             <div className="flex flex-col gap-5">
