@@ -25,7 +25,7 @@ const rajdhani = Rajdhani({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://jamiesshoess.com'),
+  metadataBase: new URL('https://jamiesshoes.com'),
   title: {
     default: 'JAMIESSHOESS | Vintage Clothing & Sneakers · Springfield, MO',
     template: '%s | JAMIESSHOESS',
