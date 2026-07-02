@@ -19,12 +19,20 @@ CANVAS = 2000
 SESSION = new_session("u2net")
 
 
+CANVAS_W, CANVAS_H = 1600, 2000  # 4:5 to match the product-card crop
+
+
 def load_background() -> Image.Image:
     bg = Image.open(BG_PATH).convert("RGB")
-    # crop 4% off each edge to remove the AI watermark, then resize
+    # crop 4% off each edge to remove the AI watermark
     w, h = bg.size
     m = int(w * 0.04)
-    bg = bg.crop((m, m, w - m, h - m)).resize((CANVAS, CANVAS), Image.LANCZOS)
+    bg = bg.crop((m, m, w - m, h - m))
+    # center-crop to 4:5
+    w, h = bg.size
+    cw = int(h * CANVAS_W / CANVAS_H)
+    x0 = (w - cw) // 2
+    bg = bg.crop((x0, 0, x0 + cw, h)).resize((CANVAS_W, CANVAS_H), Image.LANCZOS)
     # subtle blur + darken so the garment pops at thumbnail size
     bg = bg.filter(ImageFilter.GaussianBlur(6))
     bg = ImageEnhance.Brightness(bg).enhance(0.72)
@@ -41,12 +49,12 @@ def cutout(img_bytes: bytes) -> Image.Image:
 
 def compose(bg: Image.Image, fg: Image.Image) -> Image.Image:
     canvas = bg.copy()
-    # fit garment into 78% of canvas, centered, slightly low
-    max_side = int(CANVAS * 0.78)
-    scale = min(max_side / fg.width, max_side / fg.height)
+    # fit garment into the safe area, dead-center
+    max_w, max_h = int(CANVAS_W * 0.82), int(CANVAS_H * 0.74)
+    scale = min(max_w / fg.width, max_h / fg.height)
     fg = fg.resize((int(fg.width * scale), int(fg.height * scale)), Image.LANCZOS)
-    x = (CANVAS - fg.width) // 2
-    y = (CANVAS - fg.height) // 2 + int(CANVAS * 0.03)
+    x = (CANVAS_W - fg.width) // 2
+    y = (CANVAS_H - fg.height) // 2
     # soft drop shadow
     shadow = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
     alpha = fg.split()[3].point(lambda a: int(a * 0.55))
