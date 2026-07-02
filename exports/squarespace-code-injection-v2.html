@@ -1,0 +1,78 @@
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+html,body{background:#080A09!important;color:#F4F4F4!important}
+body{font-family:'Rajdhani',system-ui,sans-serif!important;padding-top:64px!important}
+header#header,.header-announcement-bar-wrapper,.sqs-announcement-bar-dropzone,#announcement-bar-text-inner-id{display:none!important}
+h1,h2,h3,h4,.ProductItem-details-title,.grid-title,.product-title{font-family:'Barlow Condensed',sans-serif!important;font-weight:900!important;font-style:italic!important;text-transform:uppercase!important;letter-spacing:.02em!important;color:#F4F4F4!important}
+#siteWrapper,.site-wrapper,#page,.sections,.page-section,.section-background,.content-wrapper,.view-list,.view-item,.products-flex-container,.ProductItem,.tweak-product-basic-item-width-full .ProductItem-summary,#sqs-cart-root,.cart-container,footer.sections,#footer-sections,.page-section.bright{background:#080A09!important;color:#F4F4F4!important}
+.section-background{background-color:#080A09!important;background-image:none!important}
+p,.sqs-block-content,.ProductItem-details-excerpt,li{color:#F4F4F4}
+a{color:#00ECF1}
+.grid-item{background:#0F1411!important;border:1px solid rgba(0,236,241,.15)!important;border-radius:10px!important;overflow:hidden!important;transition:border-color .18s,box-shadow .18s!important}
+.grid-item:hover{border-color:rgba(0,236,241,.4)!important;box-shadow:0 0 24px rgba(0,236,241,.35)!important}
+.grid-title{font-size:15px!important}
+.grid-prices,.product-price,.ProductItem-product-price{color:#00ECF1!important;font-family:'Barlow Condensed',sans-serif!important;font-weight:700!important;font-style:italic!important}
+.grid-meta-status,.product-mark{background:#00ECF1!important;color:#080A09!important;font-family:'Barlow Condensed',sans-serif!important;font-style:italic!important;font-weight:900!important;text-transform:uppercase!important}
+.sqs-add-to-cart-button,.cart-checkout-button,button[type=submit],.checkout-button{background:#00ECF1!important;color:#080A09!important;border:none!important;font-family:'Barlow Condensed',sans-serif!important;font-weight:900!important;font-style:italic!important;text-transform:uppercase!important;font-size:17px!important;letter-spacing:.03em!important;border-radius:3px!important;box-shadow:0 0 24px rgba(0,236,241,.35)!important}
+.sqs-add-to-cart-button:hover,.cart-checkout-button:hover{background:#fff!important}
+.product-quantity-input input,.quantity-input,input[type=number],select{background:#0F1411!important;color:#F4F4F4!important;border:1px solid rgba(0,236,241,.15)!important;border-radius:3px!important}
+.cart-title,.cart-item-desc a,.item-title{color:#F4F4F4!important}
+.cart-container *,.cart-table,.cart-row{border-color:rgba(0,236,241,.15)!important}
+.variant-option-title,.variant-select-wrapper,label{color:#8A9290!important}
+footer .sqs-block-content,footer p,.sqs-svg-icon--wrapper svg{color:#8A9290!important;fill:#8A9290!important}
+.sqs-svg-icon--wrapper:hover svg{fill:#00ECF1!important}
+input[type=text],input[type=email],input[type=tel],textarea{background:#0F1411!important;color:#F4F4F4!important;border:1px solid rgba(0,236,241,.15)!important}
+.user-accounts-text-link,.user-accounts-link{display:none!important}
+#jhdr{position:fixed;top:0;left:0;right:0;z-index:9999;height:64px;background:rgba(8,10,9,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,52px)}
+#jhdr .jw{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;text-transform:uppercase;font-size:22px;color:#00ECF1;text-decoration:none;letter-spacing:.01em}
+#jhdr nav{display:flex;align-items:center;gap:8px}
+#jhdr nav a{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.2);border-radius:2px;padding:5px 11px;transition:all .15s}
+#jhdr nav a:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.05)}
+#jhdr nav a.jc{background:#00ECF1;color:#080A09;border-color:#00ECF1;font-weight:700}
+#jhdr nav a.jc:hover{background:#fff}
+#jct{display:inline-block;min-width:16px;text-align:center;margin-left:4px}
+@media(max-width:680px){#jhdr{height:56px}body{padding-top:56px!important}#jhdr .jw{font-size:18px}#jhdr nav a.jh{display:none}#jhdr nav a{padding:4px 8px;font-size:10px}}
+</style>
+<script>
+(function(){
+var M='https://www.jamiesshoes.com';
+function hdr(){
+if(document.getElementById('jhdr'))return;
+var h=document.createElement('div');h.id='jhdr';
+h.innerHTML='<a class="jw" href="'+M+'">JAMIESSHOESS</a><nav>'+
+'<a href="/">SHOP</a>'+
+'<a class="jh" href="/vintage-items">VINTAGE</a>'+
+'<a class="jh" href="'+M+'/sell">SELL</a>'+
+'<a class="jh" href="'+M+'/about">ABOUT</a>'+
+'<a class="jc" href="/cart">CART<span id="jct"></span></a></nav>';
+document.body.prepend(h);
+}
+function cart(){
+var q=document.querySelector('.sqs-cart-quantity');
+var t=document.getElementById('jct');
+if(q&&t){var n=q.textContent.trim();t.textContent=n&&n!=='0'?'('+n+')':'';}
+}
+function links(){
+document.querySelectorAll('a').forEach(function(a){
+var h=a.getAttribute('href')||'';
+if(/YOUTUBE\.COM/i.test(h)&&/http:\/\/http/i.test(h))a.setAttribute('href','https://www.youtube.com/@Jamiesshoess417');
+if(h==='/shopp'||h==='/shopp/')a.setAttribute('href','/');
+if(/continue shopping|back to home/i.test(a.textContent))a.setAttribute('href',M);
+});
+}
+function dark(){
+document.querySelectorAll('.page-section,.section-background,#siteWrapper,.content-wrapper').forEach(function(e){
+if(e.style.backgroundColor&&e.style.backgroundColor!=='rgb(8, 10, 9)')e.style.setProperty('background-color','#080A09','important');
+if(e.style.backgroundImage&&/gradient/.test(e.style.backgroundImage))e.style.setProperty('background-image','none','important');
+});
+}
+function boot(){hdr();cart();links();dark();}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+var mo=new MutationObserver(function(){cart();dark();});
+document.addEventListener('DOMContentLoaded',function(){
+mo.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+links();
+});
+window.addEventListener('load',function(){boot();setTimeout(boot,800);});
+})();
+</script>

@@ -84,7 +84,7 @@ export default function Footer() {
             <IconFacebook />
           </a>
           <a
-            href="https://youtube.com/@jamiesshoess"
+            href="https://www.youtube.com/@Jamiesshoess417"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"

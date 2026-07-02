@@ -32,7 +32,7 @@ export function getLocalBusinessSchema() {
       'https://instagram.com/JAMIESSHOESS',
       'https://www.tiktok.com/@jamiesshoess417',
       'https://www.facebook.com/p/jamiesshoess-100080011887058/',
-      'https://youtube.com/@jamiesshoess',
+      'https://www.youtube.com/@Jamiesshoess417',
     ],
   }
 }
