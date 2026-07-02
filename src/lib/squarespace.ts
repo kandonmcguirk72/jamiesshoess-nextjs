@@ -8,7 +8,8 @@ interface SQSImageItem {
 interface SQSVariant {
   price?: number
   attributes?: Record<string, string>
-  stock?: { unlimited?: boolean; quantity?: number }
+  unlimited?: boolean
+  qtyInStock?: number
 }
 
 interface SQSItem {
@@ -94,9 +95,7 @@ export async function fetchSquarespaceProducts(): Promise<SQSRawProduct[]> {
         const inStock =
           variants.length === 0 ||
           variants.some(
-            (v) =>
-              v.stock?.unlimited ||
-              (typeof v.stock?.quantity === 'number' && v.stock.quantity > 0)
+            (v) => v.unlimited || (typeof v.qtyInStock === 'number' && v.qtyInStock > 0)
           )
 
         results.push({
