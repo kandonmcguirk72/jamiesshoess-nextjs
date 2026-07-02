@@ -1,4 +1,14 @@
+import { existsSync } from 'fs'
+import { join } from 'path'
 import { fetchSquarespaceProducts } from './squarespace'
+
+// Branded composite thumbnails (store-wall background) generated in
+// exports/listing-composites and served from public/composites/<slug>.jpg.
+// When one exists it becomes the product's first image.
+function compositeFor(slug: string): string | null {
+  const file = join(process.cwd(), 'public', 'composites', `${slug}.jpg`)
+  return existsSync(file) ? `/composites/${slug}.jpg` : null
+}
 
 export interface Product {
   id: string
@@ -65,8 +75,11 @@ export async function fetchProducts(): Promise<Product[]> {
       price: p.price,
       cat,
       tags,
-      img: p.images[0] ?? '',
-      images: p.images,
+      img: compositeFor(p.slug) ?? p.images[0] ?? '',
+      images: (() => {
+        const c = compositeFor(p.slug)
+        return c ? [c, ...p.images] : p.images
+      })(),
       stock: p.stock,
       emoji: inferEmoji(cat, p.title),
       description: p.description || DEFAULT_DESCRIPTION,
