@@ -124,7 +124,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <p className="font-sans font-semibold text-[10px] tracking-[0.14em] uppercase text-white/20">
-          © 2025 JAMIESSHOESS · Springfield, MO
+          © 2026 JAMIESSHOESS · Springfield, MO
         </p>
       </div>
     </footer>

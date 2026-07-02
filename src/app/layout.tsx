@@ -25,7 +25,7 @@ const rajdhani = Rajdhani({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://jamiesshoes.com'),
+  metadataBase: new URL('https://www.jamiesshoes.com'),
   title: {
     default: 'JAMIESSHOESS | Vintage Clothing & Sneakers · Springfield, MO',
     template: '%s | JAMIESSHOESS',
@@ -48,20 +48,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${barlow.variable} ${rajdhani.variable}`} suppressHydrationWarning>
       <head>
-        {/* TODO: Replace G-XXXXXXXXXX with real GA4 Measurement ID from
-            Google Analytics dashboard before going live */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
-          strategy="afterInteractive"
-        />
-        <Script id="ga4-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-XXXXXXXXXX');
-          `}
-        </Script>
+        {/* GA4 loads only when NEXT_PUBLIC_GA_ID is set in Vercel env */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </head>
       <body>
         <Providers>

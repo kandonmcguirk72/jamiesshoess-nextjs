@@ -5,10 +5,28 @@ import { useState } from 'react'
 export default function EmailCapture() {
   const [phone, setPhone] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (phone.trim()) setSubmitted(true)
+    if (!phone.trim() || sending) return
+    setSending(true)
+    setError('')
+    try {
+      const res = await fetch('/api/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Something went wrong')
+      setSubmitted(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong — try again')
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -54,7 +72,8 @@ export default function EmailCapture() {
               />
               <button
                 type="submit"
-                className="font-sans font-bold text-[12px] tracking-[0.14em] uppercase hover:opacity-90 transition-opacity whitespace-nowrap"
+                disabled={sending}
+                className="font-sans font-bold text-[12px] tracking-[0.14em] uppercase hover:opacity-90 transition-opacity whitespace-nowrap disabled:opacity-50"
                 style={{
                   background: '#00ECF1',
                   color: '#080A09',
@@ -63,9 +82,12 @@ export default function EmailCapture() {
                   boxShadow: '0 0 20px rgba(0,236,241,0.3)',
                 }}
               >
-                Notify Me
+                {sending ? 'Sending…' : 'Notify Me'}
               </button>
             </div>
+            {error && (
+              <p className="font-sans text-[12px] mt-3" style={{ color: '#FF6B6B' }}>{error}</p>
+            )}
           </form>
         )}
 

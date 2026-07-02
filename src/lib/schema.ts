@@ -3,9 +3,9 @@ export function getLocalBusinessSchema() {
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'ClothingStore'],
     name: 'JAMIESSHOESS',
-    url: 'https://jamiesshoess.com',
-    logo: 'https://jamiesshoess.com/brand/logos/logo-circle-badge-transparent.png',
-    image: 'https://jamiesshoess.com/images/store/exterior-street.jpg',
+    url: 'https://www.jamiesshoes.com',
+    logo: 'https://www.jamiesshoes.com/brand/logos/logo-circle-badge-transparent.png',
+    image: 'https://www.jamiesshoes.com/images/store/exterior-street.jpg',
     description:
       "Springfield's sneaker boutique and vintage clothing store. Hand-picked vintage tees, authenticated sneakers, and in-house merch at 302 Park Central East on Historic Route 66.",
     address: {

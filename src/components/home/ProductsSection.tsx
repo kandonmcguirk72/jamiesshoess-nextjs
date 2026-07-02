@@ -2,8 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef, useCallback, Suspense } from 'react'
 import Image from 'next/image'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { PRODUCTS } from '@/lib/products'
+import { useSearchParams } from 'next/navigation'
 import type { Product } from '@/lib/products'
 
 const FILTERS = [
@@ -15,20 +14,13 @@ const FILTERS = [
 ]
 const VALID_FILTER_IDS = FILTERS.map((f) => f.id)
 
-const AVAILABLE = PRODUCTS.filter((p) => p.stock > 0)
-
-function ProductCard({ product, imageMap }: { product: Product; imageMap: Record<string, string[]> }) {
-  const router = useRouter()
+function ProductCard({ product }: { product: Product }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [hovered, setHovered] = useState(false)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const touchStartX = useRef<number | null>(null)
 
-  const isTemplate = product.template === true
-  const sqsSlug = product.squarespaceUrl?.split('/p/')?.[1]
-  const imgs = (sqsSlug && imageMap[sqsSlug]?.length)
-    ? imageMap[sqsSlug]
-    : (product.images?.length ? product.images : [product.img])
+  const imgs = product.images.length ? product.images : [product.img]
   const hasMultiple = imgs.length > 1
 
   const startCycle = useCallback(() => {
@@ -43,10 +35,10 @@ function ProductCard({ product, imageMap }: { product: Product; imageMap: Record
   }, [])
 
   useEffect(() => {
-    if (hovered && !isTemplate) { startCycle() }
+    if (hovered) { startCycle() }
     else { stopCycle(); setActiveIndex(0) }
     return stopCycle
-  }, [hovered, isTemplate, startCycle, stopCycle])
+  }, [hovered, startCycle, stopCycle])
 
   function handleTouchStart(e: React.TouchEvent) {
     touchStartX.current = e.touches[0].clientX
@@ -62,76 +54,60 @@ function ProductCard({ product, imageMap }: { product: Product; imageMap: Record
     touchStartX.current = null
   }
 
+  const badgeTag = product.tags.find((t) => ['SALE', '1/1', 'NEW', 'VTG'].includes(t))
+  const badgeColor: Record<string, string> = { SALE: '#FF2D2D', '1/1': '#00ECF1', NEW: '#FF6B35', VTG: '#00ECF1' }
+
   return (
-    <div
-      onClick={isTemplate ? undefined : () => router.push(`/product/${product.id}`)}
+    <a
+      href={product.squarespaceUrl}
+      aria-label={`${product.full} — view on shop`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onTouchStart={isTemplate ? undefined : handleTouchStart}
-      onTouchEnd={isTemplate ? undefined : handleTouchEnd}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       style={{
         background: 'var(--color-bg-card)',
         borderRadius: 10,
         overflow: 'hidden',
-        cursor: isTemplate ? 'default' : 'pointer',
-        border: `1px solid ${hovered && !isTemplate ? 'rgba(0,236,241,.35)' : 'var(--color-border)'}`,
-        boxShadow: hovered && !isTemplate ? '0 0 20px rgba(0,236,241,.1)' : 'var(--color-card-shadow, none)',
+        cursor: 'pointer',
+        border: `1px solid ${hovered ? 'rgba(0,236,241,.35)' : 'var(--color-border)'}`,
+        boxShadow: hovered ? '0 0 20px rgba(0,236,241,.1)' : 'var(--color-card-shadow, none)',
         transition: 'border-color .18s, box-shadow .18s',
         display: 'flex',
         flexDirection: 'column',
+        textDecoration: 'none',
       }}
     >
       {/* Image */}
       <div style={{ width: '100%', aspectRatio: '4/5', position: 'relative', background: 'var(--color-bg-surface)', flexShrink: 0 }}>
-        <Image
-          src={imgs[activeIndex] ?? product.img}
-          alt={isTemplate ? 'Coming soon listing' : product.full}
-          fill
-          sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 220px"
-          style={{ objectFit: 'cover', objectPosition: 'center top' }}
-          loading="lazy"
-        />
-
-        {/* Template overlay */}
-        {isTemplate && (
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'rgba(8,10,9,0.55)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <span style={{
-              fontFamily: "'Barlow Condensed',sans-serif",
-              fontStyle: 'italic', fontWeight: 900, fontSize: 13,
-              textTransform: 'uppercase', letterSpacing: '0.12em',
-              color: '#F322B3', border: '1px solid rgba(243,34,179,0.5)',
-              padding: '6px 16px', borderRadius: 3,
-            }}>
-              Coming Soon
-            </span>
-          </div>
+        {imgs[0] && (
+          <Image
+            src={imgs[activeIndex] ?? imgs[0]}
+            alt={product.full}
+            fill
+            sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 220px"
+            style={{ objectFit: 'cover', objectPosition: 'center top' }}
+            loading="lazy"
+          />
         )}
 
         {/* Badge */}
-        {!isTemplate && product.tags.length > 0 && (() => {
-          const badgeTag = product.tags.find((t) => ['SALE','1/1','NEW','VTG'].includes(t))
-          const badgeColor: Record<string, string> = { SALE: '#FF2D2D', '1/1': '#00ECF1', NEW: '#FF6B35', VTG: '#00ECF1' }
-          return badgeTag ? (
-            <span style={{
-              position: 'absolute', top: 10, left: 10,
-              background: badgeColor[badgeTag] ?? '#00ECF1',
-              color: '#080A09',
-              fontFamily: "'Barlow Condensed',sans-serif",
-              fontStyle: 'italic', fontWeight: 900,
-              fontSize: 11, textTransform: 'uppercase',
-              letterSpacing: '0.1em', padding: '3px 10px', borderRadius: 3,
-            }}>
-              {badgeTag}
-            </span>
-          ) : null
-        })()}
+        {badgeTag && (
+          <span style={{
+            position: 'absolute', top: 10, left: 10,
+            background: badgeColor[badgeTag] ?? '#00ECF1',
+            color: '#080A09',
+            fontFamily: "'Barlow Condensed',sans-serif",
+            fontStyle: 'italic', fontWeight: 900,
+            fontSize: 11, textTransform: 'uppercase',
+            letterSpacing: '0.1em', padding: '3px 10px', borderRadius: 3,
+          }}>
+            {badgeTag}
+          </span>
+        )}
 
         {/* Multi-image dots */}
-        {hasMultiple && !isTemplate && (
+        {hasMultiple && (
           <div style={{
             position: 'absolute', bottom: 8, left: 0, right: 0,
             display: 'flex', justifyContent: 'center', gap: 4,
@@ -150,7 +126,7 @@ function ProductCard({ product, imageMap }: { product: Product; imageMap: Record
         )}
 
         {/* Image counter */}
-        {hasMultiple && !isTemplate && (
+        {hasMultiple && (
           <div style={{
             position: 'absolute', top: 8, right: 8,
             background: 'rgba(8,10,9,0.72)', color: '#8A9290',
@@ -169,7 +145,7 @@ function ProductCard({ product, imageMap }: { product: Product; imageMap: Record
           fontFamily: "'Barlow Condensed',sans-serif",
           fontWeight: 600, fontSize: '0.8rem',
           textTransform: 'uppercase', letterSpacing: '0.08em',
-          color: isTemplate ? 'var(--color-text-size)' : 'var(--color-text-primary)',
+          color: 'var(--color-text-primary)',
           lineHeight: 1.25, wordBreak: 'break-word', overflowWrap: 'break-word',
         }}>
           {product.name}
@@ -177,10 +153,11 @@ function ProductCard({ product, imageMap }: { product: Product; imageMap: Record
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2, marginTop: 2 }}>
           <span style={{
             fontFamily: "'Barlow Condensed',sans-serif", fontWeight: 700,
-            fontSize: '1.1rem',
-            color: isTemplate ? 'var(--color-text-size)' : '#FFFFFF', lineHeight: 1,
+            fontSize: '1.1rem', color: '#FFFFFF', lineHeight: 1,
           }}>
-            {isTemplate ? '—' : `$${product.price % 1 === 0 ? product.price : product.price.toFixed(2)}`}
+            {product.price > 0
+              ? `$${product.price % 1 === 0 ? product.price : product.price.toFixed(2)}`
+              : 'See price'}
           </span>
           <span style={{
             fontFamily: 'inherit', fontSize: '0.75rem', fontWeight: 700,
@@ -191,11 +168,11 @@ function ProductCard({ product, imageMap }: { product: Product; imageMap: Record
           </span>
         </div>
       </div>
-    </div>
+    </a>
   )
 }
 
-function ProductsSectionInner({ imageMap }: { imageMap: Record<string, string[]> }) {
+function ProductsSectionInner({ products }: { products: Product[] }) {
   const searchParams = useSearchParams()
   const [activeFilter, setActiveFilter] = useState('shop')
 
@@ -210,11 +187,13 @@ function ProductsSectionInner({ imageMap }: { imageMap: Record<string, string[]>
     window.history.replaceState(null, '', `/${qs}#products`)
   }
 
+  const available = products.filter((p) => p.stock > 0)
+
   const filtered = useMemo(() => {
-    if (activeFilter === 'shop') return AVAILABLE
-    if (activeFilter === 'new') return AVAILABLE.filter((p) => p.tags.includes('NEW'))
-    return AVAILABLE.filter((p) => p.cat === activeFilter)
-  }, [activeFilter])
+    if (activeFilter === 'shop') return available
+    if (activeFilter === 'new') return available.filter((p) => p.tags.includes('NEW'))
+    return available.filter((p) => p.cat === activeFilter)
+  }, [activeFilter, available])
 
   return (
     <section
@@ -265,7 +244,7 @@ function ProductsSectionInner({ imageMap }: { imageMap: Record<string, string[]>
         {/* Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(180px,1fr))', gap: 16 }}>
           {filtered.map((p) => (
-            <ProductCard key={p.id} product={p} imageMap={imageMap} />
+            <ProductCard key={p.id} product={p} />
           ))}
         </div>
 
@@ -279,10 +258,10 @@ function ProductsSectionInner({ imageMap }: { imageMap: Record<string, string[]>
   )
 }
 
-export default function ProductsSection({ imageMap = {} }: { imageMap?: Record<string, string[]> }) {
+export default function ProductsSection({ products = [] }: { products?: Product[] }) {
   return (
     <Suspense fallback={null}>
-      <ProductsSectionInner imageMap={imageMap} />
+      <ProductsSectionInner products={products} />
     </Suspense>
   )
 }

@@ -10,10 +10,12 @@ import InstagramCTA from '@/components/home/InstagramCTA'
 import StorySection from '@/components/home/StorySection'
 import ReviewCTA from '@/components/home/ReviewCTA'
 import EmailCapture from '@/components/home/EmailCapture'
-import { fetchProductImageMap } from '@/lib/squarespace'
+import { fetchProducts } from '@/lib/products'
+
+export const revalidate = 3600
 
 export default async function HomePage() {
-  const imageMap = await fetchProductImageMap()
+  const products = await fetchProducts()
 
   return (
     <>
@@ -24,7 +26,7 @@ export default async function HomePage() {
       />
       <Hero />
       <CountdownBanner />
-      <ProductsSection imageMap={imageMap} />
+      <ProductsSection products={products} />
       <FeaturesBar />
       <StorePhotos />
       <CustomerStrip />

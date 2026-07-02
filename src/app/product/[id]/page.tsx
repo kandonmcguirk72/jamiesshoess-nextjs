@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { PRODUCTS, SQUARESPACE_STORE_URL } from '@/lib/products'
-import { fetchProductImageMap } from '@/lib/squarespace'
+import { fetchProducts, SQUARESPACE_STORE_URL } from '@/lib/products'
 import ProductGallery from '@/components/ProductGallery'
+
+export const revalidate = 3600
 
 const BADGE_COLOR: Record<string, string> = {
   SALE: '#FF2D2D',
@@ -14,13 +15,10 @@ const BADGE_COLOR: Record<string, string> = {
 
 const DEFAULT_DESCRIPTION = 'Vintage condition. Minor wear expected. All items are hand-picked and authenticated by JAMIESSHOESS.'
 
-export function generateStaticParams() {
-  return PRODUCTS.map((p) => ({ id: String(p.id) }))
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params
-  const product = PRODUCTS.find((p) => p.id === Number(id))
+  const products = await fetchProducts()
+  const product = products.find((p) => p.id === id)
   if (!product) return {}
   return {
     title: `${product.full} — JAMIESSHOESS`,
@@ -30,23 +28,16 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const product = PRODUCTS.find((p) => p.id === Number(id))
+  const products = await fetchProducts()
+  const product = products.find((p) => p.id === id)
   if (!product) notFound()
 
-  const isTemplate = product.template === true
   const firstTag = product.tags.find((t) => ['SALE', '1/1', 'NEW', 'VTG'].includes(t))
   const badgeColor = firstTag ? BADGE_COLOR[firstTag] : null
   const description = product.description || DEFAULT_DESCRIPTION
   const isHighPrice = product.price >= 60
-
+  const galleryImages = product.images.length ? product.images : [product.img]
   const buyUrl = product.squarespaceUrl ?? SQUARESPACE_STORE_URL
-
-  // Fetch multi-image gallery from Squarespace
-  const imageMap = await fetchProductImageMap()
-  const sqsSlug = product.squarespaceUrl?.split('/p/')?.[1]
-  const galleryImages = (sqsSlug && imageMap[sqsSlug]?.length)
-    ? imageMap[sqsSlug]
-    : (product.images?.length ? product.images : [product.img])
 
   return (
     <main className="min-h-screen" style={{ background: 'var(--bg-page)' }}>
@@ -79,7 +70,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
               {/* Category label */}
               <p className="font-sans font-bold text-[10px] tracking-[0.22em] uppercase text-minted/70">
-                {product.cat === 'merch' ? 'JAMIESSHOESS Merch' : product.cat === 'headwear' ? 'Headwear' : 'Vintage'}
+                {product.cat === 'merch' ? 'JAMIESSHOESS Merch' : product.cat === 'headwear' ? 'Headwear' : product.cat === 'sneakers' ? 'Sneakers' : 'Vintage'}
               </p>
 
               {/* Name + price */}
@@ -94,7 +85,9 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                   className="font-display italic font-black text-minted"
                   style={{ fontSize: 'clamp(30px,5vw,46px)', letterSpacing: '0.01em', lineHeight: 1 }}
                 >
-                  ${product.price % 1 === 0 ? product.price : product.price.toFixed(2)}
+                  {product.price > 0
+                    ? `$${product.price % 1 === 0 ? product.price : product.price.toFixed(2)}`
+                    : 'See price →'}
                 </div>
               </div>
 
@@ -130,40 +123,24 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 {description}
               </p>
 
-              {/* Action buttons */}
+              {/* Buy button */}
               <div className="flex flex-col gap-3 pt-1">
-                {isTemplate ? (
-                  <div
-                    className="font-display italic font-black uppercase text-center rounded-sm"
-                    style={{
-                      fontSize: 18,
-                      background: 'rgba(243,34,179,0.1)',
-                      border: '1px solid rgba(243,34,179,0.3)',
-                      color: '#F322B3',
-                      padding: '16px 0',
-                      letterSpacing: '0.02em',
-                    }}
-                  >
-                    Coming Soon — Follow @JAMIESSHOESS
-                  </div>
-                ) : (
-                  <a
-                    href={buyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-display italic font-black uppercase text-leather text-center rounded-sm transition-all duration-150 hover:bg-white active:scale-[0.97]"
-                    style={{
-                      fontSize: 18,
-                      background: '#00ECF1',
-                      padding: '16px 0',
-                      letterSpacing: '0.02em',
-                      boxShadow: '0 0 28px rgba(0,236,241,.4)',
-                      display: 'block',
-                    }}
-                  >
-                    Buy Now
-                  </a>
-                )}
+                <a
+                  href={buyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-display italic font-black uppercase text-leather text-center rounded-sm transition-all duration-150 hover:bg-white active:scale-[0.97]"
+                  style={{
+                    fontSize: 18,
+                    background: '#00ECF1',
+                    padding: '16px 0',
+                    letterSpacing: '0.02em',
+                    boxShadow: '0 0 28px rgba(0,236,241,.4)',
+                    display: 'block',
+                  }}
+                >
+                  Buy Now
+                </a>
               </div>
 
               <p className="font-sans font-semibold text-[10px] tracking-[0.14em] uppercase text-white/25 text-center">
