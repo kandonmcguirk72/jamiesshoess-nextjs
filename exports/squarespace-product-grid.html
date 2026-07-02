@@ -1,0 +1,427 @@
+<!-- ═══════════════════════════════════════════════════════════════════
+     JAMIESSHOESS — Custom Product Grid
+     Paste this as a Code Block on the /home page in Squarespace.
+     Products, images, prices, and sizes load automatically from your
+     Squarespace store — no manual updates needed.
+     ═══════════════════════════════════════════════════════════════════ -->
+
+<div id="jssh-root">
+
+  <div class="jssh-hd">
+    <div>
+      <p class="jssh-eye">Now In-Store</p>
+      <h2 class="jssh-ttl">Shop the Floor</h2>
+    </div>
+    <span class="jssh-ct" id="jssh-ct"></span>
+  </div>
+
+  <div class="jssh-flt" id="jssh-flt">
+    <button class="jssh-fb active" data-f="all">Shop All</button>
+    <button class="jssh-fb" data-f="vintage">Vintage</button>
+    <button class="jssh-fb" data-f="merch">Merch</button>
+    <button class="jssh-fb" data-f="headwear">Headwear</button>
+    <button class="jssh-fb" data-f="sneakers">Sneakers</button>
+  </div>
+
+  <div class="jssh-grid" id="jssh-grid">
+    <div class="jssh-msg">Loading inventory...</div>
+  </div>
+
+</div>
+
+<style>
+/* ── Reset / Container ─────────────────────────────────────── */
+#jssh-root *,#jssh-root *::before,#jssh-root *::after{box-sizing:border-box;margin:0;padding:0;}
+#jssh-root{
+  background:#080A09;
+  padding:clamp(36px,6vw,60px) clamp(16px,4vw,48px);
+  max-width:1260px;
+  margin:0 auto;
+  font-family:'Rajdhani','Segoe UI',sans-serif;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.jssh-hd{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;margin-bottom:28px;
+}
+.jssh-eye{
+  font-size:10px;font-weight:700;letter-spacing:.22em;
+  text-transform:uppercase;color:rgba(0,236,241,.7);margin-bottom:6px;
+}
+.jssh-ttl{
+  font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;
+  text-transform:uppercase;color:#fff;
+  font-size:clamp(26px,4vw,40px);letter-spacing:.01em;line-height:.95;
+}
+.jssh-ct{
+  font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.3);
+  flex-shrink:0;
+}
+
+/* ── Filter tabs ────────────────────────────────────────────── */
+.jssh-flt{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.jssh-fb{
+  font-family:'Rajdhani','Segoe UI',sans-serif;
+  font-size:11px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;padding:7px 18px;
+  border-radius:4px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.12);
+  background:transparent;color:rgba(255,255,255,.45);
+  transition:border-color .15s,background .15s,color .15s;
+  white-space:nowrap;
+}
+.jssh-fb.active,
+.jssh-fb:hover{
+  border-color:#00ECF1;
+  background:rgba(0,236,241,.08);
+  color:#00ECF1;
+}
+
+/* ── Grid ───────────────────────────────────────────────────── */
+.jssh-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:14px;
+}
+.jssh-msg{
+  grid-column:1/-1;text-align:center;
+  padding:60px 0;font-size:12px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);
+}
+
+/* ── Card ───────────────────────────────────────────────────── */
+.jssh-card{
+  display:flex;flex-direction:column;
+  background:#111413;border-radius:10px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.07);
+  text-decoration:none;
+  transition:border-color .18s,box-shadow .18s;
+  cursor:pointer;
+}
+.jssh-card:hover{
+  border-color:rgba(0,236,241,.35);
+  box-shadow:0 0 22px rgba(0,236,241,.1);
+}
+
+/* ── Card image ─────────────────────────────────────────────── */
+.jssh-iw{
+  width:100%;aspect-ratio:4/5;
+  position:relative;background:#181c1a;
+  overflow:hidden;flex-shrink:0;
+}
+.jssh-img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center top;
+  display:block;
+}
+
+/* ── Badge ──────────────────────────────────────────────────── */
+.jssh-bdg{
+  position:absolute;top:10px;left:10px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-style:italic;font-weight:900;
+  font-size:11px;text-transform:uppercase;
+  letter-spacing:.1em;padding:3px 10px;
+  border-radius:3px;color:#080A09;
+}
+
+/* ── Counter ────────────────────────────────────────────────── */
+.jssh-ctr{
+  position:absolute;top:8px;right:8px;
+  background:rgba(8,10,9,.72);color:#8A9290;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;font-size:10px;
+  letter-spacing:.08em;padding:2px 6px;border-radius:2px;
+}
+
+/* ── Dots ───────────────────────────────────────────────────── */
+.jssh-dots{
+  position:absolute;bottom:8px;left:0;right:0;
+  display:flex;justify-content:center;gap:4px;
+  pointer-events:none;
+}
+.jssh-dot{
+  display:block;height:5px;border-radius:3px;
+  background:rgba(0,236,241,.3);
+  transition:width .2s,background .2s;
+  width:5px;
+}
+.jssh-dot.on{width:14px;background:#00ECF1;}
+
+/* ── Card info ──────────────────────────────────────────────── */
+.jssh-info{
+  padding:10px 12px 12px;flex:1;
+  display:flex;flex-direction:column;gap:3px;
+}
+.jssh-nm{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:600;font-size:.8rem;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:#fff;line-height:1.25;
+  word-break:break-word;overflow-wrap:break-word;
+}
+.jssh-pr{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;font-size:1.1rem;
+  color:#fff;line-height:1;margin-top:2px;
+}
+.jssh-sz{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.75rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.05em;
+  color:rgba(255,255,255,.35);line-height:1;
+}
+
+/* ── Mobile ─────────────────────────────────────────────────── */
+@media(max-width:540px){
+  .jssh-grid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  #jssh-root{padding:28px 12px;}
+}
+</style>
+
+<script>
+(function(){
+'use strict';
+
+/* ── Config ──────────────────────────────────────────── */
+var FETCH_URL = '/home?format=json';
+var MAX_PAGES = 6;
+var BADGE_CLR = {VTG:'#00ECF1',NEW:'#FF6B35','1/1':'#00ECF1',SALE:'#FF2D2D'};
+var SHOW_TAGS = {VTG:1,NEW:1,'1/1':1,SALE:1};
+var CYCLE_MS  = 800;
+
+/* ── State ───────────────────────────────────────────── */
+var all = [];
+var activeFilter = 'all';
+
+/* ── Helpers ─────────────────────────────────────────── */
+function inferCat(title, cats){
+  var lc = (cats||[]).map(function(c){return c.toLowerCase();});
+  if(lc.indexOf('merch')>=0||lc.indexOf('merchandise')>=0) return 'merch';
+  if(lc.indexOf('headwear')>=0||lc.indexOf('hats')>=0)     return 'headwear';
+  if(lc.indexOf('sneakers')>=0||lc.indexOf('shoes')>=0)    return 'sneakers';
+  if(lc.indexOf('vintage')>=0)                              return 'vintage';
+  var t = title.toUpperCase();
+  if(/^JAMIESSHOESS\s|^JS\s/.test(t)) return /\b(HAT|BEANIE|CAP)\b/.test(t)?'headwear':'merch';
+  if(/\b(HAT|BEANIE|CAP)\b/.test(t)) return 'headwear';
+  if(/\b(NIKE|JORDAN|ADIDAS|AIR FORCE|DUNK|YEEZY|NEW BALANCE|VANS|CONVERSE|REEBOK|PUMA)\b/.test(t)) return 'sneakers';
+  return 'vintage';
+}
+
+function getSize(variants, title){
+  for(var i=0;i<(variants||[]).length;i++){
+    var a=variants[i].attributes||{};
+    var s=a.Size||a.size||a.SIZE;
+    if(s) return s;
+  }
+  var m=title.match(/\b(XXS|XS|S[-\/]M|M[-\/]L|L[-\/]XL|XL[-\/]XXL|3XL|XXXL|2XL|XXL|XL|OS|LOT)\b/i);
+  return m?m[1].toUpperCase():'OS';
+}
+
+function getTag(tags){
+  for(var i=0;i<(tags||[]).length;i++){
+    var t=tags[i].toUpperCase();
+    if(SHOW_TAGS[t]) return t;
+  }
+  return null;
+}
+
+function imgUrl(u){ return u+(u.indexOf('?')<0?'?':'&')+'format=500w'; }
+
+/* ── Build one card ──────────────────────────────────── */
+function makeCard(p){
+  var a=document.createElement('a');
+  a.className='jssh-card';
+  a.href=p.url;
+
+  /* image wrap */
+  var iw=document.createElement('div');
+  iw.className='jssh-iw';
+
+  var img=document.createElement('img');
+  img.className='jssh-img';
+  img.src=imgUrl(p.imgs[0]);
+  img.alt=p.title;
+  img.loading='lazy';
+  iw.appendChild(img);
+
+  /* badge */
+  var tag=getTag(p.tags);
+  if(tag){
+    var bdg=document.createElement('span');
+    bdg.className='jssh-bdg';
+    bdg.textContent=tag;
+    bdg.style.background=BADGE_CLR[tag]||'#00ECF1';
+    iw.appendChild(bdg);
+  }
+
+  /* multi-image: counter + dots + cycling */
+  var n=p.imgs.length;
+  if(n>1){
+    var ctr=document.createElement('div');
+    ctr.className='jssh-ctr';
+    ctr.textContent='1/'+n;
+    iw.appendChild(ctr);
+
+    var dotsEl=document.createElement('div');
+    dotsEl.className='jssh-dots';
+    for(var di=0;di<n;di++){
+      var d=document.createElement('span');
+      d.className='jssh-dot'+(di===0?' on':'');
+      dotsEl.appendChild(d);
+    }
+    iw.appendChild(dotsEl);
+
+    var dots=dotsEl.querySelectorAll('.jssh-dot');
+    var cur=0;
+    var timer=null;
+
+    function setFrame(i){
+      cur=i;
+      img.src=imgUrl(p.imgs[cur]);
+      ctr.textContent=(cur+1)+'/'+n;
+      dots.forEach(function(dot,j){dot.className='jssh-dot'+(j===cur?' on':'');});
+    }
+
+    a.addEventListener('mouseenter',function(){
+      timer=setInterval(function(){setFrame((cur+1)%n);},CYCLE_MS);
+    });
+    a.addEventListener('mouseleave',function(){
+      clearInterval(timer);timer=null;setFrame(0);
+    });
+
+    /* touch swipe */
+    var tx=null;
+    a.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;},{passive:true});
+    a.addEventListener('touchend',function(e){
+      if(tx===null) return;
+      var dx=tx-e.changedTouches[0].clientX;
+      if(Math.abs(dx)>40) setFrame(dx>0?(cur+1)%n:(cur-1+n)%n);
+      tx=null;
+    });
+  }
+
+  a.appendChild(iw);
+
+  /* info */
+  var info=document.createElement('div');
+  info.className='jssh-info';
+
+  var nm=document.createElement('div');
+  nm.className='jssh-nm';
+  nm.textContent=p.title;
+
+  var pr=document.createElement('div');
+  pr.className='jssh-pr';
+  pr.textContent=p.price>0?'$'+(p.price%1===0?p.price:p.price.toFixed(2)):'See price';
+
+  var sz=document.createElement('div');
+  sz.className='jssh-sz';
+  sz.textContent='SZ '+p.size;
+
+  info.appendChild(nm);
+  info.appendChild(pr);
+  info.appendChild(sz);
+  a.appendChild(info);
+
+  return a;
+}
+
+/* ── Render ──────────────────────────────────────────── */
+function render(){
+  var grid=document.getElementById('jssh-grid');
+  var ctEl=document.getElementById('jssh-ct');
+  grid.innerHTML='';
+
+  var list=all.filter(function(p){
+    if(activeFilter==='all') return true;
+    if(activeFilter==='new') return p.tags.some(function(t){return t.toUpperCase()==='NEW';});
+    return p.cat===activeFilter;
+  });
+
+  ctEl.textContent=list.length+(list.length===1?' item':' items');
+
+  if(!list.length){
+    var msg=document.createElement('div');
+    msg.className='jssh-msg';
+    msg.textContent='No items in this category right now — check back Saturday';
+    grid.appendChild(msg);
+    return;
+  }
+
+  var frag=document.createDocumentFragment();
+  list.forEach(function(p){frag.appendChild(makeCard(p));});
+  grid.appendChild(frag);
+}
+
+/* ── Filter buttons ──────────────────────────────────── */
+document.getElementById('jssh-flt').addEventListener('click',function(e){
+  var btn=e.target.closest('.jssh-fb');
+  if(!btn) return;
+  document.querySelectorAll('#jssh-flt .jssh-fb').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  activeFilter=btn.getAttribute('data-f');
+  render();
+});
+
+/* ── Fetch all pages ─────────────────────────────────── */
+function fetchPage(page,acc){
+  return fetch(FETCH_URL+'&page='+page)
+    .then(function(r){return r.json();})
+    .then(function(data){
+      (data.items||[]).forEach(function(item){
+        if(!item.fullUrl||!item.title) return;
+
+        /* images */
+        var imgs=[];
+        (item.items||[]).forEach(function(img){
+          if(img.assetUrl&&imgs.indexOf(img.assetUrl)<0) imgs.push(img.assetUrl);
+        });
+        if(!imgs.length&&item.assetUrl) imgs.push(item.assetUrl);
+        if(!imgs.length) return;
+
+        /* price */
+        var cents=item.price||(item.variants&&item.variants[0]&&item.variants[0].price)||0;
+
+        /* stock */
+        var variants=item.variants||[];
+        var inStock=variants.length===0||variants.some(function(v){
+          return v.stock&&(v.stock.unlimited||(typeof v.stock.quantity==='number'&&v.stock.quantity>0));
+        });
+        if(!inStock) return;
+
+        acc.push({
+          title: item.title,
+          price: cents/100,
+          size:  getSize(variants,item.title),
+          cat:   inferCat(item.title,item.categories||[]),
+          tags:  item.tags||[],
+          imgs:  imgs,
+          url:   item.fullUrl,
+        });
+      });
+
+      if(data.pagination&&data.pagination.nextPage&&page<MAX_PAGES){
+        return fetchPage(page+1,acc);
+      }
+      return acc;
+    });
+}
+
+/* ── Init ────────────────────────────────────────────── */
+fetchPage(1,[])
+  .then(function(products){
+    all=products;
+    render();
+  })
+  .catch(function(err){
+    console.error('[JSSH grid]',err);
+    var g=document.getElementById('jssh-grid');
+    g.innerHTML='<div class="jssh-msg">Could not load products — please refresh the page</div>';
+  });
+
+})();
+</script>

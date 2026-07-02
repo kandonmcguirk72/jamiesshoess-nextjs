@@ -15,10 +15,12 @@ a{color:#00ECF1}
 .grid-meta-status,.product-mark{background:#00ECF1!important;color:#080A09!important;font-family:'Barlow Condensed',sans-serif!important;font-style:italic!important;font-weight:900!important;text-transform:uppercase!important}
 .sqs-add-to-cart-button,.cart-checkout-button,button[type=submit],.checkout-button{background:#00ECF1!important;color:#080A09!important;border:none!important;font-family:'Barlow Condensed',sans-serif!important;font-weight:900!important;font-style:italic!important;text-transform:uppercase!important;font-size:17px!important;letter-spacing:.03em!important;border-radius:3px!important;box-shadow:0 0 24px rgba(0,236,241,.35)!important}
 .sqs-add-to-cart-button:hover,.cart-checkout-button:hover{background:#fff!important}
-.product-quantity-input input,.quantity-input,input[type=number],select{background:#0F1411!important;color:#F4F4F4!important;border:1px solid rgba(0,236,241,.15)!important;border-radius:3px!important}
+.product-quantity-input input,input[name="quantity-input"],.quantity-input,input[type=number],select{background:#0F1411!important;color:#F4F4F4!important;border:1px solid rgba(0,236,241,.15)!important;border-radius:3px!important}
+.decrease-button,.increase-button{background:#0F1411!important;color:#00ECF1!important;border:1px solid rgba(0,236,241,.15)!important}
 .cart-title,.cart-item-desc a,.item-title{color:#F4F4F4!important}
 .cart-container *,.cart-table,.cart-row{border-color:rgba(0,236,241,.15)!important}
 .variant-option-title,.variant-select-wrapper,label{color:#8A9290!important}
+footer#footer-sections,footer#footer-sections .page-section{background:#080A09!important;border-top:1px solid rgba(0,236,241,.15)!important}
 footer .sqs-block-content,footer p,.sqs-svg-icon--wrapper svg{color:#8A9290!important;fill:#8A9290!important}
 .sqs-svg-icon--wrapper:hover svg{fill:#00ECF1!important}
 input[type=text],input[type=email],input[type=tel],textarea{background:#0F1411!important;color:#F4F4F4!important;border:1px solid rgba(0,236,241,.15)!important}
@@ -70,7 +72,7 @@ function boot(){hdr();cart();links();dark();}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 var mo=new MutationObserver(function(){cart();dark();});
 document.addEventListener('DOMContentLoaded',function(){
-mo.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+mo.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class','data-section-theme']});
 links();
 });
 window.addEventListener('load',function(){boot();setTimeout(boot,800);});

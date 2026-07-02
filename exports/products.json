@@ -1,0 +1,133 @@
+{
+  "_note": "JAMIESSHOESS product data export — 2026-06-04. Template items are placeholders. Replace with real product data before importing to Squarespace.",
+  "_squarespace_api_endpoint": "POST https://api.squarespace.com/1.0/commerce/products",
+  "_squarespace_api_docs": "https://developers.squarespace.com/commerce-apis/products",
+  "products": [
+    {
+      "id": 1,
+      "name": "ITEM NAME",
+      "full": "ITEM NAME",
+      "size": "SIZE",
+      "price": 0,
+      "cat": "merch",
+      "tags": [],
+      "stock": 1,
+      "description": "New listing coming soon. Follow @JAMIESSHOESS for drop updates.",
+      "img": "/images/listing-background.png",
+      "template": true,
+      "_squarespace_payload": {
+        "type": "PHYSICAL",
+        "name": "ITEM NAME",
+        "isVisible": true,
+        "description": "New listing coming soon. Follow @JAMIESSHOESS for drop updates.",
+        "tags": ["merch"],
+        "variants": [
+          {
+            "sku": "JS-001",
+            "pricing": { "basePrice": { "currency": "USD", "value": "0.00" } },
+            "stock": { "quantity": 1, "unlimited": false },
+            "attributes": { "Size": "SIZE" }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "ITEM NAME",
+      "full": "ITEM NAME",
+      "size": "SIZE",
+      "price": 0,
+      "cat": "vintage",
+      "tags": [],
+      "stock": 1,
+      "description": "New listing coming soon. Follow @JAMIESSHOESS for drop updates.",
+      "img": "/images/listing-background.png",
+      "template": true,
+      "_squarespace_payload": {
+        "type": "PHYSICAL",
+        "name": "ITEM NAME",
+        "isVisible": true,
+        "description": "New listing coming soon. Follow @JAMIESSHOESS for drop updates.",
+        "tags": ["vintage", "VTG"],
+        "variants": [
+          {
+            "sku": "JS-002",
+            "pricing": { "basePrice": { "currency": "USD", "value": "0.00" } },
+            "stock": { "quantity": 1, "unlimited": false },
+            "attributes": { "Size": "SIZE" }
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "ITEM NAME",
+      "full": "ITEM NAME",
+      "size": "SIZE",
+      "price": 0,
+      "cat": "merch",
+      "tags": [],
+      "stock": 1,
+      "description": "New listing coming soon. Follow @JAMIESSHOESS for drop updates.",
+      "img": "/images/listing-background.png",
+      "template": true
+    },
+    {
+      "id": 4,
+      "name": "ITEM NAME",
+      "full": "ITEM NAME",
+      "size": "SIZE",
+      "price": 0,
+      "cat": "vintage",
+      "tags": [],
+      "stock": 1,
+      "description": "New listing coming soon. Follow @JAMIESSHOESS for drop updates.",
+      "img": "/images/listing-background.png",
+      "template": true
+    },
+    {
+      "id": 5,
+      "name": "ITEM NAME",
+      "full": "ITEM NAME",
+      "size": "SIZE",
+      "price": 0,
+      "cat": "headwear",
+      "tags": [],
+      "stock": 1,
+      "description": "New listing coming soon. Follow @JAMIESSHOESS for drop updates.",
+      "img": "/images/listing-background.png",
+      "template": true
+    },
+    {
+      "id": 6,
+      "name": "ITEM NAME",
+      "full": "ITEM NAME",
+      "size": "SIZE",
+      "price": 0,
+      "cat": "merch",
+      "tags": [],
+      "stock": 1,
+      "description": "New listing coming soon. Follow @JAMIESSHOESS for drop updates.",
+      "img": "/images/listing-background.png",
+      "template": true
+    }
+  ],
+  "_real_product_template": {
+    "_instructions": "When you have real products, structure each one like this example:",
+    "example": {
+      "type": "PHYSICAL",
+      "name": "VTG 1995 STARTER BULLS JACKET",
+      "isVisible": true,
+      "description": "Vintage condition. Minor wear expected. All items are hand-picked and authenticated by JAMIESSHOESS.",
+      "tags": ["vintage", "VTG", "headwear"],
+      "variants": [
+        {
+          "sku": "JS-VTG-001",
+          "pricing": { "basePrice": { "currency": "USD", "value": "85.00" } },
+          "stock": { "quantity": 1, "unlimited": false },
+          "attributes": { "Size": "L" }
+        }
+      ]
+    }
+  }
+}

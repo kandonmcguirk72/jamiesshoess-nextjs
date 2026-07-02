@@ -1,0 +1,463 @@
+<!--
+  JAMIESSHOESS — Squarespace Code Injection SOURCE
+  Minified output (squarespace-code-injection.html): 16,601 chars
+  Paste the MINIFIED file into: jamiesshoess.squarespace.com → Settings → Code Injection → Header
+
+  SECTIONS:
+  1. Font import
+  2. Global dark reset
+  3. Typography
+  4. Hero CTA overrides
+  5. Header / nav
+  6. Product grid (V2 selectors only — V1 removed after Sept 2025 migration)
+  7. Product Detail Page (PDP)
+  8. Category filter tab bar
+  9. Cart / checkout
+  10. Footer
+  11. Mobile overrides
+  12. JavaScript (all behavior in one IIFE)
+-->
+
+<!-- ===== 1. FONT IMPORT ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===== 2. GLOBAL DARK RESET ===== */
+/* background:#080A09 on body + all Squarespace wrapper classes.
+   !important is required here because Squarespace's own JS dynamically
+   re-applies inline background:white on [data-color-scheme] sections.
+   The darkSections() JS function handles that at runtime. */
+html, body {
+  background: #080A09 !important;
+  color: #F4F4F4 !important;
+  font-family: -apple-system, sans-serif !important;
+}
+.Main, #page, .site-wrapper, .site-content, .content-wrapper,
+.collection-content, .collection-type-products,
+.sqs-layout, .sqs-row, .sqs-col-12,
+.sqs-block, .sqs-block-content, .page-section,
+main, #content, [data-color-scheme], [data-section-id] {
+  background: #080A09 !important;
+}
+
+/* ===== 3. TYPOGRAPHY ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 900 !important;
+  font-style: italic !important;
+  text-transform: uppercase !important;
+  color: #fff !important;
+  letter-spacing: .02em !important;
+}
+p, li { color: rgba(255,255,255,.75) !important; }
+a { color: #00ECF1 !important; text-decoration: none !important; }
+a:hover { color: #fff !important; }
+
+/* ===== 4. HERO CTA OVERRIDES =====
+   Global a { color: #00ECF1 } would override the inline color:#080A09
+   on the primary CTA button. We need higher specificity (ID + class)
+   plus !important to win the cascade battle. */
+#js-hero .js-cta-p { color: #080A09 !important; background: #00ECF1 !important; box-shadow: 0 0 28px rgba(0,236,241,.4) !important; }
+#js-hero .js-cta-p:hover { background: #fff !important; color: #080A09 !important; }
+#js-hero .js-cta-s { color: #fff !important; border: 1px solid rgba(255,255,255,.2) !important; background: transparent !important; }
+#js-hero .js-cta-s:hover { color: #00ECF1 !important; border-color: #00ECF1 !important; }
+
+/* ===== 5. HEADER / NAV ===== */
+header, #header, .Header, .Header--top, .site-header, .header-inner, .header-nav {
+  background: #080A09 !important;
+  border-bottom: 1px solid rgba(0,236,241,.15) !important;
+}
+.sqs-announcement-bar { background: #080A09 !important; border: none !important; }
+
+/* Hide Squarespace's logo image — JS replaces it with the JAMIESSHOESS wordmark */
+header img, #header img, .Header img, .site-header img,
+.header-title-nav-wrapper img, .Header-branding img,
+.site-logo img, [class*="branding"] img { display: none !important; }
+
+.header-nav-item a, .nav-wrapper a, .header-nav-folder-title, .Header-nav a {
+  color: rgba(255,255,255,.7) !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  font-size: 13px !important;
+  letter-spacing: .1em !important;
+  text-transform: uppercase !important;
+}
+.header-nav-item a:hover, .Header-nav a:hover { color: #00ECF1 !important; }
+.header-menu-nav-item a, .header-nav-folder-content { background: #0d0f0e !important; color: #fff !important; }
+.sqs-cart-count { background: #00ECF1 !important; color: #080A09 !important; font-family: 'Barlow Condensed', sans-serif !important; font-weight: 900 !important; }
+
+/* ===== 6. PRODUCT GRID (V2 ONLY) =====
+   V1 selectors (.ProductList-*, .ProductItem-*) dropped after Sept 2025 migration. */
+.product-list, .product-list-container { background: #080A09 !important; }
+
+.product-list-item {
+  background: #0F1411 !important;
+  border: 1px solid rgba(0,236,241,.15) !important;
+  border-radius: 4px !important;
+  overflow: hidden !important;
+  transition: border-color .2s, transform .2s, box-shadow .2s !important;
+}
+.product-list-item:hover {
+  border-color: rgba(0,236,241,.5) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 0 24px rgba(0,236,241,.2) !important;
+}
+.product-list-item img { background: #0A0D0C !important; display: block !important; }
+
+.product-list-item-title {
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 900 !important;
+  font-style: italic !important;
+  text-transform: uppercase !important;
+  color: #F4F4F4 !important;
+  font-size: 14px !important;
+}
+.product-list-item-price, .product-price {
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  color: #00ECF1 !important;
+  font-size: 16px !important;
+}
+
+/* Hide "Quick View" overlay — the card is already the click target */
+.product-list-item-quick-view { display: none !important; }
+
+/* ===== 7. PRODUCT DETAIL PAGE (PDP) ===== */
+.product-details, [data-product-detail-layout] { background: #080A09 !important; }
+
+.product-title h1, .product-title {
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 900 !important;
+  font-style: italic !important;
+  text-transform: uppercase !important;
+  color: #fff !important;
+  font-size: clamp(28px, 4vw, 48px) !important;
+  /* pink text-shadow to match main site hero headline style */
+  text-shadow: 2px 2px 0 rgba(243,34,179,.4) !important;
+}
+.product-description { color: rgba(255,255,255,.6) !important; font-size: 15px !important; line-height: 1.7 !important; }
+
+select, .sqs-select {
+  background: #0F1411 !important;
+  color: #fff !important;
+  border: 1px solid rgba(0,236,241,.25) !important;
+  border-radius: 6px !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 700 !important;
+}
+select option { background: #0F1411 !important; color: #fff !important; }
+
+input[type="number"], input[type="text"], input[type="email"], input[type="tel"], textarea {
+  background: #0F1411 !important;
+  color: #fff !important;
+  border: 1px solid rgba(0,236,241,.2) !important;
+  border-radius: 6px !important;
+}
+::placeholder { color: rgba(255,255,255,.2) !important; }
+input:focus, textarea:focus, select:focus {
+  border-color: #00ECF1 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(0,236,241,.15) !important;
+}
+
+.sqs-add-to-cart-button, .product-add-to-cart-button {
+  background: #00ECF1 !important;
+  color: #080A09 !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 900 !important;
+  font-style: italic !important;
+  text-transform: uppercase !important;
+  letter-spacing: .05em !important;
+  font-size: 16px !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 16px 32px !important;
+  box-shadow: 0 0 28px rgba(0,236,241,.3) !important;
+  width: 100% !important;
+}
+
+/* ===== 8. CATEGORY FILTER TAB BAR ===== */
+.product-list-filters, .category-filter-list {
+  display: flex !important;
+  gap: 20px !important;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid rgba(0,236,241,.15) !important;
+  list-style: none !important;
+}
+.product-list-filter-list-item a, .category-filter-list a {
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  text-transform: uppercase !important;
+  font-size: 15px !important;
+  color: rgba(255,255,255,.45) !important;
+  padding-bottom: 14px !important;
+  border-bottom: 2px solid transparent !important;
+  transition: color .15s, border-color .15s !important;
+  margin-bottom: -1px !important; /* overlap container border to create connected-tab effect */
+}
+.product-list-filter-list-item a:hover,
+.product-list-filter-list-item--active a { color: #00ECF1 !important; }
+.product-list-filter-list-item--active a { border-bottom-color: #00ECF1 !important; }
+.product-list-filter-separator { display: none !important; } /* hide pipe characters between filters */
+
+/* ===== 9. CART / CHECKOUT ===== */
+#cart-overlay, .CartContainer, .sqs-cart-container, .Cart { background: #0c0e0d !important; color: #fff !important; }
+.CartHeader { background: #0c0e0d !important; border-bottom: 1px solid rgba(0,236,241,.12) !important; }
+.CartHeader-title { font-family: 'Barlow Condensed', sans-serif !important; font-weight: 900 !important; font-style: italic !important; text-transform: uppercase !important; color: #fff !important; }
+.CartItem-title { color: #fff !important; font-family: 'Barlow Condensed', sans-serif !important; font-weight: 700 !important; font-style: italic !important; }
+.CartItem-price { color: #00ECF1 !important; font-weight: 900 !important; }
+.CartFooter { background: #0c0e0d !important; border-top: 1px solid rgba(0,236,241,.12) !important; }
+.CartFooter a, .CartFooter button, .cart-checkout-button {
+  background: #00ECF1 !important;
+  color: #080A09 !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 900 !important;
+  font-style: italic !important;
+  text-transform: uppercase !important;
+  border: none !important;
+  border-radius: 6px !important;
+}
+.order-summary, .checkout-order-summary {
+  background: #0F1411 !important;
+  border: 1px solid rgba(0,236,241,.1) !important;
+  border-radius: 8px !important;
+}
+button[type="submit"] {
+  background: #00ECF1 !important;
+  color: #080A09 !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 900 !important;
+  font-style: italic !important;
+  text-transform: uppercase !important;
+  border: none !important;
+  border-radius: 6px !important;
+  width: 100% !important;
+  padding: 16px !important;
+  font-size: 16px !important;
+  box-shadow: 0 0 28px rgba(0,236,241,.3) !important;
+}
+
+/* ===== 10. FOOTER ===== */
+footer, #footer, .Footer, .sqs-footer-wrapper {
+  background: #0A0D0C !important;
+  border-top: 1px solid rgba(0,236,241,.2) !important;
+}
+footer a, .Footer a { color: rgba(255,255,255,.35) !important; }
+footer a:hover, .Footer a:hover { color: #00ECF1 !important; }
+/* Hide Squarespace branding + broken social link list (JS injects corrected links) */
+#sqs-site-by-squarespace, .sqs-footer-social-list { display: none !important; }
+
+/* ===== MISC ===== */
+.page-section, [data-section-theme] { border: none !important; outline: none !important; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #080A09; }
+::-webkit-scrollbar-thumb { background: rgba(0,236,241,.25); border-radius: 3px; }
+
+/* ===== 11. MOBILE OVERRIDES ===== */
+@media (max-width: 767px) {
+  body { padding-bottom: 64px; }
+  .product-list { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+  /* Hero: minimum 96px top padding ensures it clears Squarespace's fixed mobile header (~70–90px).
+     fixHeroPadding() in JS also measures the actual header height at runtime. */
+  #js-hero { padding-top: 96px !important; padding-left: 16px !important; padding-right: 16px !important; padding-bottom: 36px !important; }
+  .js-hero-logo { width: 88px !important; height: 88px !important; }
+  .js-hero-logo img { width: 78px !important; height: 78px !important; }
+  .js-hero-stats { gap: 12px !important; }
+  .js-hero-btns { flex-direction: column !important; width: 100% !important; gap: 8px !important; }
+  #js-hero .js-cta-p, #js-hero .js-cta-s { width: 100% !important; text-align: center !important; display: block !important; box-sizing: border-box !important; }
+}
+</style>
+
+<script>
+/*
+  All runtime behavior in one IIFE to avoid polluting global scope.
+
+  Functions:
+    pageType()        — detects list / item / cart from body classes + URL
+    darkSections()    — forces dark bg on Squarespace sections via JS setProperty
+                        (CSS !important alone loses to Squarespace's own JS inline styles)
+    fixHeroPadding()  — measures actual header height and adjusts hero top padding
+                        MUST be called OUTSIDE the "if hero doesn't exist" guard
+                        so the 700ms retry re-measures when header is fully rendered
+    fixCartLinks()    — rewrites "Continue Shopping" → "Back to JAMIESSHOESS" + main site URL
+    fixFooter()       — injects corrected social links row into footer
+    run()             — orchestrates all of the above on DOMContentLoaded + 700ms retry
+
+  Observers / timers:
+    MutationObserver  — re-runs darkSections + fixCartLinks + fixFooter when Squarespace
+                        dynamically renders new sections (e.g. cart overlay, product images)
+    resize listener   — debounces fixHeroPadding (100ms) so hero padding stays correct
+                        when the user rotates their device or resizes the window
+*/
+(function() {
+  var BG = '#080A09', AC = '#00ECF1', MAIN = 'https://jamiesshoes.com';
+  var LOGO = MAIN + '/brand/logos/logo-circle-badge-transparent.png';
+  // NOTE: no crossorigin="anonymous" on the img — Vercel does not send
+  // Access-Control-Allow-Origin headers for /brand/* static files,
+  // so adding crossorigin causes the browser to silently block the image.
+
+  // ---- HERO HTML STRING ----
+  // Injected as first child of #page/.Main/main on product listing pages only.
+  // Kept as a JS string so it can reference BG/AC variables.
+  var HERO = '<section id="js-hero" style="background:' + BG + ';padding:clamp(80px,9vw,110px) 20px clamp(40px,5vw,60px);display:flex;justify-content:center;border-bottom:1px solid rgba(255,255,255,.07)">'
+    + '<div style="max-width:560px;width:100%;display:flex;flex-direction:column;align-items:center;text-align:center;gap:20px">'
+    + '<div class="js-hero-logo" style="width:120px;height:120px;border-radius:50%;border:2px solid rgba(0,236,241,.5);box-shadow:0 0 22px rgba(0,236,241,.38),0 0 50px rgba(0,236,241,.14);background:' + BG + ';display:flex;align-items:center;justify-content:center;flex-shrink:0">'
+    + '<img src="' + LOGO + '" alt="JAMIESSHOESS" style="width:110px;height:110px;object-fit:contain;border-radius:50%;display:block">'
+    + '</div>'
+    + '<div style="font-size:10px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.28)">Springfield, MO &bull; Downtown &bull; The 417</div>'
+    + '<h1 style="font-family:Barlow Condensed,sans-serif;font-weight:900;font-style:italic;font-size:clamp(34px,5.5vw,58px);line-height:.9;text-transform:uppercase;margin:0;color:#fff">'
+    + '<span style="text-shadow:2px 2px 0 rgba(243,34,179,.5)">Vintage Clothing</span><br>'
+    + '<span style="color:' + AC + ';text-shadow:2px 2px 0 rgba(243,34,179,.4)">&amp; Sneakers</span>'
+    + '</h1>'
+    + '<div class="js-hero-stats" style="width:100%;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);padding:10px 0;display:flex;justify-content:center;gap:20px;flex-wrap:wrap">'
+    + '<div style="text-align:center;min-width:56px"><div style="font-family:Barlow Condensed,sans-serif;font-weight:900;font-style:italic;font-size:17px;color:' + AC + '">6,100+</div><div style="font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28)">Instagram</div></div>'
+    + '<div style="text-align:center;min-width:56px"><div style="font-family:Barlow Condensed,sans-serif;font-weight:900;font-style:italic;font-size:17px;color:' + AC + '">Weekly</div><div style="font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28)">New Drops</div></div>'
+    + '<div style="text-align:center;min-width:56px"><div style="font-family:Barlow Condensed,sans-serif;font-weight:900;font-style:italic;font-size:17px;color:' + AC + '">100%</div><div style="font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28)">Authentic</div></div>'
+    + '</div>'
+    + '<div class="js-hero-btns" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;width:100%">'
+    + '<a href="/" class="js-cta-p" style="font-family:Barlow Condensed,sans-serif;font-weight:900;font-style:italic;font-size:15px;text-transform:uppercase;letter-spacing:.04em;color:' + BG + '!important;background:' + AC + ';padding:12px 32px;border-radius:6px;text-decoration:none;display:inline-block">Browse the Store</a>'
+    + '<a href="https://instagram.com/JAMIESSHOESS" target="_blank" class="js-cta-s" style="font-family:Barlow Condensed,sans-serif;font-weight:900;font-style:italic;font-size:15px;text-transform:uppercase;letter-spacing:.04em;color:#fff!important;padding:11px 24px;border-radius:6px;border:1px solid rgba(255,255,255,.18);text-decoration:none;display:inline-block">@JAMIESSHOESS &#x2197;</a>'
+    + '</div>'
+    + '<div style="font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.18)">Wed&ndash;Thu 12&ndash;6&nbsp;&bull;&nbsp;Fri&ndash;Sat 12&ndash;7&nbsp;&bull;&nbsp;Free Local Pickup</div>'
+    + '</div></section>';
+
+  function pageType() {
+    // view-item = Squarespace body class for individual product pages
+    if (document.body.classList.contains('view-item') || document.querySelector('.product-details')) return 'item';
+    var p = window.location.pathname.toLowerCase();
+    if (p.indexOf('cart') > -1 || p.indexOf('checkout') > -1) return 'cart';
+    return 'list';
+  }
+
+  function darkSections() {
+    // Must use setProperty with 'important' flag — CSS !important alone loses
+    // to Squarespace's own JS-applied inline background-color: white.
+    document.querySelectorAll('[data-color-scheme],[data-section-id],.page-section').forEach(function(el) {
+      el.style.setProperty('background-color', BG, 'important');
+      el.style.setProperty('background', BG, 'important');
+    });
+  }
+
+  function fixHeroPadding() {
+    var hero = document.getElementById('js-hero');
+    if (!hero) return;
+    var hdr = document.querySelector('header,#header,.Header,.site-header');
+    var hh = hdr ? (hdr.getBoundingClientRect().height || hdr.offsetHeight || 0) : 0;
+    if (hh > 0) {
+      var cur = parseInt(getComputedStyle(hero).paddingTop) || 80;
+      if (hh + 24 > cur) hero.style.paddingTop = (hh + 24) + 'px';
+    }
+  }
+
+  function fixCartLinks() {
+    document.querySelectorAll('a').forEach(function(a) {
+      var t = (a.textContent || '').toLowerCase().trim();
+      if ((t === 'continue shopping' || t === 'keep shopping') && a.href.indexOf('jamiesshoes.com') < 0) {
+        a.href = MAIN;
+        a.textContent = 'Back to JAMIESSHOESS';
+        a.style.cssText = 'color:' + AC + '!important;font-family:"Barlow Condensed",sans-serif;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.04em;font-size:14px';
+      }
+    });
+  }
+
+  function fixFooter() {
+    // Inject corrected social links, hiding Squarespace's broken auto-rendered ones.
+    // YouTube was entered incorrectly in SS settings as "http://http:/YOUTUBE.COM/JAMIESSHOESS"
+    var ft = document.querySelector('footer,#footer,.Footer,.sqs-footer-wrapper');
+    if (!ft || ft.querySelector('#js-ft-social')) return;
+    var s = document.createElement('div');
+    s.id = 'js-ft-social';
+    s.style.cssText = 'padding:20px 0 12px;display:flex;justify-content:center;gap:20px;flex-wrap:wrap';
+    [
+      ['IG', 'https://instagram.com/JAMIESSHOESS'],
+      ['TikTok', 'https://www.tiktok.com/@jamiesshoess417'],
+      ['FB', 'https://www.facebook.com/p/jamiesshoess-100080011887058/'],
+      ['YouTube', 'https://youtube.com/@jamiesshoess']
+    ].forEach(function(l) {
+      s.innerHTML += '<a href="' + l[1] + '" target="_blank" rel="noopener" style="color:rgba(255,255,255,.5)!important;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-style:italic;font-size:13px;letter-spacing:.1em;text-transform:uppercase">' + l[0] + '</a>';
+    });
+    ft.insertAdjacentElement('afterbegin', s);
+  }
+
+  function run() {
+    var type = pageType();
+    darkSections();
+
+    // Hide Squarespace's logo image elements
+    document.querySelectorAll('header img,#header img,.Header img,.site-header img').forEach(function(i) {
+      i.style.setProperty('display', 'none', 'important');
+    });
+
+    // Replace logo with JAMIESSHOESS wordmark
+    var ns = ['.header-title-nav-wrapper', '.Header-branding', '.site-logo', '[class*="branding"]'];
+    for (var n = 0; n < ns.length; n++) {
+      var el = document.querySelector(ns[n]);
+      if (el && !el.querySelector('.js-wm')) {
+        var img = el.querySelector('img');
+        if (img) img.style.setProperty('display', 'none', 'important');
+        var wm = document.createElement('a');
+        // On listing page: wordmark links to the store root.
+        // On item/cart pages: wordmark links back to main brand site.
+        wm.href = (type === 'list') ? '/' : MAIN;
+        wm.className = 'js-wm';
+        wm.textContent = 'JAMIESSHOESS';
+        wm.style.cssText = 'font-family:"Barlow Condensed",sans-serif;font-weight:900;font-style:italic;font-size:clamp(17px,2.5vw,22px);color:' + AC + ';text-transform:uppercase;letter-spacing:.01em;text-decoration:none;text-shadow:0 0 16px rgba(0,236,241,.5),0 0 36px rgba(0,236,241,.22);white-space:nowrap;display:block';
+        el.appendChild(wm);
+        break;
+      }
+    }
+
+    // Inject hero on listing pages only
+    if (type === 'list' && !document.getElementById('js-hero')) {
+      var ts = ['#page', '#content', '.Main', '.content-wrapper', 'main'];
+      for (var t = 0; t < ts.length; t++) {
+        var c = document.querySelector(ts[t]);
+        if (c) { c.insertAdjacentHTML('afterbegin', HERO); break; }
+      }
+    }
+
+    // IMPORTANT: fixHeroPadding must be called OUTSIDE the "if hero doesn't exist"
+    // block above. The 700ms setTimeout retry calls run() again when the hero
+    // already exists, and that's when the header height is finally measurable.
+    fixHeroPadding();
+
+    // Inject "← All Items" breadcrumb on PDP
+    if (type === 'item' && !document.getElementById('js-back')) {
+      var b = document.createElement('div');
+      b.id = 'js-back';
+      b.style.cssText = 'background:' + BG + ';padding:10px 24px;border-bottom:1px solid rgba(255,255,255,.07)';
+      b.innerHTML = '<a href="/" style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-style:italic;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);text-decoration:none">&#8592; All Items</a>';
+      var pg = document.querySelector('#page,.Main,main');
+      if (pg) pg.insertAdjacentElement('afterbegin', b);
+    }
+
+    fixCartLinks();
+    fixFooter();
+  }
+
+  // Debounced resize handler so hero padding stays correct on device rotation
+  var _rt;
+  window.addEventListener('resize', function() { clearTimeout(_rt); _rt = setTimeout(fixHeroPadding, 100); });
+
+  // MutationObserver re-applies dark backgrounds + cart link fixes whenever
+  // Squarespace dynamically renders new sections (cart overlay, product images, etc.)
+  new MutationObserver(function() { darkSections(); fixCartLinks(); fixFooter(); })
+    .observe(document.body, { childList: true, subtree: true, attributeFilter: ['style', 'class'] });
+
+  // Run immediately if DOM is ready, otherwise wait for DOMContentLoaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+  // Second pass at 700ms — by this time Squarespace's own JS has finished
+  // rendering the header, so fixHeroPadding() gets the real header height.
+  setTimeout(run, 700);
+})();
+</script>

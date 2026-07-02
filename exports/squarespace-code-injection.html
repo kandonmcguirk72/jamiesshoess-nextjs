@@ -1,10 +1,10 @@
-<script>(function(){var p=location.pathname;if(!/^\/(home|cart|checkout|account)(\/|$)|^\/$/.test(p)){location.replace(p==='/about'?'https://jamiesshoes.com/about':'https://jamiesshoes.com');}})();</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;1,700;1,900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;1,700;1,900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 
 /* === BASE === */
 html,body{background:#080A09!important;color:#F4F4F4!important;}
 *{box-sizing:border-box;}
-body{font-family:system-ui,sans-serif;padding-top:58px!important;}
+body{font-family:'Rajdhani',system-ui,sans-serif;padding-top:58px!important;}
 @media(max-width:768px){
   body{padding-top:52px!important;}
   #jhdr{height:52px!important;padding:0 16px!important;}
@@ -14,6 +14,11 @@ body{font-family:system-ui,sans-serif;padding-top:58px!important;}
 /* === HIDE SQS NATIVE HEADER + ANNOUNCEMENT BAR === */
 header#header,.header-announcement-bar-wrapper,.sqs-announcement-bar-dropzone{display:none!important;}
 
+/* === HIDE NATIVE PRODUCT LIST (replaced by custom code block grid) === */
+.view-list .product-list-section,
+.view-list .ProductList,
+.view-list [class*="product-list"]{display:none!important;}
+
 /* === TYPOGRAPHY === */
 h1,h2,h3,h4,.product-title,.product-list-item-title{
   font-family:'Barlow Condensed',sans-serif!important;
@@ -21,10 +26,7 @@ h1,h2,h3,h4,.product-title,.product-list-item-title{
   text-transform:uppercase!important;letter-spacing:.03em!important;
 }
 
-/* === OVERRIDE SQS BRIGHT/LIGHT THEMES ===
-   Squarespace sets data-section-theme="bright" on product sections
-   and adds class "bright" which triggers their light color scheme.
-   We nuke all of it. */
+/* === OVERRIDE SQS BRIGHT/LIGHT THEMES === */
 [data-section-theme],
 .page-section,
 .bright.page-section,
@@ -56,7 +58,7 @@ h1,h2,h3,h4,.product-title,.product-list-item-title{
   font-size:22px;letter-spacing:.05em;text-transform:uppercase;
   color:#00ECF1;text-shadow:2px 2px 0 rgba(243,34,179,.55);text-decoration:none;
 }
-#jhdr nav{display:flex;gap:20px;}
+#jhdr nav{display:flex;gap:20px;align-items:center;}
 #jhdr nav a{
   font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;
   letter-spacing:.1em;text-transform:uppercase;color:#F4F4F4;text-decoration:none;
@@ -65,12 +67,13 @@ h1,h2,h3,h4,.product-title,.product-list-item-title{
 #jcc{color:#00ECF1;margin-left:3px;}
 #jcc[data-n="0"]{display:none;}
 
-/* === HERO (shop /home page only) + BACK LINK (product page only) === */
+/* === HERO (home page only) + BACK LINK (product page only) === */
 body:not(.view-list) #jhero{display:none;}
 body:not(.view-item) #jbc{display:none;}
+
 #jhero{
-  max-width:840px;margin:0 auto 28px;
-  padding:clamp(20px,5vw,44px) 16px 24px;text-align:center;
+  max-width:840px;margin:0 auto 10px;
+  padding:clamp(20px,5vw,40px) 16px 16px;text-align:center;
 }
 #jhero *{font-family:'Barlow Condensed',sans-serif;}
 .jl{
@@ -90,12 +93,6 @@ body:not(.view-item) #jbc{display:none;}
 .jst{display:flex;justify-content:center;gap:32px;margin-bottom:6px;}
 @media(max-width:480px){.jst{gap:16px;flex-wrap:wrap;}}
 .jstn{display:block;font-weight:900;font-style:italic;font-size:clamp(30px,6vw,52px);color:#00ECF1;line-height:1;}
-.jbp{
-  background:#00ECF1;color:#080A09;font-weight:900;font-style:italic;
-  font-size:14px;letter-spacing:.06em;text-transform:uppercase;
-  text-decoration:none;padding:12px 26px;border-radius:3px;display:inline-block;
-  transition:box-shadow .2s,transform .15s;
-}
 .jbs{
   border:2px solid #00ECF1;color:#00ECF1;font-weight:900;font-style:italic;
   font-size:14px;letter-spacing:.06em;text-transform:uppercase;
@@ -108,37 +105,7 @@ body:not(.view-item) #jbc{display:none;}
   font-size:12px;letter-spacing:.12em;text-transform:uppercase;
   color:#8A9290;text-decoration:none;margin:14px 0 4px 18px;
 }
-
-/* === PRODUCT LIST GRID === */
-.product-list-item{
-  background:#0F1411!important;
-  border:1px solid rgba(0,236,241,.15)!important;
-  border-radius:4px!important;overflow:hidden!important;
-  transition:transform .2s,border-color .2s,box-shadow .2s!important;
-}
-.product-list-item:hover{
-  transform:translateY(-3px)!important;
-  border-color:rgba(0,236,241,.4)!important;
-  box-shadow:0 0 20px rgba(0,236,241,.3)!important;
-}
-.product-list-item-link{text-decoration:none!important;color:inherit!important;}
-.product-list-image-wrapper,
-.product-list-item-image,
-.grid-image-wrapper{background:#0A0D0C!important;}
-.product-list-item-meta{background:#0F1411!important;}
-.product-list-item-title{
-  font-family:'Barlow Condensed',sans-serif!important;
-  font-size:14px!important;color:#F4F4F4!important;
-  display:-webkit-box!important;-webkit-line-clamp:2!important;
-  -webkit-box-orient:vertical!important;overflow:hidden!important;
-  padding:9px 10px 2px!important;
-}
-.product-list-item-price,
-.product-list-item-price *{
-  font-family:'Barlow Condensed',sans-serif!important;
-  font-weight:700!important;font-size:14px!important;
-  color:#00ECF1!important;padding:2px 10px 9px!important;
-}
+#jbc:hover{color:#00ECF1;}
 
 /* === PRODUCT DETAIL PAGE === */
 .product-meta,
@@ -160,24 +127,20 @@ body:not(.view-item) #jbc{display:none;}
 .product-gallery-thumbnails-item{
   border:2px solid rgba(0,236,241,.2)!important;border-radius:2px!important;
 }
-.product-gallery-thumbnails-item:hover{border-color:rgba(0,236,241,.6)!important;}
+.product-gallery-thumbnails-item:hover,
+.product-gallery-thumbnails-item.active{border-color:rgba(0,236,241,.7)!important;}
 
-/* === QUANTITY INPUT (confirmed real classes from DOM) === */
+/* === QUANTITY + ADD TO CART === */
 .product-quantity-input-wrapper,
 .product-quantity-input{
   background:#0F1411!important;
-  border:1px solid rgba(0,236,241,.2)!important;
-  border-radius:3px!important;
+  border:1px solid rgba(0,236,241,.2)!important;border-radius:3px!important;
 }
 .product-quantity-input input[type=number],
 input[name="quantity-input"]{
   background:#0F1411!important;color:#F4F4F4!important;border:none!important;
 }
-.decrease-button,.increase-button{
-  color:#00ECF1!important;background:transparent!important;border:none!important;
-}
-
-/* === ADD TO CART BUTTON (confirmed class from DOM) === */
+.decrease-button,.increase-button{color:#00ECF1!important;background:transparent!important;border:none!important;}
 .sqs-add-to-cart-button,
 .sqs-button-element--primary{
   background:#00ECF1!important;color:#080A09!important;
@@ -186,18 +149,22 @@ input[name="quantity-input"]{
   font-size:15px!important;text-transform:uppercase!important;
   border:none!important;padding:15px 32px!important;
   border-radius:3px!important;cursor:pointer!important;
-  width:100%!important;transition:box-shadow .2s!important;
+  width:100%!important;transition:opacity .2s!important;
+  box-shadow:0 0 28px rgba(0,236,241,.4)!important;
 }
+.sqs-add-to-cart-button:hover{opacity:.85!important;}
 .sqs-add-to-cart-button-inner{pointer-events:none;}
+
+/* === CART / CHECKOUT === */
+#cart-overlay,.CartContainer,.cart-container{background:#080A09!important;}
 
 /* === FOOTER === */
 footer,
 #footer-sections,
-.sqs-footer-section,
-#siteWrapper,
-.site-wrapper{background:#0A0D0C!important;color:#8A9290!important;}
+.sqs-footer-section{background:#0A0D0C!important;color:#8A9290!important;}
 footer *,#footer-sections *{color:#8A9290!important;}
 footer a,#footer-sections a{color:#8A9290!important;text-decoration:none;}
+footer a:hover,#footer-sections a:hover{color:#F4F4F4!important;}
 
 /* === NEWSLETTER / FORMS === */
 .newsletter-form-wrapper,.newsletter-form{background:#0F1411!important;}
@@ -205,14 +172,47 @@ footer a,#footer-sections a{color:#8A9290!important;text-decoration:none;}
   background:#080A09!important;color:#F4F4F4!important;
   border:1px solid rgba(0,236,241,.2)!important;border-radius:2px!important;
 }
-.newsletter-form-button{
-  background:#00ECF1!important;color:#080A09!important;border:none!important;
-}
+.newsletter-form-button{background:#00ECF1!important;color:#080A09!important;border:none!important;}
 
 </style>
-<header id="jhdr"><a href="https://jamiesshoes.com" class="jw">JAMIESSHOESS</a><nav><a href="/home">SHOP</a><a href="/cart">CART <span id="jcc" data-n="0"></span></a></nav></header>
-<div id="jhero"><p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8A9290;margin-bottom:13px">Springfield, MO &middot; Downtown &middot; The 417</p><img class="jl" src="https://jamiesshoes.com/brand/logos/logo-circle-badge-transparent.png" alt="JAMIESSHOESS" width="94" height="94"><h1 class="jh">Vintage Clothing<br>&amp; Sneakers</h1><p class="js2">Hand-picked vintage &middot; Authenticated sneakers &middot; Springfield, MO</p><div class="jst"><div style="text-align:center"><span class="jstn">6,100+</span><span style="display:block;font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A9290;margin-top:2px">Instagram Followers</span></div><div style="text-align:center"><span class="jstn">Weekly</span><span style="display:block;font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A9290;margin-top:2px">New Drops</span></div><div style="text-align:center"><span class="jstn">100%</span><span style="display:block;font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A9290;margin-top:2px">Authenticated*</span></div></div><p style="font-size:10px;color:#8A9290;font-style:italic;max-width:480px;margin:4px auto 20px;line-height:1.5">*Authentication is our best professional judgment. Not liable for defects on previously purchased items.</p><div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:17px"><a class="jbp" href="/home">BROWSE THE STORE</a><a class="jbs" href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener">@JAMIESSHOESS &rarr;</a></div><p style="font-size:10px;color:#8A9290;letter-spacing:.06em;text-transform:uppercase">Open Wed&ndash;Thu 12&ndash;6 PM &middot; Fri&ndash;Sat 12&ndash;7 PM &middot; Free Local Pickup</p></div>
+
+<!-- Custom header -->
+<header id="jhdr">
+  <a href="/home" class="jw">JAMIESSHOESS</a>
+  <nav>
+    <a href="/home">SHOP</a>
+    <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener">INSTAGRAM</a>
+    <a href="/cart">CART <span id="jcc" data-n="0"></span></a>
+  </nav>
+</header>
+
+<!-- Hero (shows on /home only via CSS) -->
+<div id="jhero">
+  <p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8A9290;margin-bottom:13px">Springfield, MO &middot; Downtown &middot; The 417</p>
+  <img class="jl" src="https://static1.squarespace.com/static/62fbad74b2e83466d4f8bc87/t/logo.png" alt="JAMIESSHOESS" width="94" height="94" onerror="this.style.display='none'">
+  <h1 class="jh">Vintage Clothing<br>&amp; Sneakers</h1>
+  <p class="js2">Hand-picked vintage &middot; Authenticated sneakers &middot; Springfield, MO</p>
+  <div class="jst">
+    <div style="text-align:center">
+      <span class="jstn">6,100+</span>
+      <span style="display:block;font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A9290;margin-top:2px">Instagram Followers</span>
+    </div>
+    <div style="text-align:center">
+      <span class="jstn">Every Sat</span>
+      <span style="display:block;font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A9290;margin-top:2px">New Drops</span>
+    </div>
+    <div style="text-align:center">
+      <span class="jstn">100%</span>
+      <span style="display:block;font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#8A9290;margin-top:2px">Hand-Picked</span>
+    </div>
+  </div>
+  <p style="font-size:10px;color:#8A9290;font-style:italic;max-width:480px;margin:6px auto 18px;line-height:1.5">Open Wed&ndash;Thu 12&ndash;6 PM &middot; Fri&ndash;Sat 12&ndash;7 PM &middot; 302 Park Central East, Springfield MO</p>
+  <a class="jbs" href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener">Follow @JAMIESSHOESS &rarr;</a>
+</div>
+
+<!-- Back link (shows on product pages only via CSS) -->
 <a id="jbc" href="/home">&larr; All Items</a>
+
 <script>
 (function(){
 'use strict';
@@ -251,23 +251,12 @@ function ucc(){
   if(badge){badge.textContent=n>0?n:'';badge.setAttribute('data-n',n);}
 }
 
-function fixCart(){
-  D.querySelectorAll('a.continue-shopping,.continue-shopping-link').forEach(function(a){
-    a.innerHTML='&larr; Back to JAMIESSHOESS';
-    a.href='https://jamiesshoes.com';
-  });
-}
-
 function fixFt(){
   var f=D.querySelector('footer,#footer-sections,.sqs-footer-section');
   if(!f)return;
   f.querySelectorAll('a').forEach(function(a){
     var h=a.getAttribute('href')||'';
-    if(h.indexOf('twitter.com')>-1||h.indexOf('x.com')>-1){a.style.display='none';return;}
-    if(h.toUpperCase().indexOf('YOUTUBE.COM')>-1){a.href='https://youtube.com/@jamiesshoess';return;}
-    if(h.charAt(0)==='/'&&!/^\/(home|cart|checkout|account)/.test(h)){
-      a.href=h==='/about'?'https://jamiesshoes.com/about':'https://jamiesshoes.com';
-    }
+    if(h.indexOf('twitter.com')>-1||h.indexOf('x.com')>-1){a.style.display='none';}
   });
 }
 
@@ -282,15 +271,13 @@ function fixPad(){
 window.addEventListener('resize',fixPad);
 
 function init(){
-  var isCart=/\/(cart|checkout|account)/.test(location.pathname);
   sw();
   ob.observe(D.documentElement,{
     subtree:true,childList:true,attributes:true,
     attributeFilter:['style','class','data-section-theme']
   });
-  if(isCart)fixCart();
   fixFt();ucc();fixPad();
-  setTimeout(function(){sw();if(isCart)fixCart();fixFt();ucc();fixPad();},750);
+  setTimeout(function(){sw();fixFt();ucc();fixPad();},750);
 }
 
 fixPad();

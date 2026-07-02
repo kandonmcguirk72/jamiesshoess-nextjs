@@ -1,0 +1,277 @@
+/*
+  JAMIESSHOESS — Squarespace Custom CSS
+  Paste this into: Design → Custom CSS
+*/
+
+/* ── BASE ──────────────────────────────────────────────── */
+:root {
+  --bg:        #080A09;
+  --bg-card:   #111311;
+  --text:      #FFFFFF;
+  --accent:    #00E5FF;
+  --border:    #1f2120;
+  --muted:     #888;
+}
+
+body,
+.sqs-layout,
+.sqs-block-content,
+.page-section {
+  background-color: #080A09 !important;
+  color: #FFFFFF !important;
+}
+
+/* ── HEADER / NAV ──────────────────────────────────────── */
+header,
+.header-inner,
+.site-header,
+#header {
+  background-color: #080A09 !important;
+  border-bottom: 1px solid #1f2120 !important;
+}
+
+.header-nav-item a,
+.nav-wrapper a,
+.header-nav-folder-title {
+  color: #FFFFFF !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+.header-nav-item a:hover,
+.nav-wrapper a:hover {
+  color: #00E5FF !important;
+}
+
+/* Cart icon */
+.header-actions .cart-icon svg path {
+  fill: #FFFFFF !important;
+}
+
+/* ── ANNOUNCEMENT BAR ──────────────────────────────────── */
+.sqs-announcement-bar,
+.announcement-bar-close,
+#announcement-bar {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+/* ── TYPOGRAPHY ────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6,
+.sqsrte-large,
+[data-font="headline"] {
+  color: #FFFFFF !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.02em !important;
+}
+
+p, li, span, div {
+  color: #FFFFFF !important;
+}
+
+a {
+  color: #00E5FF !important;
+  text-decoration: none !important;
+}
+
+a:hover {
+  color: #00E5FF !important;
+  opacity: 0.8 !important;
+}
+
+/* ── BUTTONS ──────────────────────────────────────────── */
+.sqs-block-button-element,
+.sqs-block-button .sqs-button-element--primary,
+.btn,
+[class*="button--primary"] {
+  background-color: #00E5FF !important;
+  color: #080A09 !important;
+  border: none !important;
+  font-weight: 800 !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  border-radius: 2px !important;
+}
+
+.sqs-block-button .sqs-button-element--secondary,
+[class*="button--secondary"] {
+  background-color: transparent !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  font-weight: 700 !important;
+}
+
+.sqs-block-button .sqs-button-element--secondary:hover,
+[class*="button--secondary"]:hover {
+  border-color: #FFFFFF !important;
+}
+
+/* ── PRODUCT CARDS ─────────────────────────────────────── */
+.ProductList-list,
+.ProductList-item,
+.ProductItem,
+[class*="productList"],
+[class*="ProductList"] {
+  background-color: #111311 !important;
+}
+
+.ProductList-item {
+  border: 1px solid #1f2120 !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}
+
+.ProductList-item:hover {
+  border-color: #00E5FF !important;
+  transform: translateY(-2px) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Product title */
+.ProductList-item .ProductList-title,
+.product-list-item--name,
+[class*="productItem-title"] {
+  color: #FFFFFF !important;
+  font-family: 'Barlow Condensed', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+}
+
+/* Product price */
+.ProductList-item .ProductList-price,
+[class*="productItem-price"],
+.product-price {
+  color: #00E5FF !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+}
+
+/* Store page background */
+.collection-type-products .sqs-layout,
+.sqs-col-12[data-type="store"],
+.collection-type-store {
+  background-color: #080A09 !important;
+}
+
+/* Product detail page */
+.ProductItem-details,
+.ProductItem-summary {
+  background-color: #080A09 !important;
+}
+
+.ProductItem-details h1 {
+  color: #FFFFFF !important;
+}
+
+.ProductItem-price {
+  color: #00E5FF !important;
+  font-weight: 700 !important;
+  font-size: 1.4rem !important;
+}
+
+.ProductItem-quantity-label,
+.sqs-editable-button {
+  background-color: #00E5FF !important;
+  color: #080A09 !important;
+  font-weight: 800 !important;
+}
+
+/* ── SECTION BACKGROUNDS ───────────────────────────────── */
+.page-section,
+.sqs-block,
+.sqs-row,
+.sqs-col-12 {
+  background-color: #080A09 !important;
+}
+
+/* Alternate dark card sections */
+.dark-card,
+[data-section-theme="dark"] {
+  background-color: #111311 !important;
+  border: 1px solid #1f2120 !important;
+  border-radius: 10px !important;
+}
+
+/* ── FORMS ─────────────────────────────────────────────── */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea,
+select {
+  background-color: #111311 !important;
+  border: 1px solid #1f2120 !important;
+  color: #FFFFFF !important;
+  border-radius: 4px !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #555 !important;
+}
+
+/* ── FOOTER ────────────────────────────────────────────── */
+footer,
+#footer,
+.Footer {
+  background-color: #080A09 !important;
+  border-top: 1px solid #1f2120 !important;
+  color: #888 !important;
+}
+
+footer a,
+.Footer a {
+  color: #888 !important;
+}
+
+footer a:hover,
+.Footer a:hover {
+  color: #FFFFFF !important;
+}
+
+/* ── CART / CHECKOUT ───────────────────────────────────── */
+#cart-overlay,
+.CartContainer {
+  background-color: #080A09 !important;
+}
+
+/* ── MOBILE ─────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .header-nav-folder-content {
+    background-color: #080A09 !important;
+  }
+
+  .ProductList-list {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  body {
+    padding-bottom: 64px;
+  }
+
+  /* Mobile sticky bar placeholder */
+  .mobile-sticky-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: #080A09;
+    border-top: 1px solid #1f2120;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 9999;
+  }
+}
