@@ -70,7 +70,11 @@ if(e.style.backgroundImage&&/gradient/.test(e.style.backgroundImage))e.style.set
 }
 function boot(){hdr();cart();links();dark();}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
-var mo=new MutationObserver(function(){cart();dark();});
+var pend=false;
+var mo=new MutationObserver(function(){
+if(pend)return;pend=true;
+requestAnimationFrame(function(){pend=false;cart();dark();});
+});
 document.addEventListener('DOMContentLoaded',function(){
 mo.observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class','data-section-theme']});
 links();
