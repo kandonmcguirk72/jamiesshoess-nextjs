@@ -1,12 +1,5 @@
-# Composite Upload Map
+# Composite Upload Map (white-bg listings only)
 
-- 0xj04ne2l137t5yio2187ihsclir14.jpg  →  1/1 JAMIESSHOESS HOODIE (SIZE XXL)
-- snwyiuieacqrcickijlbz2tjxvf81o.jpg  →  1/1 JAMIESSHOESS CREW (SIZE XL)
-- w306oyuemnhoeo1jf96ter6bqh491k.jpg  →  1/1 JAMIESSHOESS CREW (SIZE 2XL)
-- 6j9azp0y88mpnmj3xdfsybhk2vwqec.jpg  →  1/1 JAMIESSHOESS CREWNECK (SIZE 3XL)
-- athy488akv0e0zzcqgani2qt9683yv.jpg  →  1/1 JAMIESSHOESS CREWNECK
-- 5i7dijaascf2lgogmz2i56euufkjbx.jpg  →  1/1 JAMIESSHOESS HOODIE (SIZE M)
-- gcay417dhnnx3qeqhjzrazgoqq97jw.jpg  →  JAMIESSHOESS OG TEE (SIZE S-3XL)
 - h5j35vvj6ehgomcsmt1m00koexy08g.jpg  →  VTG NASCAR AOP (SIZE L)
 - mn5j23ic8rljndhxb710fqaxa8w2su.jpg  →  VTG MARK MCGWIRE TEE (FITS XL)
 - vnmiybtkru88iswkgu0weu35gf4cto.jpg  →  VTG Y2K JIMMY NEUTRON TEE (SIZE S-M)
@@ -34,20 +27,3 @@
 - q7qrxluktunihmkg3jft61p9x7m9g7.jpg  →  VTG NOTRE DAME TEE (SIZE L)
 - kugw2lllzb52un1j1p3tsjywfpw7g0.jpg  →  VTG CHIEFS SINGLE STITCH ( FITS XL)
 - nz4aswlw0psmnhf42y5ing1kqk85lm.jpg  →  VTG RAMS JERSEY (SIZE XL)
-- cbf56t3z43igg0cfcs8iryrsi28ol3.jpg  →  JAMIESSHOESS 1/1 CAMO TEE (fits L)
-- yuzkztfkdbjmxy1fcowap12ii6cmqn.jpg  →  JAMIESSHOESS X JOHN DEERE 1/1 LONG SLEEVE (SIZE M)
-- lvmwnn9wne40i5v8025cm06yzlh7jg.jpg  →  VTG TEE (size L)
-- ho41gcig1c8lfb8417eucay61gm79x.jpg  →  VTG SINGLE STITCH BS PARTY TEE (XL)
-- 7o79rgxare9zovvwza24f3eteuh281.jpg  →  VTG 1995 EASTBAY TEE (XL)
-- j79o0jte6gm2qe8qs6vtkbmvxawybz.jpg  →  Dale #3 LOT (2pc)
-- h4jzp9kj1cd869q0fy7wfpbfretl3k.jpg  →  VTG Sweatsuit (size L)
-- e2oj85ly58gpe2i3nisnhyy6k3cbjd.jpg  →  2004 Daytona 500 hats (2pc)
-- l6ohojpr03p1qg6qjlarguiiyfi4h8.jpg  →  VTG HAT LOT (5pc)
-- 3z7lqsi5dlscfkaa350pt6wv4w8me3.jpg  →  Vintage Cardinals 3pc lot (SIZE XL)
-- nk9ggbc4q8zm7nqs55koi0l7crjhto.jpg  →  Carhartt X Jamiesshoess Beanie
-- mxkat6pzfbbtmtlptt2jmftkajir9w.jpg  →  Vintage KU Crewneck (size xl)
-- xud32r0mjkajzswhn9l20n9td01o2t.jpg  →  Vintage Sweater (SIZE L)
-- b6nv11a40p3fv0iwdht4uqxsqjott6.jpg  →  Vintage Sweater (SIZE XXL)
-- tpxddzao44xcrw2urbs6tddh10co5c.jpg  →  Harley Davidson Button Up (SIZE XL)
-- qr74l8q02pdfno9etgdy82yljmiim6.jpg  →  Vintage 1996 Grateful Dead Tee (size S)
-- bj4jg214sbq8mzfccgp3occ22hswxn.jpg  →  Carhartt X Jamiesshoess Beanie
