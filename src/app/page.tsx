@@ -1,4 +1,3 @@
-import Script from 'next/script'
 import { getLocalBusinessSchema, getProductListSchema } from '@/lib/schema'
 import Hero from '@/components/home/Hero'
 import CountdownBanner from '@/components/home/CountdownBanner'
@@ -20,13 +19,11 @@ export default async function HomePage() {
 
   return (
     <>
-      <Script
-        id="local-business-schema"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getLocalBusinessSchema()) }}
       />
-      <Script
-        id="product-list-schema"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getProductListSchema(products)) }}
       />
