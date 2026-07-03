@@ -86,6 +86,7 @@ function ProductCard({ product }: { product: Product }) {
             alt={product.full}
             fill
             sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 220px"
+            quality={85}
             style={{ objectFit: 'cover', objectPosition: 'center top' }}
             loading="lazy"
           />

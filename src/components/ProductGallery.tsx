@@ -42,6 +42,7 @@ export default function ProductGallery({ images, alt, badge, badgeColor }: Props
           alt={alt}
           fill
           sizes="(max-width:768px) 100vw, 500px"
+          quality={85}
           style={{ objectFit: 'cover' }}
           priority
         />

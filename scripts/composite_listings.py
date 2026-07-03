@@ -33,9 +33,10 @@ def load_background() -> Image.Image:
     cw = int(h * CANVAS_W / CANVAS_H)
     x0 = (w - cw) // 2
     bg = bg.crop((x0, 0, x0 + cw, h)).resize((CANVAS_W, CANVAS_H), Image.LANCZOS)
-    # subtle blur + darken so the garment pops at thumbnail size
-    bg = bg.filter(ImageFilter.GaussianBlur(6))
-    bg = ImageEnhance.Brightness(bg).enhance(0.72)
+    # keep the background nearly sharp so composites match the real store photos;
+    # a touch of blur + darkening still separates the garment
+    bg = bg.filter(ImageFilter.GaussianBlur(1.5))
+    bg = ImageEnhance.Brightness(bg).enhance(0.85)
     return bg
 
 
