@@ -1,3 +1,33 @@
+import type { Product } from './products'
+
+// ItemList of in-stock products so Google can show items with prices in search
+export function getProductListSchema(products: Product[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'JAMIESSHOESS — Now In-Store',
+    itemListElement: products
+      .filter((p) => p.stock > 0 && p.price > 0)
+      .map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'Product',
+          name: p.full,
+          image: p.img.startsWith('/') ? `https://www.jamiesshoes.com${p.img}` : p.img,
+          url: p.squarespaceUrl,
+          offers: {
+            '@type': 'Offer',
+            price: p.price.toFixed(2),
+            priceCurrency: 'USD',
+            availability: 'https://schema.org/InStock',
+            seller: { '@type': 'Organization', name: 'JAMIESSHOESS' },
+          },
+        },
+      })),
+  }
+}
+
 export function getLocalBusinessSchema() {
   return {
     '@context': 'https://schema.org',
