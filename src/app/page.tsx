@@ -15,7 +15,8 @@ import { fetchProducts } from '@/lib/products'
 export const revalidate = 3600
 
 export default async function HomePage() {
-  const products = await fetchProducts()
+  // The grid never shows descriptions — strip them to keep the page payload lean
+  const products = (await fetchProducts()).map((p) => ({ ...p, description: '' }))
 
   return (
     <>
