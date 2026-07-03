@@ -44,6 +44,11 @@ input[type=text],input[type=email],input[type=tel],textarea{background:#0F1411!i
 <script>
 (function(){
 var M='https://www.jamiesshoes.com';
+// Keep Google pointed at the main site: noindex shop browse pages, keep product pages indexed
+if(!/\/p\//.test(location.pathname)){
+var r=document.createElement('meta');r.name='robots';r.content='noindex,follow';
+document.head.appendChild(r);
+}
 function hdr(){
 if(document.getElementById('jhdr'))return;
 var h=document.createElement('div');h.id='jhdr';
