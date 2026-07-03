@@ -72,6 +72,16 @@ const NAV_LINKS = [
   { label: 'CART',    href: 'https://shop.jamiesshoes.com/cart', external: true },
 ]
 
+function CartIcon() {
+  return (
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      <circle cx="9" cy="20" r="1.6" />
+      <circle cx="17" cy="20" r="1.6" />
+      <path d="M2.5 3.5h3l2.6 12h10.4l2-8.5H6.1" />
+    </svg>
+  )
+}
+
 function InstagramIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -155,11 +165,25 @@ export default function Nav() {
           >
             SHOP NOW
           </a>
+          <a
+            href="https://shop.jamiesshoes.com/cart"
+            aria-label="View cart"
+            className="text-minted hover:text-white transition-colors duration-150"
+          >
+            <CartIcon />
+          </a>
         </div>
 
-        {/* Mobile search */}
+        {/* Mobile search + cart */}
         <div className="flex md:hidden items-center gap-3">
           <SearchBar />
+          <a
+            href="https://shop.jamiesshoes.com/cart"
+            aria-label="View cart"
+            className="text-minted hover:text-white transition-colors duration-150"
+          >
+            <CartIcon />
+          </a>
         </div>
 
         {/* Mobile hamburger */}
