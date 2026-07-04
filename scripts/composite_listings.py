@@ -22,6 +22,10 @@ SESSION = new_session("u2net")
 CANVAS_W, CANVAS_H = 1600, 2000  # 4:5 to match the product-card crop
 
 
+def load_white() -> Image.Image:
+    return Image.new("RGB", (CANVAS_W, CANVAS_H), (250, 250, 250))
+
+
 def load_background() -> Image.Image:
     bg = Image.open(BG_PATH).convert("RGB")
     # crop 4% off each edge to remove the AI watermark
@@ -41,7 +45,22 @@ def load_background() -> Image.Image:
 
 
 def cutout(img_bytes: bytes) -> Image.Image:
+    import numpy as np
+    from scipy import ndimage
+
     fg = remove(Image.open(io.BytesIO(img_bytes)).convert("RGBA"), session=SESSION)
+    # keep only the largest connected region of the alpha mask — drops stray
+    # background fragments (bear paws, smudges) that show badly on white
+    a = np.array(fg)
+    mask = a[..., 3] > 100
+    labels, n = ndimage.label(mask)
+    if n >= 1:
+        sizes = ndimage.sum(mask, labels, range(1, n + 1))
+        keep = (labels == (int(np.argmax(sizes)) + 1))
+        # dilate to preserve soft edges, then zero EVERYTHING else (incl. faint ghosts)
+        keep = ndimage.binary_dilation(keep, iterations=4)
+        a[..., 3] = np.where(keep, a[..., 3], 0)
+        fg = Image.fromarray(a)
     box = fg.getbbox()
     if box:
         fg = fg.crop(box)
@@ -82,7 +101,7 @@ def main():
     items = feed["items"]
     if mode == "samples":
         items = [items[0], items[15], items[30]]
-    bg = load_background()
+    bg = load_white() if mode == "whiteall" else load_background()
     for it in items:
         slug = (it.get("fullUrl") or "").split("/p/")[-1] or "item"
         title = it.get("title", slug)

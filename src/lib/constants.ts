@@ -34,7 +34,7 @@ export const BRAND = {
 
   stats: [
     { value: '50K+', label: 'Items Resold',  desc: 'Vintage pieces rescued and rehomed. Every one matters.' },
-    { value: '6.1K', label: 'IG Followers',  desc: 'Follow for first access to new drops.' },
+    { value: '7.1K', label: 'IG Followers',  desc: 'Follow for first access to new drops.' },
     { value: 'WKLY', label: 'New Drops',     desc: 'Fresh inventory every week without fail.' },
     { value: '100%', label: 'Authenticated', desc: 'Every piece hand-picked. No fakes, ever.' },
   ],

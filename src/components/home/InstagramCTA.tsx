@@ -35,7 +35,7 @@ export default function InstagramCTA() {
               className="font-display italic font-black uppercase text-minted"
               style={{ fontSize: 'clamp(36px,5vw,52px)', lineHeight: 1, letterSpacing: '0.01em' }}
             >
-              6,100+
+              7,100+
             </p>
             <p className="font-sans font-bold text-[10px] tracking-[0.16em] uppercase text-white/30 mt-1">
               Followers · @jamiesshoess

@@ -62,7 +62,7 @@ export default function Hero() {
             style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', padding: '14px 0' }}
           >
             {[
-              { val: '6,100+', label: 'Instagram Followers' },
+              { val: '7,100+', label: 'Instagram Followers' },
               { val: 'Weekly', label: 'New Drops' },
               { val: '100%',   label: 'Authenticated*' },
             ].map((s) => (
