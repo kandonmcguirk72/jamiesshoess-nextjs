@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { BRAND } from '@/lib/constants'
+import HeroLogo from './HeroLogo'
 
 export default function Hero() {
   return (
@@ -23,14 +23,7 @@ export default function Hero() {
             flexShrink: 0,
           }}
         >
-          <Image
-            src="/brand/logos/logo-circle-badge-transparent.png"
-            alt="JAMIESSHOESS"
-            width={112}
-            height={112}
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-            priority
-          />
+          <HeroLogo />
         </div>
 
         {/* Headline block */}
