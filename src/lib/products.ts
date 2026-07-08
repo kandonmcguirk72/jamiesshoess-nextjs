@@ -62,7 +62,7 @@ const DEFAULT_DESCRIPTION =
 
 export async function fetchProducts(): Promise<Product[]> {
   const raw = await fetchSquarespaceProducts()
-  return raw.map((p) => {
+  const products = raw.map((p) => {
     const cat = inferCategory(p.title, p.categories)
     const tags = p.tags
       .map((t) => t.toUpperCase())
@@ -75,15 +75,16 @@ export async function fetchProducts(): Promise<Product[]> {
       price: p.price,
       cat,
       tags,
-      img: compositeFor(p.slug) ?? p.images[0] ?? '',
-      images: (() => {
-        const c = compositeFor(p.slug)
-        return c ? [c, ...p.images] : p.images
-      })(),
+      // Prefer the live Squarespace image so thumbnails stay in sync with the
+      // store; fall back to the branded composite only if a listing has no image.
+      img: p.images[0] ?? compositeFor(p.slug) ?? '',
+      images: p.images,
       stock: p.stock,
       emoji: inferEmoji(cat, p.title),
       description: p.description || DEFAULT_DESCRIPTION,
       squarespaceUrl: p.squarespaceUrl,
     }
   })
+
+  return products
 }

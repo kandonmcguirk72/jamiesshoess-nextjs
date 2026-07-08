@@ -79,7 +79,7 @@ function ProductCard({ product }: { product: Product }) {
       }}
     >
       {/* Image */}
-      <div style={{ width: '100%', aspectRatio: '4/5', position: 'relative', background: 'var(--color-bg-surface)', flexShrink: 0 }}>
+      <div style={{ width: '100%', aspectRatio: '4/5', position: 'relative', background: '#0d0f0e', flexShrink: 0 }}>
         {imgs[0] && (
           <Image
             src={imgs[activeIndex] ?? imgs[0]}

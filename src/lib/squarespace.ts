@@ -67,7 +67,7 @@ export async function fetchSquarespaceProducts(): Promise<SQSRawProduct[]> {
     while (page <= maxPages) {
       const res = await fetch(
         `https://shop.jamiesshoes.com/home?format=json&page=${page}`,
-        { next: { revalidate: 3600 } }
+        { next: { revalidate: 300 } }
       )
       if (!res.ok) break
 
@@ -85,6 +85,10 @@ export async function fetchSquarespaceProducts(): Promise<SQSRawProduct[]> {
         }
         if (!images.length && item.assetUrl) images.push(item.assetUrl)
         if (!images.length) continue
+
+        // Skip test/placeholder listings
+        const titleRaw = (item.title ?? '').trim()
+        if (/^test$/i.test(titleRaw) || /^test\s+listing/i.test(titleRaw)) continue
 
         const priceCents = item.price ?? item.variants?.[0]?.price ?? 0
         const price = priceCents / 100
