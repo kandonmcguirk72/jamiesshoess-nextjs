@@ -38,7 +38,8 @@ export default function MapSection() {
                 </p>
                 <p className="font-sans font-semibold text-white" style={{ fontSize: 14, lineHeight: 1.7 }}>
                   Wed – Thu &nbsp; 12–6 PM<br />
-                  Fri – Sat &nbsp;&nbsp;&nbsp;&nbsp; 12–7 PM
+                  Fri – Sat &nbsp;&nbsp;&nbsp;&nbsp; 12–7 PM<br />
+                  Sun &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12–4 PM
                 </p>
               </div>
 

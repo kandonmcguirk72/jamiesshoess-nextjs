@@ -7,6 +7,7 @@ import AnnouncementBar from '@/components/layout/AnnouncementBar'
 import Nav from '@/components/layout/Nav'
 import Footer from '@/components/layout/Footer'
 import MobileStickyBar from '@/components/MobileStickyBar'
+import ChatWidget from '@/components/chat/ChatWidget'
 import './globals.css'
 
 const barlow = Barlow_Condensed({
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     template: '%s | JAMIESSHOESS',
   },
   description:
-    'Hand-picked vintage tees, authenticated sneakers, and in-house merch in downtown Springfield, MO. 302 Park Central East. Open Wed–Sat.',
+    'Hand-picked vintage tees, authenticated sneakers, and in-house merch in downtown Springfield, MO. 302 Park Central East. Open Wed–Sun.',
   openGraph: {
     type: 'website',
     siteName: 'JAMIESSHOESS',
@@ -74,6 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main id="main-content">{children}</main>
           <Footer />
           <MobileStickyBar />
+          <ChatWidget />
         </Providers>
         <Analytics />
       </body>

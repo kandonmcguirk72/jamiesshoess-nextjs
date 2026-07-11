@@ -3,7 +3,7 @@ import { BRAND } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Hours & Location',
-  description: '302 Park Central East, Springfield MO 65806. Open Wed–Sat 12–7 PM on Historic Route 66.',
+  description: '302 Park Central East, Springfield MO 65806. Open Wed–Sun on Historic Route 66.',
 }
 
 export default function LocationPage() {

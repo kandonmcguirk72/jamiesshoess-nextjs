@@ -88,7 +88,7 @@ export default function SellPage() {
           {/* Process steps */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 32 }}>
             {[
-              'Bring your items in-store Wed–Sat, 12PM–7PM',
+              'Bring your items in-store Wed–Sun during open hours',
               'We evaluate on the spot — cash or store credit',
               'We buy vintage tees, sneakers, streetwear & more',
             ].map((step) => (

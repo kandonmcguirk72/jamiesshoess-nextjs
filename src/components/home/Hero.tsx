@@ -105,7 +105,7 @@ export default function Hero() {
 
         {/* Hours */}
         <p className="font-sans font-semibold text-[10px] tracking-[0.14em] uppercase text-white/20">
-          Open Wed–Thu&nbsp;&nbsp;12–6 PM&nbsp;&nbsp;·&nbsp;&nbsp;Fri–Sat&nbsp;&nbsp;12–7 PM&nbsp;&nbsp;·&nbsp;&nbsp;Free Local Pickup
+          Open Wed–Thu&nbsp;&nbsp;12–6 PM&nbsp;&nbsp;·&nbsp;&nbsp;Fri–Sat&nbsp;&nbsp;12–7 PM&nbsp;&nbsp;·&nbsp;&nbsp;Sun&nbsp;&nbsp;12–4 PM&nbsp;&nbsp;·&nbsp;&nbsp;Free Local Pickup
         </p>
       </div>
     </section>

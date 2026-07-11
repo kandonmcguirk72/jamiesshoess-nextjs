@@ -22,7 +22,7 @@ export const BRAND = {
     { day: 'Thu', full: 'Thursday',  time: '12 – 6 PM', open: true  },
     { day: 'Fri', full: 'Friday',    time: '12 – 7 PM', open: true  },
     { day: 'Sat', full: 'Saturday',  time: '12 – 7 PM', open: true  },
-    { day: 'Sun', full: 'Sunday',    time: 'Closed',    open: false },
+    { day: 'Sun', full: 'Sunday',    time: '12 – 4 PM', open: true  },
   ],
 
   social: {
@@ -50,7 +50,7 @@ export const BRAND = {
   reviews: [
     { stars: 5, quote: "Best sneaker spot in Springfield. Found a pair I'd been hunting everywhere — they had it. Legit store, legit people.", name: '@sneakerhead_sgf', source: 'Instagram' },
     { stars: 5, quote: "The vintage section is unreal. Walked out with a '98 NASCAR AOP for $40. Nowhere else has this stuff.", name: 'Riley M.', source: 'Springfield, MO' },
-    { stars: 5, quote: "Only open Wed–Sat and I plan my whole weekend around going. New stuff every single time.", name: 'Devon K.', source: 'Regular Customer' },
+    { stars: 5, quote: "Only open Wed–Sun and I plan my whole weekend around going. New stuff every single time.", name: 'Devon K.', source: 'Regular Customer' },
     { stars: 5, quote: "Found a piece in 15 minutes I'd been hunting online for months. Nothing like this in SGF.", name: 'Marcus T.', source: 'Springfield, MO' },
   ],
 
@@ -59,7 +59,7 @@ export const BRAND = {
     { q: 'Where are you located?', a: '302 Park Central East, Downtown Springfield MO — right on Historic Route 66. 16 doors from the Route 66 Welcome Center. Look for the sign in the window.' },
     { q: 'Can I try things on before buying?', a: "Yes — come in during store hours and try before you buy. Especially for sneakers. We'd rather you love what you leave with." },
     { q: "What's the price range?", a: 'Sneakers from $40. Vintage tees $15–$75. Outerwear from $25. Hats from $10. Bottoms from $15. We price fairly — nothing padded for markup.' },
-    { q: 'Is local pickup free?', a: 'Completely free. Find something online, then swing by Wed–Sat, 12 PM–7 PM. No shipping fees, no wait.' },
+    { q: 'Is local pickup free?', a: 'Completely free. Find something online, then swing by Wed–Sun during store hours. No shipping fees, no wait.' },
     { q: 'Do you buy or trade?', a: "Yes — bring it in during store hours. Clean condition, authentic pieces. Come talk to us." },
     { q: 'How often does new inventory arrive?', a: 'Every week. Follow @JAMIESSHOESS on Instagram — we post every drop there first.' },
     { q: 'What payment methods do you accept?', a: 'Cash, credit/debit card, and Venmo.' },

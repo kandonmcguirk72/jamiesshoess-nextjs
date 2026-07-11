@@ -3,7 +3,7 @@ export default function MobileStickyBar() {
   return (
     <nav
       aria-label="Quick actions"
-      className="md:hidden"
+      className="grid grid-cols-3 md:hidden"
       style={{
         position: 'fixed',
         bottom: 0,
@@ -12,8 +12,6 @@ export default function MobileStickyBar() {
         zIndex: 200,
         background: '#080A09',
         borderTop: '1px solid #1f2120',
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr 1fr',
       }}
     >
       <a
@@ -56,7 +54,7 @@ export default function MobileStickyBar() {
           <path d="M12 6v6l4 2"/>
         </svg>
         <span style={{ fontFamily: "'Rajdhani',sans-serif", fontWeight: 700, fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-          Wed–Sat 12–7
+          Open Wed–Sun
         </span>
       </div>
 

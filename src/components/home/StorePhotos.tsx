@@ -25,7 +25,7 @@ export default function StorePhotos() {
             Come See For Yourself
           </h2>
           <p className="font-sans font-semibold text-white/40 mt-3" style={{ fontSize: 13, letterSpacing: '0.06em' }}>
-            302 Park Central East · Downtown Springfield · Wed–Sat
+            302 Park Central East · Downtown Springfield · Wed–Sun
           </p>
         </div>
 

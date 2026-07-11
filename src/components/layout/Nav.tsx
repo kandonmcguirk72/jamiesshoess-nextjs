@@ -230,7 +230,7 @@ export default function Nav() {
               <div className="px-6 pt-4 pb-2 border-t border-white/[0.07]">
                 <p className="font-sans text-[11px] tracking-[0.08em] uppercase text-white/25 mb-3">
                   302 Park Central East · Springfield, MO<br />
-                  Wed–Thu 12–6 · Fri–Sat 12–7
+                  Wed–Thu 12–6 · Fri–Sat 12–7 · Sun 12–4
                 </p>
                 <a
                   href="/#products"
