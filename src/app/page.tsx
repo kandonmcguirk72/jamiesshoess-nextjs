@@ -2,6 +2,7 @@ import { getLocalBusinessSchema, getProductListSchema } from '@/lib/schema'
 import Hero from '@/components/home/Hero'
 import CountdownBanner from '@/components/home/CountdownBanner'
 import ProductsSection from '@/components/home/ProductsSection'
+import ProductsFallback from '@/components/home/ProductsFallback'
 import FeaturesBar from '@/components/home/FeaturesBar'
 import StorePhotos from '@/components/home/StorePhotos'
 import CustomerStrip from '@/components/home/CustomerStrip'
@@ -11,11 +12,19 @@ import ReviewCTA from '@/components/home/ReviewCTA'
 import EmailCapture from '@/components/home/EmailCapture'
 import { fetchProducts } from '@/lib/products'
 
-export const revalidate = 3600
+// The product fetch revalidates at 300s, which caps the whole route (a lower
+// fetch revalidate wins over a higher segment value) — declare the real number.
+export const revalidate = 300
+
+export const metadata = {
+  alternates: { canonical: '/' },
+}
 
 export default async function HomePage() {
-  // The grid never shows descriptions — strip them to keep the page payload lean
-  const products = (await fetchProducts()).map((p) => ({ ...p, description: '' }))
+  // null = store feed unreachable → render the designed fallback, never a blank grid.
+  // The grid never shows descriptions — strip them to keep the page payload lean.
+  const fetched = await fetchProducts()
+  const products = fetched?.map((p) => ({ ...p, description: '' })) ?? null
 
   return (
     <>
@@ -23,13 +32,19 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getLocalBusinessSchema()) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(getProductListSchema(products)) }}
-      />
+      {products && products.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(getProductListSchema(products)) }}
+        />
+      )}
       <Hero />
       <CountdownBanner />
-      <ProductsSection products={products} />
+      {products === null ? (
+        <ProductsFallback />
+      ) : (
+        <ProductsSection products={products} />
+      )}
       <FeaturesBar />
       <StorePhotos />
       <CustomerStrip />

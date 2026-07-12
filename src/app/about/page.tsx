@@ -5,12 +5,13 @@
 
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { BRAND } from '@/lib/constants'
+import { BRAND, STORE_HOURS_LINE } from '@/lib/constants'
 import MapSection from '@/components/home/MapSection'
 
 export const metadata: Metadata = {
   title: 'About — JAMIESSHOESS',
   description: "The story behind Springfield's favorite vintage and sneaker shop.",
+  alternates: { canonical: '/about' },
 }
 
 export default function AboutPage() {
@@ -101,7 +102,7 @@ export default function AboutPage() {
             {[
               { label: 'Founded',  value: '10+ Years',          sub: 'in the resale market' },
               { label: 'Location', value: '302 Park Central East', sub: 'Downtown Springfield' },
-              { label: 'Hours',    value: 'Wed – Sat',           sub: '12 PM – 7 PM' },
+              { label: 'Hours',    value: 'Wed – Sun',           sub: STORE_HOURS_LINE },
               { label: 'Services', value: 'Buy · Trade · Sell',  sub: 'Vintage & sneakers' },
             ].map((stat) => (
               <div key={stat.label} className="flex flex-col gap-1 p-6" style={{ background: 'var(--bg-page)' }}>

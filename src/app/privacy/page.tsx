@@ -4,6 +4,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Privacy Policy — JAMIESSHOESS',
   description: 'Privacy Policy for JAMIESSHOESS, Springfield MO.',
+  alternates: { canonical: '/privacy' },
 }
 
 export default function PrivacyPage() {

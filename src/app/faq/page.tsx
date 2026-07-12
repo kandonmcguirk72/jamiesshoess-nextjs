@@ -5,6 +5,7 @@ import { BRAND } from '@/lib/constants'
 export const metadata: Metadata = {
   title: 'FAQ',
   description: 'Frequently asked questions about JAMIESSHOESS — authenticity, location, hours, pricing, and more.',
+  alternates: { canonical: '/faq' },
 }
 
 export default function FaqPage() {

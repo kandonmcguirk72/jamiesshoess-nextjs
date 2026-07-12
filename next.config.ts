@@ -1,5 +1,14 @@
 import type { NextConfig } from "next";
 
+// React dev mode uses eval() for debugging; allow it only in development so
+// production keeps a strict CSP (no 'unsafe-eval').
+const isDev = process.env.NODE_ENV === 'development';
+const scriptSrc = [
+  "script-src 'self' 'unsafe-inline'",
+  isDev ? "'unsafe-eval'" : '',
+  "https://fonts.googleapis.com https://www.googletagmanager.com",
+].filter(Boolean).join(' ');
+
 const nextConfig: NextConfig = {
   images: {
     formats: ['image/webp', 'image/avif'],
@@ -37,7 +46,7 @@ const nextConfig: NextConfig = {
           key: 'Content-Security-Policy',
           value: [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.googletagmanager.com",
+            scriptSrc,
             "frame-src 'none'",
             "connect-src 'self' https://www.google-analytics.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",

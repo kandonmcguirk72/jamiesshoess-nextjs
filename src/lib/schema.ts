@@ -1,4 +1,5 @@
 import type { Product } from './products'
+import { STORE_HOURS } from './constants'
 
 // ItemList of in-stock products so Google can show items with prices in search
 export function getProductListSchema(products: Product[]) {
@@ -51,11 +52,12 @@ export function getLocalBusinessSchema() {
       latitude: 37.209,
       longitude: -93.2923,
     },
-    openingHoursSpecification: [
-      { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday', 'Thursday'], opens: '12:00', closes: '18:00' },
-      { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Friday', 'Saturday'], opens: '12:00', closes: '19:00' },
-      { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Sunday'], opens: '12:00', closes: '16:00' },
-    ],
+    openingHoursSpecification: STORE_HOURS.map((g) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: [...g.schemaDays],
+      opens: g.opens,
+      closes: g.closes,
+    })),
     priceRange: '$$',
     currenciesAccepted: 'USD',
     paymentAccepted: 'Cash, Credit Card',

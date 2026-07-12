@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { existsSync } from 'fs'
 import { join } from 'path'
 import { fetchSquarespaceProducts } from './squarespace'
@@ -60,8 +61,14 @@ function inferEmoji(cat: string, title: string): string {
 const DEFAULT_DESCRIPTION =
   'Vintage condition. Minor wear expected. All items are hand-picked and authenticated by JAMIESSHOESS.'
 
-export async function fetchProducts(): Promise<Product[]> {
+/**
+ * Returns products, or `null` when the store feed is unreachable (render a
+ * fallback). Wrapped in React cache() so generateMetadata + page body share
+ * one parse/normalize per request instead of doing the work twice.
+ */
+export const fetchProducts = cache(async (): Promise<Product[] | null> => {
   const raw = await fetchSquarespaceProducts()
+  if (raw === null) return null
   const products = raw.map((p) => {
     const cat = inferCategory(p.title, p.categories)
     const tags = p.tags
@@ -87,4 +94,4 @@ export async function fetchProducts(): Promise<Product[]> {
   })
 
   return products
-}
+})

@@ -57,7 +57,42 @@ function extractSize(variants: SQSVariant[], title: string): string {
   return m ? m[1].toUpperCase() : 'OS'
 }
 
-export async function fetchSquarespaceProducts(): Promise<SQSRawProduct[]> {
+// Squarespace's CDN intermittently rejects requests without a browser-like
+// User-Agent, which is the most likely cause of the grid rendering empty.
+const FETCH_HEADERS = {
+  'User-Agent':
+    'Mozilla/5.0 (compatible; JamiesshoessBot/1.0; +https://jamiesshoes.com)',
+  Accept: 'application/json',
+}
+
+async function fetchPage(page: number, attempts = 2): Promise<Response> {
+  let lastError: unknown
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const res = await fetch(
+        `https://shop.jamiesshoes.com/home?format=json&page=${page}`,
+        { headers: FETCH_HEADERS, next: { revalidate: 300 } }
+      )
+      if (res.ok) return res
+      lastError = new Error(`HTTP ${res.status} ${res.statusText}`)
+      // 4xx won't succeed on an immediate retry — only retry 5xx/network errors
+      if (res.status < 500) break
+    } catch (err) {
+      lastError = err
+    }
+  }
+  throw lastError
+}
+
+/**
+ * Returns the product list, or `null` when the fetch layer failed entirely —
+ * callers must distinguish "store is empty" ([]) from "we couldn't reach the
+ * store" (null) and render a designed fallback for the latter.
+ *
+ * No API key or env var is required: this hits the store's public
+ * `?format=json` endpoint, not the authenticated Commerce API.
+ */
+export async function fetchSquarespaceProducts(): Promise<SQSRawProduct[] | null> {
   const results: SQSRawProduct[] = []
 
   try {
@@ -65,11 +100,20 @@ export async function fetchSquarespaceProducts(): Promise<SQSRawProduct[]> {
     const maxPages = 6
 
     while (page <= maxPages) {
-      const res = await fetch(
-        `https://shop.jamiesshoes.com/home?format=json&page=${page}`,
-        { next: { revalidate: 300 } }
-      )
-      if (!res.ok) break
+      let res: Response
+      try {
+        res = await fetchPage(page)
+      } catch (err) {
+        // Page 1 failing means the feed is down → full failure path below.
+        // A LATER page failing shouldn't hide the products we already have:
+        // serve the partial catalog instead of the empty-store fallback.
+        if (results.length === 0) throw err
+        console.error(
+          `[squarespace] page ${page} failed after retries; serving ${results.length} products from earlier pages. Error:`,
+          err
+        )
+        break
+      }
 
       const data: SQSPage = await res.json()
       const items = data.items ?? []
@@ -120,7 +164,20 @@ export async function fetchSquarespaceProducts(): Promise<SQSRawProduct[]> {
       page++
     }
   } catch (err) {
-    console.error('[squarespace] fetchSquarespaceProducts failed:', err)
+    console.error(
+      '[squarespace] Product fetch failed for https://shop.jamiesshoes.com/home?format=json ' +
+        '(public endpoint — no API key/env var involved). ' +
+        'Check that the store is online and not blocking the request. Error:',
+      err
+    )
+    if (process.env.NODE_ENV === 'development') {
+      // Fail loud in dev so a broken feed can't slip past unnoticed.
+      throw err
+    }
+    // Fail graceful in prod: signal failure so pages render a designed fallback
+    // instead of an empty grid. (Later-page failures already broke out of the
+    // loop above with partial results; only page-1/parse failures land here.)
+    return null
   }
 
   return results

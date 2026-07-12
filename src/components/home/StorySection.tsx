@@ -1,4 +1,4 @@
-import { BRAND } from '@/lib/constants'
+import { BRAND, STORE_HOURS_LINE } from '@/lib/constants'
 
 export default function StorySection() {
   return (
@@ -69,7 +69,7 @@ export default function StorySection() {
             {[
               { label: 'Founded',   value: '10+ Years',          sub: 'in the resale market' },
               { label: 'Location',  value: 'Springfield, MO',    sub: '302 Park Central East' },
-              { label: 'Hours',     value: 'Wed – Sat',          sub: '12 PM – 6/7 PM' },
+              { label: 'Hours',     value: 'Wed – Sun',          sub: STORE_HOURS_LINE },
               { label: 'Services',  value: 'Buy · Trade · Sell', sub: 'Vintage & sneakers' },
             ].map((fact) => (
               <div key={fact.label} className="flex flex-col gap-1 p-7" style={{ background: 'var(--bg-page)' }}>

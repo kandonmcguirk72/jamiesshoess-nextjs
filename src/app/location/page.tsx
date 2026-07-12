@@ -4,6 +4,7 @@ import { BRAND } from '@/lib/constants'
 export const metadata: Metadata = {
   title: 'Hours & Location',
   description: '302 Park Central East, Springfield MO 65806. Open Wed–Sun on Historic Route 66.',
+  alternates: { canonical: '/location' },
 }
 
 export default function LocationPage() {

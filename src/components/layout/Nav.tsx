@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTheme } from 'next-themes'
-import { BRAND } from '@/lib/constants'
+import { BRAND, STORE_HOURS_LINE } from '@/lib/constants'
 import SearchBar from '@/components/SearchBar'
 
 function ThemeToggle({ mobile = false }: { mobile?: boolean }) {
@@ -230,7 +230,7 @@ export default function Nav() {
               <div className="px-6 pt-4 pb-2 border-t border-white/[0.07]">
                 <p className="font-sans text-[11px] tracking-[0.08em] uppercase text-white/25 mb-3">
                   302 Park Central East · Springfield, MO<br />
-                  Wed–Thu 12–6 · Fri–Sat 12–7 · Sun 12–4
+                  {STORE_HOURS_LINE}
                 </p>
                 <a
                   href="/#products"

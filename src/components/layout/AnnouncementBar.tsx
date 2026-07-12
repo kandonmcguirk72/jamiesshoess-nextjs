@@ -1,5 +1,9 @@
+import { formatStoreHours } from '@/lib/constants'
+
+const HOURS_TICKER = formatStoreHours('  ').toUpperCase()
+
 const TICKER =
-  'NEW DROP EVERY WEEKEND  ·  FOLLOW @JAMIESSHOESS FOR UPDATES  ·  📍 302 PARK CENTRAL EAST, SPRINGFIELD MO  ·  WED–THU 12–6  FRI–SAT 12–7  SUN 12–4  ·  FREE LOCAL PICKUP AT THE STORE  ·  '
+  `NEW DROP EVERY WEEKEND  ·  FOLLOW @JAMIESSHOESS FOR UPDATES  ·  📍 302 PARK CENTRAL EAST, SPRINGFIELD MO  ·  ${HOURS_TICKER}  ·  FREE LOCAL PICKUP AT THE STORE  ·  `
 
 export default function AnnouncementBar() {
   return (

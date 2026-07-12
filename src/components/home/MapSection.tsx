@@ -1,3 +1,5 @@
+import { STORE_HOURS } from '@/lib/constants'
+
 export default function MapSection() {
   return (
     <section
@@ -36,11 +38,14 @@ export default function MapSection() {
                 <p className="font-sans font-bold text-[10px] tracking-[0.18em] uppercase text-white/35 mb-1.5">
                   Hours
                 </p>
-                <p className="font-sans font-semibold text-white" style={{ fontSize: 14, lineHeight: 1.7 }}>
-                  Wed – Thu &nbsp; 12–6 PM<br />
-                  Fri – Sat &nbsp;&nbsp;&nbsp;&nbsp; 12–7 PM<br />
-                  Sun &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12–4 PM
-                </p>
+                <div className="font-sans font-semibold text-white" style={{ fontSize: 14, lineHeight: 1.7 }}>
+                  {STORE_HOURS.map((g) => (
+                    <div key={g.days} style={{ display: 'flex', justifyContent: 'space-between', maxWidth: 170 }}>
+                      <span>{g.days}</span>
+                      <span>{g.time}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               <div>

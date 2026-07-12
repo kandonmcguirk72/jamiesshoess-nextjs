@@ -1,4 +1,6 @@
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<!-- SEO BACKUP: hard-block search indexing of shop subdomain (checkout/product/cart). Primary method is Settings > Marketing > SEO "hide from search engines" toggle; this is the redundant safety layer. Most-restrictive directive wins, so this supersedes the JS robots logic below. -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 html,body{background:#080A09!important;color:#F4F4F4!important}
 body{font-family:'Rajdhani',system-ui,sans-serif!important;padding-top:64px!important}
@@ -48,17 +50,13 @@ input[type=text],input[type=email],input[type=tel],textarea{background:#0F1411!i
 <script>
 (function(){
 var M='https://www.jamiesshoes.com';
-// Keep Google pointed at the main site: noindex shop browse pages, keep product pages indexed
-if(!/\/p\//.test(location.pathname)){
-var r=document.createElement('meta');r.name='robots';r.content='noindex,follow';
-document.head.appendChild(r);
-}
+// SEO handled site-wide by static <meta name="robots" content="noindex, nofollow, noarchive"> in header (no per-path JS needed)
 function hdr(){
 if(document.getElementById('jhdr'))return;
 var h=document.createElement('div');h.id='jhdr';
 h.innerHTML='<a class="jw" href="'+M+'">JAMIESSHOESS</a><nav>'+
-'<a href="/">SHOP</a>'+
-'<a class="jh" href="/vintage-items">VINTAGE</a>'+
+'<a href="'+M+'/#products">SHOP</a>'+
+'<a class="jh" href="'+M+'/?filter=vintage#products">VINTAGE</a>'+
 '<a class="jh" href="'+M+'/sell">SELL</a>'+
 '<a class="jh" href="'+M+'/about">ABOUT</a>'+
 '<a class="jc" href="/cart">CART<span id="jct"></span></a></nav>';

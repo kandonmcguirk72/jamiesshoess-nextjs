@@ -3,7 +3,7 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 
-Sitemap: https://jamiesshoess-nextjs.vercel.app/sitemap.xml
+Sitemap: https://www.jamiesshoes.com/sitemap.xml
 
 # Specific bot rules
 User-agent: AdsBot-Google

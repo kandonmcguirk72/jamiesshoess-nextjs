@@ -1,3 +1,24 @@
+// Single source of truth for store hours: every display (ticker, hero, nav,
+// map, stat blocks, 404, JSON-LD, and the per-day BRAND.hours table) derives
+// from this array — edit hours here and nowhere else.
+export const STORE_HOURS = [
+  { days: 'Wed–Thu', time: '12–6 PM', schemaDays: ['Wednesday', 'Thursday'], opens: '12:00', closes: '18:00' },
+  { days: 'Fri–Sat', time: '12–7 PM', schemaDays: ['Friday', 'Saturday'],   opens: '12:00', closes: '19:00' },
+  { days: 'Sun',     time: '12–4 PM', schemaDays: ['Sunday'],               opens: '12:00', closes: '16:00' },
+] as const
+
+export function formatStoreHours(groupSep = ' · ', daySep = ' ') {
+  return STORE_HOURS.map((g) => `${g.days}${daySep}${g.time}`).join(groupSep)
+}
+
+// "Wed–Thu 12–6 PM · Fri–Sat 12–7 PM · Sun 12–4 PM"
+export const STORE_HOURS_LINE = formatStoreHours()
+
+const WEEK = [
+  ['Mon', 'Monday'], ['Tue', 'Tuesday'], ['Wed', 'Wednesday'], ['Thu', 'Thursday'],
+  ['Fri', 'Friday'], ['Sat', 'Saturday'], ['Sun', 'Sunday'],
+] as const
+
 export const BRAND = {
   name: 'JAMIESSHOESS',
   shortName: 'JS',
@@ -15,15 +36,10 @@ export const BRAND = {
     embedUrl: 'https://maps.google.com/maps?q=302+Park+Central+East+Springfield+MO+65806&t=&z=15&ie=UTF8&iwloc=&output=embed',
   },
 
-  hours: [
-    { day: 'Mon', full: 'Monday',    time: 'Closed',    open: false },
-    { day: 'Tue', full: 'Tuesday',   time: 'Closed',    open: false },
-    { day: 'Wed', full: 'Wednesday', time: '12 – 6 PM', open: true  },
-    { day: 'Thu', full: 'Thursday',  time: '12 – 6 PM', open: true  },
-    { day: 'Fri', full: 'Friday',    time: '12 – 7 PM', open: true  },
-    { day: 'Sat', full: 'Saturday',  time: '12 – 7 PM', open: true  },
-    { day: 'Sun', full: 'Sunday',    time: '12 – 4 PM', open: true  },
-  ],
+  hours: WEEK.map(([day, full]) => {
+    const g = STORE_HOURS.find((g) => (g.schemaDays as readonly string[]).includes(full))
+    return { day, full, time: g ? g.time : 'Closed', open: !!g }
+  }),
 
   social: {
     instagram:   { url: 'https://instagram.com/JAMIESSHOESS',                           handle: '@JAMIESSHOESS',    label: 'Instagram' },

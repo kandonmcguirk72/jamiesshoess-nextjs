@@ -17,18 +17,22 @@ const DEFAULT_DESCRIPTION = 'Vintage condition. Minor wear expected. All items a
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params
-  const products = await fetchProducts()
+  const products = (await fetchProducts()) ?? []
   const product = products.find((p) => p.id === id)
   if (!product) return {}
   return {
     title: `${product.full} — JAMIESSHOESS`,
     description: product.description || DEFAULT_DESCRIPTION,
+    alternates: { canonical: `/product/${id}` },
   }
 }
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const products = await fetchProducts()
+  // null = feed outage: fail the request (retryable error) rather than 404ing
+  // a real product URL — a cached 404 would outlive the outage.
+  if (products === null) throw new Error('Store feed unreachable — cannot render product page')
   const product = products.find((p) => p.id === id)
   if (!product) notFound()
 

@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect, useRef, useCallback, Suspense } from 'rea
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import type { Product } from '@/lib/products'
+import ProductsHeading from './ProductsHeading'
 
 const FILTERS = [
   { label: 'New This Week', id: 'new' },
@@ -173,14 +174,22 @@ function ProductCard({ product }: { product: Product }) {
   )
 }
 
-function ProductsSectionInner({ products }: { products: Product[] }) {
+// useSearchParams suspends during prerender, so it lives in this null-rendering
+// child: only this suspends, and the grid itself stays in the static HTML.
+// (Previously the whole section sat behind <Suspense fallback={null}>, which
+// prerendered the homepage with NO products section at all — if hydration
+// failed or JS was slow, the grid rendered nothing.)
+function FilterSync({ onFilter }: { onFilter: (id: string) => void }) {
   const searchParams = useSearchParams()
-  const [activeFilter, setActiveFilter] = useState('shop')
-
   useEffect(() => {
     const f = searchParams.get('filter')?.toLowerCase()
-    setActiveFilter(f && VALID_FILTER_IDS.includes(f) ? f : 'shop')
-  }, [searchParams])
+    onFilter(f && VALID_FILTER_IDS.includes(f) ? f : 'shop')
+  }, [searchParams, onFilter])
+  return null
+}
+
+export default function ProductsSection({ products }: { products: Product[] }) {
+  const [activeFilter, setActiveFilter] = useState('shop')
 
   const handleFilter = (id: string) => {
     setActiveFilter(id)
@@ -188,13 +197,12 @@ function ProductsSectionInner({ products }: { products: Product[] }) {
     window.history.replaceState(null, '', `/${qs}#products`)
   }
 
-  const available = products.filter((p) => p.stock > 0)
-
   const filtered = useMemo(() => {
+    const available = products.filter((p) => p.stock > 0)
     if (activeFilter === 'shop') return available
     if (activeFilter === 'new') return available.filter((p) => p.tags.includes('NEW'))
     return available.filter((p) => p.cat === activeFilter)
-  }, [activeFilter, available])
+  }, [activeFilter, products])
 
   return (
     <section
@@ -202,18 +210,13 @@ function ProductsSectionInner({ products }: { products: Product[] }) {
       className="border-t border-white/[0.07]"
       style={{ background: 'var(--bg-page)', padding: 'clamp(40px,6vw,64px) clamp(16px,4vw,52px)' }}
     >
+      <Suspense fallback={null}>
+        <FilterSync onFilter={setActiveFilter} />
+      </Suspense>
       <div style={{ maxWidth: 1260, margin: '0 auto' }}>
         {/* Heading */}
         <div className="flex items-end justify-between mb-8 flex-wrap gap-4">
-          <div>
-            <p className="font-sans font-bold text-[10px] tracking-[0.22em] uppercase text-minted/70 mb-2">Now In-Store</p>
-            <h2
-              className="font-display italic font-black uppercase text-white"
-              style={{ fontSize: 'clamp(28px,4vw,40px)', letterSpacing: '0.01em', lineHeight: 0.95 }}
-            >
-              Shop the Floor
-            </h2>
-          </div>
+          <ProductsHeading />
           <span className="font-sans font-bold text-[11px] tracking-[0.14em] uppercase text-white/30">
             {filtered.length} {filtered.length === 1 ? 'item' : 'items'}
           </span>
@@ -259,10 +262,3 @@ function ProductsSectionInner({ products }: { products: Product[] }) {
   )
 }
 
-export default function ProductsSection({ products = [] }: { products?: Product[] }) {
-  return (
-    <Suspense fallback={null}>
-      <ProductsSectionInner products={products} />
-    </Suspense>
-  )
-}

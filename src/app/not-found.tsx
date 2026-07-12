@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { BRAND } from '@/lib/constants'
+import { BRAND, STORE_HOURS_LINE } from '@/lib/constants'
 
 export default function NotFound() {
   return (
@@ -30,7 +30,7 @@ export default function NotFound() {
         <div className="bg-surface rounded-lg border border-line p-6 max-w-[320px] mx-auto">
           <p className="font-display text-lg text-ink mb-1">{BRAND.address.line1}</p>
           <p className="font-sans text-sm text-ink3 mb-1">{BRAND.address.line2}</p>
-          <p className="font-sans text-[13px] text-ink3">Wed–Thu 12–6 PM · Fri–Sat 12–7 PM · Sun 12–4 PM</p>
+          <p className="font-sans text-[13px] text-ink3">{STORE_HOURS_LINE}</p>
         </div>
       </div>
     </section>
