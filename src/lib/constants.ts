@@ -42,10 +42,11 @@ export const BRAND = {
   }),
 
   social: {
-    instagram:   { url: 'https://instagram.com/JAMIESSHOESS',                           handle: '@JAMIESSHOESS',    label: 'Instagram' },
+    instagram:   { url: 'https://www.instagram.com/JAMIESSHOESS/',                          handle: '@JAMIESSHOESS',    label: 'Instagram' },
     tiktok:      { url: 'https://www.tiktok.com/@jamiesshoess417',                      handle: '@JAMIESSHOESS417', label: 'TikTok' },
     facebook:    { url: 'https://www.facebook.com/p/jamiesshoess-100080011887058/',     handle: 'Facebook',         label: 'Facebook' },
     marketplace: { url: 'https://www.facebook.com/marketplace/profile/100080011887058/', handle: 'Shop Now',        label: 'Facebook Marketplace' },
+    youtube:     { url: 'https://www.youtube.com/@Jamiesshoess417',                      handle: '@Jamiesshoess417', label: 'YouTube' },
   },
 
   stats: [

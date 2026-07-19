@@ -22,7 +22,7 @@ export default function ReviewPage() {
   }
 
   return (
-    <main className="min-h-[calc(100vh-64px)]" style={{ background: 'var(--bg-page)' }}>
+    <div className="min-h-[calc(100vh-64px)]" style={{ background: 'var(--bg-page)' }}>
       {/* Hero */}
       <section
         className="border-b border-white/[0.07] text-center"
@@ -128,6 +128,6 @@ export default function ReviewPage() {
 
         </div>
       </section>
-    </main>
+    </div>
   )
 }

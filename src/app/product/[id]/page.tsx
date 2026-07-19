@@ -10,7 +10,7 @@ const BADGE_COLOR: Record<string, string> = {
   SALE: '#FF2D2D',
   '1/1': '#00ECF1',
   VTG:  '#00ECF1',
-  NEW:  '#FF6B35',
+  NEW:  '#5AE131',
 }
 
 const DEFAULT_DESCRIPTION = 'Vintage condition. Minor wear expected. All items are hand-picked and authenticated by JAMIESSHOESS.'
@@ -44,7 +44,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const buyUrl = product.squarespaceUrl ?? SQUARESPACE_STORE_URL
 
   return (
-    <main className="min-h-screen" style={{ background: 'var(--bg-page)' }}>
+    <div className="min-h-screen" style={{ background: 'var(--bg-page)' }}>
       <section style={{ padding: 'clamp(32px,5vw,64px) clamp(16px,4vw,52px)' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
 
@@ -154,6 +154,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           </div>
         </div>
       </section>
-    </main>
+    </div>
   )
 }

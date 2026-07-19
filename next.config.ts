@@ -47,7 +47,9 @@ const nextConfig: NextConfig = {
           value: [
             "default-src 'self'",
             scriptSrc,
-            "frame-src 'none'",
+            // Google Maps embeds on /about and /location need frames;
+            // the ?output=embed URL serves from both hosts.
+            "frame-src https://maps.google.com https://www.google.com",
             "connect-src 'self' https://www.google-analytics.com",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
             "font-src 'self' https://fonts.gstatic.com",

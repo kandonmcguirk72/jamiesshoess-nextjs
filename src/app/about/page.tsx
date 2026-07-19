@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main style={{ background: 'var(--bg-page)' }}>
+    <div style={{ background: 'var(--bg-page)' }}>
 
       {/* Hero */}
       <section
@@ -217,6 +217,6 @@ export default function AboutPage() {
           ← Back to Shop
         </Link>
       </section>
-    </main>
+    </div>
   )
 }

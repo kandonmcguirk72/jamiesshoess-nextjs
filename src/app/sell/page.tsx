@@ -64,7 +64,7 @@ export default function SellPage() {
   }
 
   return (
-    <main className="min-h-[calc(100vh-64px)] bg-leather text-white">
+    <div className="min-h-[calc(100vh-64px)] bg-leather text-white">
 
       {/* Hero */}
       <section
@@ -93,7 +93,7 @@ export default function SellPage() {
               'We buy vintage tees, sneakers, streetwear & more',
             ].map((step) => (
               <div key={step} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                <span style={{ color: '#00E5FF', fontWeight: 700, fontSize: 16, flexShrink: 0, marginTop: 1 }}>✓</span>
+                <span style={{ color: '#00ECF1', fontWeight: 700, fontSize: 16, flexShrink: 0, marginTop: 1 }}>✓</span>
                 <p className="font-sans font-medium text-[15px] text-white/70" style={{ lineHeight: 1.5 }}>
                   {step}
                 </p>
@@ -219,7 +219,7 @@ export default function SellPage() {
                 id="photo-input"
                 type="file"
                 name="photo"
-                accept="image/*"
+                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
                 required
                 onChange={handleFileChange}
                 className="w-full bg-white/[0.05] border border-white/[0.1] rounded px-4 py-3 font-sans text-[14px] text-white"
@@ -288,6 +288,6 @@ export default function SellPage() {
           </form>
         </div>
       </section>
-    </main>
+    </div>
   )
 }

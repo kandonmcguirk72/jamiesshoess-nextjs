@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <main style={{ background: 'var(--bg-page)', minHeight: 'calc(100vh - 64px)' }}>
+    <div style={{ background: 'var(--bg-page)', minHeight: 'calc(100vh - 64px)' }}>
       <section style={{ borderBottom: '1px solid rgba(255,255,255,.07)', padding: 'clamp(40px,6vw,80px) clamp(16px,4vw,52px)' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <p className="font-sans font-bold text-[10px] tracking-[0.24em] uppercase text-minted/70 mb-3">Legal</p>
@@ -68,7 +68,7 @@ export default function TermsPage() {
                 If you have questions about these terms, come see us in person or reach out online.<br /><br />
                 <span className="text-white/80 font-semibold">JAMIESSHOESS</span><br />
                 302 Park Central East, Springfield MO<br />
-                Instagram: <a href="https://instagram.com/JAMIESSHOESS" target="_blank" rel="noopener noreferrer" className="text-minted hover:text-white transition-colors">@jamiesshoess</a>
+                Instagram: <a href="https://www.instagram.com/JAMIESSHOESS/" target="_blank" rel="noopener noreferrer" className="text-minted hover:text-white transition-colors">@jamiesshoess</a>
               </p>
             </div>
 
@@ -81,6 +81,6 @@ export default function TermsPage() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   )
 }

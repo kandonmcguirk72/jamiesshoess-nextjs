@@ -59,7 +59,7 @@ export default function MobileStickyBar() {
       </div>
 
       <a
-        href="https://instagram.com/JAMIESSHOESS"
+        href="https://www.instagram.com/JAMIESSHOESS/"
         target="_blank"
         rel="noopener noreferrer"
         style={{

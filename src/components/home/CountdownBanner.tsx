@@ -2,8 +2,12 @@
 
 import { useEffect, useState } from 'react'
 
-function getNextDropTarget(): Date {
-  const now = new Date()
+// Drops go live Saturday 12 PM; the banner shows LIVE until close (7 PM Sat).
+function isDropLive(now: Date): boolean {
+  return now.getDay() === 6 && now.getHours() >= 12 && now.getHours() < 19
+}
+
+function getNextDropTarget(now: Date): Date {
   const dayOfWeek = now.getDay() // 0=Sun, 6=Sat
   const daysUntilSat = (6 - dayOfWeek + 7) % 7
   const sat = new Date(now)
@@ -26,12 +30,13 @@ export default function CountdownBanner() {
   useEffect(() => {
     setMounted(true)
     function tick() {
-      const target = getNextDropTarget()
-      const diff = target.getTime() - Date.now()
-      if (diff <= 0) {
+      const now = new Date()
+      if (isDropLive(now)) {
         setTimeLeft({ days: 0, hrs: 0, mins: 0, secs: 0, live: true })
         return
       }
+      const target = getNextDropTarget(now)
+      const diff = target.getTime() - now.getTime()
       setTimeLeft({
         days: Math.floor(diff / 86400000),
         hrs: Math.floor((diff % 86400000) / 3600000),
@@ -77,7 +82,7 @@ export default function CountdownBanner() {
               fontSize: 'clamp(16px,2.5vw,22px)',
               textTransform: 'uppercase',
               letterSpacing: '0.06em',
-              color: '#00E5FF',
+              color: '#00ECF1',
             }}
           >
             🔥 DROP IS LIVE — IN STORE NOW
@@ -114,7 +119,7 @@ export default function CountdownBanner() {
                         fontVariantNumeric: 'tabular-nums',
                         fontWeight: 700,
                         fontSize: 'clamp(22px,3.5vw,32px)',
-                        color: '#00E5FF',
+                        color: '#00ECF1',
                         lineHeight: 1,
                       }}
                     >
@@ -135,7 +140,7 @@ export default function CountdownBanner() {
                     </div>
                   </div>
                   {i < 3 && (
-                    <span style={{ color: 'rgba(0,229,255,0.4)', fontSize: 22, fontWeight: 700, lineHeight: 1, marginTop: -6 }}>:</span>
+                    <span style={{ color: 'rgba(0,236,241,0.4)', fontSize: 22, fontWeight: 700, lineHeight: 1, marginTop: -6 }}>:</span>
                   )}
                 </div>
               ))}

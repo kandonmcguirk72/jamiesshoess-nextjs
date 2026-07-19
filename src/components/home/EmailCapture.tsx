@@ -86,7 +86,7 @@ export default function EmailCapture() {
               </button>
             </div>
             {error && (
-              <p className="font-sans text-[12px] mt-3" style={{ color: '#FF6B6B' }}>{error}</p>
+              <p className="font-sans text-[12px] mt-3" style={{ color: '#FF2D2D' }}>{error}</p>
             )}
           </form>
         )}
@@ -95,7 +95,7 @@ export default function EmailCapture() {
           <p className="font-sans text-[12px] text-white/30 mt-5" style={{ lineHeight: 1.7 }}>
             Or DM{' '}
             <a
-              href="https://instagram.com/JAMIESSHOESS"
+              href="https://www.instagram.com/JAMIESSHOESS/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white/50 hover:text-minted transition-colors"

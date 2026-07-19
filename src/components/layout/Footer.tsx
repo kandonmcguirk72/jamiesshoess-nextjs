@@ -84,7 +84,7 @@ export default function Footer() {
             <IconFacebook />
           </a>
           <a
-            href="https://www.youtube.com/@Jamiesshoess417"
+            href={BRAND.social.youtube.url}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="YouTube"
@@ -124,7 +124,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <p className="font-sans font-semibold text-[10px] tracking-[0.14em] uppercase text-white/20">
-          © 2026 JAMIESSHOESS · Springfield, MO
+          © {new Date().getFullYear()} JAMIESSHOESS · Springfield, MO
         </p>
       </div>
     </footer>

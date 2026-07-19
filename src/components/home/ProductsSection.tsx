@@ -56,7 +56,7 @@ function ProductCard({ product }: { product: Product }) {
   }
 
   const badgeTag = product.tags.find((t) => ['SALE', '1/1', 'NEW', 'VTG'].includes(t))
-  const badgeColor: Record<string, string> = { SALE: '#FF2D2D', '1/1': '#00ECF1', NEW: '#FF6B35', VTG: '#00ECF1' }
+  const badgeColor: Record<string, string> = { SALE: '#FF2D2D', '1/1': '#00ECF1', NEW: '#5AE131', VTG: '#00ECF1' }
 
   return (
     <a

@@ -15,7 +15,7 @@ export function getProductListSchema(products: Product[]) {
         item: {
           '@type': 'Product',
           name: p.full,
-          image: p.img.startsWith('/') ? `https://www.jamiesshoes.com${p.img}` : p.img,
+          image: p.img.startsWith('/') ? `https://jamiesshoes.com${p.img}` : p.img,
           url: p.squarespaceUrl,
           offers: {
             '@type': 'Offer',
@@ -34,9 +34,9 @@ export function getLocalBusinessSchema() {
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'ClothingStore'],
     name: 'JAMIESSHOESS',
-    url: 'https://www.jamiesshoes.com',
-    logo: 'https://www.jamiesshoes.com/brand/logos/logo-circle-badge-transparent.png',
-    image: 'https://www.jamiesshoes.com/images/store/exterior-street.jpg',
+    url: 'https://jamiesshoes.com',
+    logo: 'https://jamiesshoes.com/brand/logos/logo-circle-badge-transparent.png',
+    image: 'https://jamiesshoes.com/images/store/exterior-street.jpg',
     description:
       "Springfield's sneaker boutique and vintage clothing store. Hand-picked vintage tees, authenticated sneakers, and in-house merch at 302 Park Central East on Historic Route 66.",
     address: {
@@ -62,7 +62,7 @@ export function getLocalBusinessSchema() {
     currenciesAccepted: 'USD',
     paymentAccepted: 'Cash, Credit Card',
     sameAs: [
-      'https://instagram.com/JAMIESSHOESS',
+      'https://www.instagram.com/JAMIESSHOESS/',
       'https://www.tiktok.com/@jamiesshoess417',
       'https://www.facebook.com/p/jamiesshoess-100080011887058/',
       'https://www.youtube.com/@Jamiesshoess417',

@@ -140,24 +140,21 @@ export async function POST(req: NextRequest) {
           contentType: photoMimeType,
         })
         imageUrl = blob.url
-        console.log('✅ Blob upload SUCCESS - URL:', imageUrl)
-        console.log('✅ Image accessible at:', imageUrl)
         safeLogger.info('Image uploaded to Blob storage', { url: imageUrl, fileName: photoFileName })
       } catch (blobError) {
-        console.error('❌ Blob upload failed:', blobError)
         safeLogger.warn('Blob upload failed, will attach to email instead', {
           error: blobError instanceof Error ? blobError.message : String(blobError),
         })
       }
     } else {
-      console.log('⚠️ No BLOB_READ_WRITE_TOKEN, will attach image to email')
+      safeLogger.info('No BLOB_READ_WRITE_TOKEN, attaching image to email instead')
     }
 
     // Initialize Resend with API key
     const resend = new Resend(apiKey)
 
     // Build email with inline image (either blob URL or embedded attachment)
-    const emailConfig: any = {
+    const emailConfig: Parameters<Resend['emails']['send']>[0] = {
       from: 'JAMIESSHOESS <noreply@resend.dev>',
       to: 'kandonmcguirk72@gmail.com',
       subject: `New Sell Request: ${sanitizeString(name)}`,
@@ -216,7 +213,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
     }
 
-    console.log('✅ Email sent successfully:', result.data?.id)
     safeLogger.info('Sell request email sent successfully', {
       emailId: result.data?.id,
       imageUrl: imageUrl || 'base64-embedded',

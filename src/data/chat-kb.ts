@@ -18,7 +18,7 @@ export interface ChatIntent {
 }
 
 export const IG = '@JAMIESSHOESS';
-export const IG_URL = 'https://instagram.com/JAMIESSHOESS';
+export const IG_URL = 'https://www.instagram.com/JAMIESSHOESS/';
 export const SHOP_URL = 'https://shop.jamiesshoes.com';
 export const ADDRESS = '302 Park Central East, Downtown Springfield, MO';
 
